@@ -1,10 +1,10 @@
 # Szablon tworzenia LXC (Alpine)
 
 ### 1. Przygotowanie hosta (Proxmox CLI)
-```bash
+`
 mkdir -p /var/lib/vz/xxx-data
 chown -R 100000:100000 /var/lib/vz/xxx-data
-
+`
 # komenda do stworzenia LXC:
 
 TEMPLATE="local:vztmpl/alpine-3.22-default_20250617_amd64.tar.xz"
