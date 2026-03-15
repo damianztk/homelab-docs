@@ -17,7 +17,7 @@ TEMPLATE="local:vztmpl/alpine-3.22-default_20250617_amd64.tar.xz"
 
 pct create XXX $TEMPLATE \ # zastąpić xxx numerem ID kontenera
   --hostname xxx \ # zastąpić xxx nazwą hosta
-  --tags tag1;tag2 # 
+  --tags "tag1;tag2" # Ustawić tagi odpowiednie dla usługi.
   --unprivileged 1 \
   --cores 1 \ #zrewidować
   --memory 512 \ #zrewidować
