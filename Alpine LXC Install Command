@@ -1,11 +1,17 @@
 # Szablon tworzenia LXC (Alpine)
 
 ### 1. Przygotowanie hosta (Proxmox CLI)
-`
+
+# Tworzenie folderu na dane
+
 mkdir -p /var/lib/vz/xxx-data
+
+# nadanie uprawnień dla tego folderu
+
 chown -R 100000:100000 /var/lib/vz/xxx-data
-`
-# komenda do stworzenia LXC:
+
+
+# Komenda do stworzenia LXC:
 
 TEMPLATE="local:vztmpl/alpine-3.22-default_20250617_amd64.tar.xz"
 
@@ -18,9 +24,9 @@ pct create XXX $TEMPLATE \ #zastąpić xxx numerem ID kontenera
   --rootfs local-lvm:2 \
   --net0 name=eth0,bridge=vmbr0,ip=10.100.20.xxx/24,gw=10.100.20.254 \ #zastąpić xxx numerem adresu IP
   --onboot 1 \
-  --password TWOJE_HASLO_DO_KONTENERA #wybrać silne hasło
+  --password HASLO #wybrać silne hasło
 
 
 # podpięcie xxx-data jako Bind Mount:
 
-pct set 200 -mp0 /var/lib/vz/xxx-data,mp=/data
+pct set XXX -mp0 /var/lib/vz/xxx-data,mp=/data (lub mp=/app/data - zależnie od aplikacji!!!)#zastąpić xxx numerem kontenera.
