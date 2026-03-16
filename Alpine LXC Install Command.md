@@ -15,6 +15,9 @@ mkdir -p /var/lib/vz/<NAZWA_APLIKACJI>-data
 chown -R 100000:100000 /var/lib/vz/<NAZWA_APLIKACJI>-data
 ```
 
+[!TIP]
+Jeśli kiedyś jakaś aplikacja (np. baza danych) będzie miała problem z zapisem mimo tego chown, sprawdź wewnątrz kontenera komendą id, czy na pewno działa jako root, czy może ma swojego dedykowanego usera (np. mysql o ID 101). Wtedy mapowanie na hoście byłoby 100101. Ale na 99% Twój szablon z 100000 zadziała dla większości usług. (Gemini)
+
 
 ## 2. Komenda do stworzenia LXC:
 
