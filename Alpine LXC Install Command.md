@@ -5,20 +5,20 @@
 
 ### Tworzenie folderu na dane
 
-```
+```bash
 mkdir -p /var/lib/vz/xxx-data
 ```
 
 ### nadanie uprawnień dla tego folderu
 
-```
+```bash
 chown -R 100000:100000 /var/lib/vz/xxx-data
 ```
 
 
 ## 2. Komenda do stworzenia LXC:
 
-```
+```bash
 TEMPLATE="local:vztmpl/alpine-3.22-default_20250617_amd64.tar.xz"
 
 pct create XXX $TEMPLATE \ # zastąpić xxx numerem ID kontenera
@@ -37,6 +37,6 @@ pct create XXX $TEMPLATE \ # zastąpić xxx numerem ID kontenera
 
 ## 3. Podpięcie xxx-data jako Bind Mount:
 
-```
+```bash
 pct set XXX -mp0 /var/lib/vz/xxx-data,mp=/data # (lub mp=/app/data - zależnie od aplikacji!!!) zastąpić xxx numerem kontenera.
 ```
