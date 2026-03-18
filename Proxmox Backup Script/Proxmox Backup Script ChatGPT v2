@@ -1,0 +1,66 @@
+#!/bin/bash
+# -------------------------------------------------------
+# Proxmox Backup Script by Damian & GPT-5 😎
+# Automatyczny backup VM + LXC z rotacją i alertem
+# -------------------------------------------------------
+
+# === KONFIGURACJA ===
+STORAGE="hdd-storage"             # Nazwa storage zdefiniowanego w Proxmox GUI (np. z HDD)
+RETENTION=7                       # Liczba dni, przez które trzymamy backupy
+LOGFILE="/var/log/proxmox_backup.log"
+MAIL="twojemail@gmail.com"        # E-mail do alertów
+BACKUP_DIR="/mnt/pve/$STORAGE/dump"  # Ścieżka do folderu dump backupów
+ALERT_THRESHOLD=90                # Wysyłaj alert przy >90% użyciu dysku
+
+# === FUNKCJE ===
+log() {
+  echo "$(date '+%Y-%m-%d %H:%M:%S') $1" | tee -a "$LOGFILE"
+}
+
+send_alert() {
+  echo "⚠️ ALERT Proxmox: $1" | msmtp -a gmail "$MAIL"
+}
+
+# === START ===
+log "=== [START BACKUPU] $(date) ==="
+
+# Sprawdź, czy storage istnieje
+if ! pvesm status | grep -q "$STORAGE"; then
+  log "❌ Błąd: Storage '$STORAGE' nie istnieje w systemie!"
+  send_alert "Storage '$STORAGE' nie istnieje lub nie jest zamontowany!"
+  exit 1
+fi
+
+# Sprawdź wolne miejsce
+FREE_PERC=$(df -h | grep "$STORAGE" | awk '{print $(NF-1)}' | tr -d '%')
+if [ -z "$FREE_PERC" ]; then
+  log "❌ Nie udało się pobrać wolnego miejsca dla storage '$STORAGE'"
+else
+  log "📦 Wolne miejsce na $STORAGE: $((100 - FREE_PERC))% (zajęte: ${FREE_PERC}%)"
+  if [ "$FREE_PERC" -ge "$ALERT_THRESHOLD" ]; then
+    log "⚠️ Uwaga: HDD przekroczył ${ALERT_THRESHOLD}% zapełnienia!"
+    send_alert "Dysk na '$STORAGE' ma zajęte ${FREE_PERC}%!"
+  fi
+fi
+
+# === BACKUP LXC ===
+for CTID in $(pct list | awk 'NR>1 {print $1}'); do
+  log "🔹 Backup LXC $CTID"
+  vzdump "$CTID" --storage "$STORAGE" --compress zstd --mode snapshot --quiet 1
+done
+
+# === BACKUP VM ===
+for VMID in $(qm list | awk 'NR>1 {print $1}'); do
+  log "🔸 Backup VM $VMID"
+  vzdump "$VMID" --storage "$STORAGE" --compress zstd --mode snapshot --quiet 1
+done
+
+# === ROTACJA BACKUPÓW ===
+if [ -d "$BACKUP_DIR" ]; then
+  log "🧹 Usuwanie backupów starszych niż $RETENTION dni..."
+  find "$BACKUP_DIR" -type f -name "*.vma.zst" -mtime +"$RETENTION" -exec rm -f {} \;
+else
+  log "⚠️ Folder backupów nie istnieje: $BACKUP_DIR"
+fi
+
+log "✅ [KONIEC BACKUPU] $(date)"
