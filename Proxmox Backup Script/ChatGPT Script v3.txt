@@ -94,6 +94,22 @@ done
 find "$LOG_DIR" -type f -name "backup_*.log" -mtime +30 -delete
 log "🧹 Usunięto logi starsze niż 30 dni"
 
+# === BACKUP KONFIGURACJI PROXMOX ===
+CONFIG_BACKUP="$MOUNT_POINT/proxmox_config_$(date '+%Y-%m-%d').tar.gz"
+log "📁 Tworzenie backupu konfiguracji Proxmoxa: $CONFIG_BACKUP"
+
+if tar -czf "$CONFIG_BACKUP" /etc/pve 2>>"$LOGFILE"; then
+  log "✅ Backup konfiguracji zakończony pomyślnie"
+  BACKUP_RESULTS+=("OK|CONFIG|—|/etc/pve|Zarchiwizowano do $CONFIG_BACKUP")
+else
+  log "❌ Błąd podczas tworzenia backupu konfiguracji!"
+  BACKUP_RESULTS+=("FAIL|CONFIG|—|/etc/pve|Błąd archiwizacji")
+fi
+
+# Usuwanie starych backupów konfiguracyjnych (>30 dni)
+find "$MOUNT_POINT" -name "proxmox_config_*.tar.gz" -mtime +30 -delete
+log "🧹 Usunięto stare backupy konfiguracji (>30 dni)"
+
 # === GENEROWANIE RAPORTU HTML ===
 HTML_REPORT="<html><body style='font-family:Arial,sans-serif;'>
 <h2 style='color:#2c3e50'>📦 Proxmox Backup Report – $(date '+%Y-%m-%d')</h2>
