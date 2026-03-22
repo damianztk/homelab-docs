@@ -13,8 +13,8 @@ To jest moje pierwsze repozytorium na własnym serwerze Gitea!
 ## Sieć (FortiGate 60E)
 * Gitea znajduje się w VLAN 20 (SERVER_LAN).
 
->[!HINT]
->Zmienić plik README!! A info o Gitea do innego pliku!!
+> [!HINT]
+> Zmienić plik README!! A info o Gitea do innego pliku!!
 
 ### usunięcie no-subscription-message w Proxmox
 
