@@ -1,4 +1,3 @@
-
 # 🛠️ Raport z odzyskiwania sieci i konfiguracji VLAN (17/18.03.2026)
 
 ## 📝 Podsumowanie incydentu
