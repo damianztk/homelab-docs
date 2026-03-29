@@ -6,13 +6,13 @@
 ### Tworzenie folderu na dane
 
 ```bash
-mkdir -p /var/lib/vz/<NAZWA_APLIKACJI>-data
+mkdir -p /opt/lxc-data/<NAZWA_APLIKACJI>-data
 ```
 
 ### nadanie uprawnień dla tego folderu
 
 ```bash
-chown -R 100000:100000 /var/lib/vz/<NAZWA_APLIKACJI>-data
+chown -R 100000:100000 /opt/lxc-data/<NAZWA_APLIKACJI>-data
 ```
 
 #### [!TIP]
@@ -41,5 +41,5 @@ pct create <ID> $TEMPLATE \ # zastąpić <ID> numerem ID kontenera
 ## 3. Podpięcie xxx-data jako Bind Mount:
 
 ```bash
-pct set <ID> -mp0 /var/lib/vz/<NAZWA_APLIKACJI>-data,mp=/data # (lub mp=/app/data - zależnie od aplikacji!!!) zastąpić <ID> numerem kontenera.
+pct set <ID> -mp0 /opt/lxc-data/<NAZWA_APLIKACJI>-data,mp=/data # (lub mp=/app/data - zależnie od aplikacji!!!) zastąpić <ID> numerem kontenera.
 ```
