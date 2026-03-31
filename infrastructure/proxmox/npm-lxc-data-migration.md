@@ -1,4 +1,5 @@
 # Migracja danych NPM (ID 104) do /opt/lxc-data — LV99 Edition
+### NPM / ID 104 - to przykładowy ID LXC.
 
 > **Uwaga — LVM-thin vs Directory storage:**
 > Jeśli kontener jest na **local-lvm** (LVM-thin), rootfs pod `/var/lib/lxc/104/rootfs/`
@@ -47,7 +48,10 @@ du -sh /opt/lxc-data/npm-data/letsencrypt/
 
 ## 6. Weryfikacja — uprawnienia
 ```bash
+ls -la /var/lib/lxc/104/rootfs/data/
 ls -la /opt/lxc-data/npm-data/data/
+
+ls -la /var/lib/lxc/104/rootfs/letsencrypt/
 ls -la /opt/lxc-data/npm-data/letsencrypt/
 ```
 > Właściciel plików powinien być `100000:100000`.
