@@ -10,7 +10,7 @@ Tworzymy ustandaryzowane miejsce na dane aplikacji, odzwierciedlające struktur�
 
 > Tworzenie kompletnej ścieżki docelowej:
 ```bash
-sudo mkdir -p /opt/docker-data/uptime-kuma/kuma-data`
+sudo mkdir -p /opt/docker-data/uptime-kuma/kuma-data
 ```
 
 ## **⏸️ Krok 2: Zatrzymanie kontenera (Cold State)**
