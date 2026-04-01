@@ -109,7 +109,6 @@ sudo chown -R 1000:1000 /opt/docker-data/uptime-kuma/kuma-data/
 
 Podnosimy kontener z nowym mapowaniem.
 ```bash
-
 docker compose up -d
 ```
 
