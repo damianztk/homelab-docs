@@ -812,5 +812,5 @@ crontab -e
 
 ### Proof of Concept
 
-![Test DNSSEC Dell Wyse](homelab-docs/screenshots/unbound-dig-test-dell-wyse.png)
-![Test DNSSEC Proxmox](homelab-docs/screenshots/unbound-dig-test-proxmox.png)
+![Test DNSSEC Dell Wyse](screenshots/unbound-dig-test-dell-wyse.png)
+![Test DNSSEC Proxmox](screenshots/unbound-dig-test-proxmox.png)
