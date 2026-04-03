@@ -1,12 +1,12 @@
 # Unbound — Instalacja i konfiguracja | Installation and Configuration | Installation und Konfiguration
 
+> 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
+
 ---
 
 # 🇵🇱 Polski
 
 > 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
-
----
 
 > **Środowisko:** Debian 13.3  
 > **Cel:** Instalacja Unbound jako lokalnego DNS resolvera działającego pod AdGuard Home  
@@ -51,7 +51,7 @@ systemctl status unbound
 
 ## 3. Root Hints
 
-Root hints to lista adresów głównych serwerów DNS (root servers). Unbound używa ich jako punktu startowego do rekurencyjnego rozwiązywania zapytań. Plik wymaga okresowego odświeżania (raz na kilka miesięcy wystarczy).
+Root hints to lista adresów głównych serwerów DNS. Unbound używa ich jako punktu startowego do rekurencyjnego rozwiązywania zapytań. Plik wymaga odświeżania co kilka miesięcy.
 
 ```bash
 curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.root
@@ -65,7 +65,7 @@ ls -la /var/lib/unbound/root.hints
 
 ## 4. Root Key (DNSSEC)
 
-Plik `root.key` zawiera główny trust anchor DNSSEC. Unbound aktualizuje go automatycznie przy każdym starcie.
+Plik `root.key` zawiera główny trust anchor DNSSEC. Unbound aktualizuje go automatycznie przy każdym starcie gdy dyrektywa `auto-trust-anchor-file` jest ustawiona.
 
 Sprawdź czy plik już istnieje:
 
@@ -96,14 +96,19 @@ Oczekiwane uprawnienia:
 
 ## 5. Konfiguracja
 
+Utwórz plik konfiguracyjny:
+
 ```bash
 nano /etc/unbound/unbound.conf.d/adguard.conf
 ```
+
+> ⚠️ **Uwaga dla Debian 13:** Debian automatycznie tworzy plik `/etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf` który już zawiera dyrektywę `auto-trust-anchor-file`. Nie dodawaj jej w swoim pliku — spowoduje błąd `trust anchor for '.' presented twice` i Unbound odmówi startu. Sprawdź przed restartem: `grep -r "auto-trust-anchor" /etc/unbound/`
 
 ### 🖥️ Wyse (2GB RAM)
 
 ```conf
 server:
+    # --- Nasłuch i podstawy ---
     verbosity: 0
     interface: 127.0.0.1
     port: 5335
@@ -112,30 +117,43 @@ server:
     do-tcp: yes
     do-ip6: no
     prefer-ip6: no
+
+    # --- Root Hints ---
     root-hints: "/var/lib/unbound/root.hints"
-    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+    # --- Bezpieczeństwo i ukrywanie tożsamości ---
     hide-identity: yes
     hide-version: yes
+
+    # --- Zabezpieczenia DNSSEC ---
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-referral-path: yes
     unwanted-reply-threshold: 10000
     use-caps-for-id: yes
+
+    # --- Prefetching ---
     prefetch: yes
     prefetch-key: yes
+
+    # --- Tuning wydajności (Intel Atom, 2GB RAM) ---
     num-threads: 1
     edns-buffer-size: 1232
-    so-rcvbuf: 1m
-    so-sndbuf: 1m
+
+    # --- Cache ---
     msg-cache-size: 32m
     rrset-cache-size: 64m
     neg-cache-size: 8m
+
+    # --- Ochrona przed DNS Rebinding ---
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
     private-address: 172.16.0.0/12
     private-address: 10.0.0.0/8
     private-address: fd00::/8
     private-address: fe80::/10
+
+    # --- Kontrola dostępu ---
     access-control: 127.0.0.0/8 allow
 ```
 
@@ -143,6 +161,7 @@ server:
 
 ```conf
 server:
+    # --- Nasłuch i podstawy ---
     verbosity: 0
     interface: 127.0.0.1
     port: 5335
@@ -151,39 +170,64 @@ server:
     do-tcp: yes
     do-ip6: no
     prefer-ip6: no
+
+    # --- Root Hints ---
     root-hints: "/var/lib/unbound/root.hints"
-    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+    # --- Bezpieczeństwo i ukrywanie tożsamości ---
     hide-identity: yes
     hide-version: yes
+
+    # --- Zabezpieczenia DNSSEC ---
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-referral-path: yes
     unwanted-reply-threshold: 10000
     use-caps-for-id: yes
+
+    # --- Prefetching ---
     prefetch: yes
     prefetch-key: yes
+
+    # --- Tuning wydajności (LXC, 1GB RAM) ---
     num-threads: 1
     edns-buffer-size: 1232
-    so-rcvbuf: 1m
-    so-sndbuf: 1m
+
+    # --- Cache (zachowawczy) ---
     msg-cache-size: 16m
     rrset-cache-size: 32m
     neg-cache-size: 4m
+
+    # --- Ochrona przed DNS Rebinding ---
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
     private-address: 172.16.0.0/12
     private-address: 10.0.0.0/8
     private-address: fd00::/8
     private-address: fe80::/10
+
+    # --- Kontrola dostępu ---
     access-control: 127.0.0.0/8 allow
 ```
 
 ## 6. Uruchomienie i weryfikacja
 
+Przed restartem zawsze sprawdź składnię:
+
 ```bash
-unbound-checkconf
-systemctl restart unbound
-systemctl status unbound
+sudo unbound-checkconf
+```
+
+Powinno zwrócić:
+```
+unbound-checkconf: no errors in /etc/unbound/unbound.conf
+```
+
+Zrestartuj Unbound:
+
+```bash
+sudo systemctl restart unbound
+sudo systemctl status unbound
 ```
 
 Test podstawowy:
@@ -195,6 +239,8 @@ Test DNSSEC (flaga `ad` w odpowiedzi = DNSSEC działa):
 ```bash
 dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 ```
+
+> ℹ️ **Znany warning:** `subnetcache: prefetch is set but not working` — można zignorować. Debian nie kompiluje domyślnie modułu subnet cache, `prefetch` działa normalnie.
 
 ## 7. Konfiguracja AdGuard Home
 
@@ -209,7 +255,7 @@ dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 Ręcznie (co kilka miesięcy):
 ```bash
 curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.root
-systemctl restart unbound
+sudo systemctl restart unbound
 ```
 
 Automatycznie przez cron (co kwartał):
@@ -225,8 +271,6 @@ crontab -e
 # 🇬🇧 English
 
 > 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
-
----
 
 > **Environment:** Debian 13.3  
 > **Goal:** Install Unbound as a local DNS resolver behind AdGuard Home  
@@ -271,7 +315,7 @@ systemctl status unbound
 
 ## 3. Root Hints
 
-Root hints is a list of DNS root server addresses. Unbound uses them as the starting point for recursive resolution. The file should be refreshed every few months.
+Root hints is a list of DNS root server addresses. Unbound uses them as the starting point for recursive resolution. Refresh the file every few months.
 
 ```bash
 curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.root
@@ -299,7 +343,7 @@ If it doesn't exist, generate it:
 unbound-anchor -a /var/lib/unbound/root.key
 ```
 
-> ⚠️ Exit code `1` on first run is **normal** — it means the key was freshly downloaded, not updated.
+> ⚠️ Exit code `1` on first run is **normal** — the key was freshly downloaded, not updated.
 
 Set the correct owner:
 
@@ -312,18 +356,23 @@ Expected permissions:
 -rw-r--r-- 1 unbound unbound 1248 ... /var/lib/unbound/root.key
 ```
 
-> ℹ️ Unbound needs **write access** to update the key. If you ever restore the file from a backup, always verify ownership with `chown unbound:unbound`.
+> ℹ️ Unbound needs **write access** to update the key. If you restore from backup, always verify ownership with `chown unbound:unbound`.
 
 ## 5. Configuration
+
+Create the configuration file:
 
 ```bash
 nano /etc/unbound/unbound.conf.d/adguard.conf
 ```
 
+> ⚠️ **Debian 13 note:** Debian automatically creates `/etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf` which already contains the `auto-trust-anchor-file` directive. Do not add it in your own file — it will cause a `trust anchor for '.' presented twice` error and Unbound will refuse to start. Check before restarting: `grep -r "auto-trust-anchor" /etc/unbound/`
+
 ### 🖥️ Wyse (2GB RAM)
 
 ```conf
 server:
+    # --- Listen and basics ---
     verbosity: 0
     interface: 127.0.0.1
     port: 5335
@@ -332,30 +381,43 @@ server:
     do-tcp: yes
     do-ip6: no
     prefer-ip6: no
+
+    # --- Root Hints ---
     root-hints: "/var/lib/unbound/root.hints"
-    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+    # --- Security and identity hiding ---
     hide-identity: yes
     hide-version: yes
+
+    # --- DNSSEC hardening ---
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-referral-path: yes
     unwanted-reply-threshold: 10000
     use-caps-for-id: yes
+
+    # --- Prefetching ---
     prefetch: yes
     prefetch-key: yes
+
+    # --- Performance tuning (Intel Atom, 2GB RAM) ---
     num-threads: 1
     edns-buffer-size: 1232
-    so-rcvbuf: 1m
-    so-sndbuf: 1m
+
+    # --- Cache ---
     msg-cache-size: 32m
     rrset-cache-size: 64m
     neg-cache-size: 8m
+
+    # --- DNS Rebinding protection ---
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
     private-address: 172.16.0.0/12
     private-address: 10.0.0.0/8
     private-address: fd00::/8
     private-address: fe80::/10
+
+    # --- Access control ---
     access-control: 127.0.0.0/8 allow
 ```
 
@@ -363,6 +425,7 @@ server:
 
 ```conf
 server:
+    # --- Listen and basics ---
     verbosity: 0
     interface: 127.0.0.1
     port: 5335
@@ -371,39 +434,64 @@ server:
     do-tcp: yes
     do-ip6: no
     prefer-ip6: no
+
+    # --- Root Hints ---
     root-hints: "/var/lib/unbound/root.hints"
-    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+    # --- Security and identity hiding ---
     hide-identity: yes
     hide-version: yes
+
+    # --- DNSSEC hardening ---
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-referral-path: yes
     unwanted-reply-threshold: 10000
     use-caps-for-id: yes
+
+    # --- Prefetching ---
     prefetch: yes
     prefetch-key: yes
+
+    # --- Performance tuning (LXC, 1GB RAM) ---
     num-threads: 1
     edns-buffer-size: 1232
-    so-rcvbuf: 1m
-    so-sndbuf: 1m
+
+    # --- Cache (conservative) ---
     msg-cache-size: 16m
     rrset-cache-size: 32m
     neg-cache-size: 4m
+
+    # --- DNS Rebinding protection ---
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
     private-address: 172.16.0.0/12
     private-address: 10.0.0.0/8
     private-address: fd00::/8
     private-address: fe80::/10
+
+    # --- Access control ---
     access-control: 127.0.0.0/8 allow
 ```
 
 ## 6. Starting and Verifying
 
+Always check config syntax before restarting:
+
 ```bash
-unbound-checkconf
-systemctl restart unbound
-systemctl status unbound
+sudo unbound-checkconf
+```
+
+Should return:
+```
+unbound-checkconf: no errors in /etc/unbound/unbound.conf
+```
+
+Restart Unbound:
+
+```bash
+sudo systemctl restart unbound
+sudo systemctl status unbound
 ```
 
 Basic test:
@@ -415,6 +503,8 @@ DNSSEC test (`ad` flag in response = DNSSEC working):
 ```bash
 dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 ```
+
+> ℹ️ **Known warning:** `subnetcache: prefetch is set but not working` — can be ignored. Debian does not compile the subnet cache module by default; prefetch works normally.
 
 ## 7. AdGuard Home Configuration
 
@@ -429,7 +519,7 @@ dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 Manually (every few months):
 ```bash
 curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.root
-systemctl restart unbound
+sudo systemctl restart unbound
 ```
 
 Automatically via cron (quarterly):
@@ -445,8 +535,6 @@ crontab -e
 # 🇩🇪 Deutsch
 
 > 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
-
----
 
 > **Umgebung:** Debian 13.3  
 > **Ziel:** Installation von Unbound als lokaler DNS-Resolver hinter AdGuard Home  
@@ -481,7 +569,7 @@ Client → AdGuard Home (Blockierung) → Unbound (127.0.0.1:5335) → Root Serv
 apt update && apt install unbound -y
 ```
 
-Status der Dienst prüfen:
+Status des Dienstes prüfen:
 
 ```bash
 systemctl status unbound
@@ -505,7 +593,7 @@ ls -la /var/lib/unbound/root.hints
 
 ## 4. Root Key (DNSSEC)
 
-Die Datei `root.key` enthält den DNSSEC Trust Anchor. Unbound aktualisiert sie automatisch beim Start, wenn `auto-trust-anchor-file` gesetzt ist.
+Die Datei `root.key` enthält den DNSSEC Trust Anchor. Unbound aktualisiert sie automatisch beim Start wenn `auto-trust-anchor-file` gesetzt ist.
 
 Prüfen ob die Datei bereits existiert:
 
@@ -536,14 +624,19 @@ Erwartete Berechtigungen:
 
 ## 5. Konfiguration
 
+Konfigurationsdatei erstellen:
+
 ```bash
 nano /etc/unbound/unbound.conf.d/adguard.conf
 ```
+
+> ⚠️ **Hinweis für Debian 13:** Debian erstellt automatisch `/etc/unbound/unbound.conf.d/root-auto-trust-anchor-file.conf`, das bereits die Direktive `auto-trust-anchor-file` enthält. Diese darf nicht erneut in der eigenen Konfigurationsdatei gesetzt werden — sonst erscheint der Fehler `trust anchor for '.' presented twice` und Unbound startet nicht. Vor dem Neustart prüfen: `grep -r "auto-trust-anchor" /etc/unbound/`
 
 ### 🖥️ Wyse (2GB RAM)
 
 ```conf
 server:
+    # --- Lauschen und Grundlagen ---
     verbosity: 0
     interface: 127.0.0.1
     port: 5335
@@ -552,30 +645,43 @@ server:
     do-tcp: yes
     do-ip6: no
     prefer-ip6: no
+
+    # --- Root Hints ---
     root-hints: "/var/lib/unbound/root.hints"
-    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+    # --- Sicherheit und Identitätsschutz ---
     hide-identity: yes
     hide-version: yes
+
+    # --- DNSSEC-Härtung ---
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-referral-path: yes
     unwanted-reply-threshold: 10000
     use-caps-for-id: yes
+
+    # --- Prefetching ---
     prefetch: yes
     prefetch-key: yes
+
+    # --- Performance-Tuning (Intel Atom, 2GB RAM) ---
     num-threads: 1
     edns-buffer-size: 1232
-    so-rcvbuf: 1m
-    so-sndbuf: 1m
+
+    # --- Cache ---
     msg-cache-size: 32m
     rrset-cache-size: 64m
     neg-cache-size: 8m
+
+    # --- DNS-Rebinding-Schutz ---
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
     private-address: 172.16.0.0/12
     private-address: 10.0.0.0/8
     private-address: fd00::/8
     private-address: fe80::/10
+
+    # --- Zugriffskontrolle ---
     access-control: 127.0.0.0/8 allow
 ```
 
@@ -583,6 +689,7 @@ server:
 
 ```conf
 server:
+    # --- Lauschen und Grundlagen ---
     verbosity: 0
     interface: 127.0.0.1
     port: 5335
@@ -591,39 +698,64 @@ server:
     do-tcp: yes
     do-ip6: no
     prefer-ip6: no
+
+    # --- Root Hints ---
     root-hints: "/var/lib/unbound/root.hints"
-    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+    # --- Sicherheit und Identitätsschutz ---
     hide-identity: yes
     hide-version: yes
+
+    # --- DNSSEC-Härtung ---
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-referral-path: yes
     unwanted-reply-threshold: 10000
     use-caps-for-id: yes
+
+    # --- Prefetching ---
     prefetch: yes
     prefetch-key: yes
+
+    # --- Performance-Tuning (LXC, 1GB RAM) ---
     num-threads: 1
     edns-buffer-size: 1232
-    so-rcvbuf: 1m
-    so-sndbuf: 1m
+
+    # --- Cache (konservativ) ---
     msg-cache-size: 16m
     rrset-cache-size: 32m
     neg-cache-size: 4m
+
+    # --- DNS-Rebinding-Schutz ---
     private-address: 192.168.0.0/16
     private-address: 169.254.0.0/16
     private-address: 172.16.0.0/12
     private-address: 10.0.0.0/8
     private-address: fd00::/8
     private-address: fe80::/10
+
+    # --- Zugriffskontrolle ---
     access-control: 127.0.0.0/8 allow
 ```
 
 ## 6. Starten und Überprüfen
 
+Vor dem Neustart immer die Konfigurationssyntax prüfen:
+
 ```bash
-unbound-checkconf
-systemctl restart unbound
-systemctl status unbound
+sudo unbound-checkconf
+```
+
+Sollte zurückgeben:
+```
+unbound-checkconf: no errors in /etc/unbound/unbound.conf
+```
+
+Unbound neustarten:
+
+```bash
+sudo systemctl restart unbound
+sudo systemctl status unbound
 ```
 
 Grundlegender Test:
@@ -635,6 +767,8 @@ DNSSEC-Test (`ad`-Flag in der Antwort = DNSSEC funktioniert):
 ```bash
 dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 ```
+
+> ℹ️ **Bekannte Warnung:** `subnetcache: prefetch is set but not working` — kann ignoriert werden. Debian kompiliert das Subnet-Cache-Modul standardmäßig nicht; Prefetch funktioniert normal.
 
 ## 7. AdGuard Home konfigurieren
 
@@ -649,7 +783,7 @@ dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 Manuell (alle paar Monate):
 ```bash
 curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.root
-systemctl restart unbound
+sudo systemctl restart unbound
 ```
 
 Automatisch per Cron (vierteljährlich):
