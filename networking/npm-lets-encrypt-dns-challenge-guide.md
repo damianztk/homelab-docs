@@ -198,4 +198,101 @@ O: Nie. Oznacza to tylko, że certyfikat nie został jeszcze przypisany do żadn
 
 ---
 
-*Dokumentacja oparta na własnej konfiguracji homelabowej: NPM na Proxmox VE 9 (LXC Debian), domena na Cloudflare.*
+
+## 🇩🇪 Deutsch
+
+### Was ist der DNS-Challenge und warum verwenden?
+
+Let's Encrypt bietet zwei Methoden zur Verifizierung der Domain-Inhaberschaft:
+
+- **HTTP-Challenge** — Let's Encrypt sendet eine Anfrage an deinen Server auf Port 80. Erfordert öffentlichen Zugang zum Server.
+- **DNS-Challenge** — Let's Encrypt verlangt das Hinzufügen eines bestimmten TXT-Eintrags in die DNS-Zone. **Keine offenen Ports erforderlich** — funktioniert hinter NAT, VPN oder einer geschlossenen Firewall.
+
+In einem Homelab, in dem Dienste nicht öffentlich erreichbar sind, ist der DNS-Challenge die richtige Wahl.
+
+---
+
+### Voraussetzungen
+
+- Domain verwaltet über **Cloudflare** (Nameserver zeigen auf Cloudflare)
+- Laufender und erreichbarer **NPM (Nginx Proxy Manager)**
+- Cloudflare-Konto mit API-Zugang
+
+> ⚠️ Wenn die Domain bei einem anderen Anbieter registriert ist und dessen eigene Nameserver verwendet, hat die Cloudflare API keine Kontrolle über die DNS-Einträge und gibt einen Fehler zurück. Zuerst muss die DNS-Zone zu Cloudflare migriert werden (siehe FAQ unten).
+
+---
+
+### Schritt 1 — Cloudflare API-Token generieren
+
+1. Bei [Cloudflare Dashboard](https://dash.cloudflare.com) einloggen
+2. Zu **My Profile → API Tokens → Create Token** navigieren
+3. Die Vorlage **"Edit zone DNS"** verwenden
+4. Unter **Zone Resources** auswählen:
+   - Include → Specific zone → *deine Domain*
+5. **Client IP Address Filtering** leer lassen (die IP von NPM kann sich bei der Erneuerung ändern)
+6. **TTL** leer lassen (Token muss für automatische 90-Tage-Erneuerungen gültig bleiben)
+7. Auf **Continue to summary → Create Token** klicken
+8. **Token sofort kopieren** — er wird nicht erneut angezeigt
+
+---
+
+### Schritt 2 — Zertifikat in NPM anfordern
+
+1. NPM öffnen → **SSL Certificates → Add Certificate**
+2. **Let's Encrypt** auswählen
+3. Ausfüllen:
+   - **Domain Names**: deine Domain (z.B. `example.de` und/oder `*.example.de` für Wildcard)
+   - **Email**: deine E-Mail-Adresse
+   - **DNS Challenge**: aktivieren ✅
+   - **DNS Provider**: Cloudflare
+   - **Credentials**: API-Token einfügen
+4. Let's Encrypt Nutzungsbedingungen akzeptieren
+5. Auf **Save** klicken
+
+NPM fügt automatisch den `_acme-challenge` TXT-Eintrag bei Cloudflare hinzu, wartet auf die Propagierung, verifiziert ihn und stellt das Zertifikat aus.
+
+---
+
+### Schritt 3 — Zertifikat einem Proxy Host zuweisen
+
+1. Zu **Hosts → Proxy Hosts** navigieren
+2. Einen Host bearbeiten (oder erstellen)
+3. Den **SSL**-Tab öffnen
+4. Das neu erstellte Zertifikat aus der Liste auswählen
+5. Speichern
+
+---
+
+### Erneuerung
+
+Zertifikate sind **90 Tage** gültig. NPM erneuert sie automatisch vor dem Ablauf — keine manuelle Aktion erforderlich, solange:
+- Der Cloudflare API-Token gültig ist (kein TTL gesetzt → kein Ablauf)
+- NPM zum Zeitpunkt der Erneuerung läuft
+
+---
+
+### FAQ
+
+**F: Ich habe die Cloudflare API versucht, aber NPM gibt "Internal Error" zurück.**  
+A: Höchstwahrscheinlich zeigen die Nameserver der Domain nicht auf Cloudflare. Die Cloudflare API kann DNS-Einträge nur für Zonen verwalten, bei denen Cloudflare der autoritative Nameserver ist. Im Cloudflare Dashboard prüfen, ob der Domain-Status **Active** ist.
+
+**F: Meine Domain ist bei einem Anbieter registriert, verwendet aber Nameserver eines anderen Anbieters. Was nun?**  
+A: Der DNS-Challenge verwendet denjenigen, der die Nameserver kontrolliert — nicht den Registrar. Wenn die Nameserver bei einem Anbieter mit eigenem Panel ohne öffentliche API liegen, gibt es zwei Optionen:
+- DNS-Zone zu Cloudflare migrieren (Nameserver auf Cloudflare-NS ändern)
+- Manuellen DNS-Challenge verwenden (`certbot --manual`) — erfordert jedoch manuelle Erneuerung alle 90 Tage
+
+**F: Zerstört die Migration der DNS zu Cloudflare meine E-Mails?**  
+A: Nicht, wenn es korrekt gemacht wird. Vor dem Ändern der Nameserver prüfen, ob Cloudflare alle DNS-Einträge importiert hat — insbesondere MX- und SPF-Einträge (TXT). Der automatische Import von Cloudflare erkennt sie normalerweise alle. Nameserver erst ändern, nachdem alles bestätigt wurde.
+
+**F: Muss ich Ports für den DNS-Challenge öffnen?**  
+A: Nein. Das ist der gesamte Sinn. Der DNS-Challenge kommuniziert über die Cloudflare API, nicht über die Netzwerkverbindung des Servers.
+
+**F: Kann ich ein Wildcard-Zertifikat (*.example.de) verwenden?**  
+A: Ja — Wildcard-Zertifikate sind nur über den DNS-Challenge möglich (nicht über HTTP). Sowohl `example.de` als auch `*.example.de` als Domain-Namen in NPM hinzufügen.
+
+**F: Nach der Erstellung steht beim Zertifikat "Not Used". Ist das ein Problem?**  
+A: Nein. Es bedeutet nur, dass das Zertifikat noch keinem Proxy Host zugewiesen wurde. Im SSL-Tab des Proxy Hosts zuweisen.
+
+---
+
+*Dokumentation basierend auf eigener Homelab-Konfiguration: NPM auf Proxmox VE 9 (LXC Debian), Domain bei Cloudflare.*
