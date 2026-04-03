@@ -97,7 +97,7 @@ Oczekiwane uprawnienia:
 ## 5. Konfiguracja
 
 ```bash
-nano /etc/unbound/unbound.conf.d/local.conf
+nano /etc/unbound/unbound.conf.d/adguard.conf
 ```
 
 ### 🖥️ Wyse (2GB RAM)
@@ -317,7 +317,7 @@ Expected permissions:
 ## 5. Configuration
 
 ```bash
-nano /etc/unbound/unbound.conf.d/local.conf
+nano /etc/unbound/unbound.conf.d/adguard.conf
 ```
 
 ### 🖥️ Wyse (2GB RAM)
@@ -537,7 +537,7 @@ Erwartete Berechtigungen:
 ## 5. Konfiguration
 
 ```bash
-nano /etc/unbound/unbound.conf.d/local.conf
+nano /etc/unbound/unbound.conf.d/adguard.conf
 ```
 
 ### 🖥️ Wyse (2GB RAM)
