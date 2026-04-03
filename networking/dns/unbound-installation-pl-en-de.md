@@ -807,3 +807,10 @@ crontab -e
 ---
 
 *Dokumentacja / Documentation / Dokumentation — kwiecień / April 2026*
+
+---
+
+### Proof of Concept
+
+![Test DNSSEC Dell Wyse](screenshots/unbound-dig-test-dell-wyse.png)
+![Test DNSSEC Proxmox](screenshots/unbound-dig-test-proxmox.png)
