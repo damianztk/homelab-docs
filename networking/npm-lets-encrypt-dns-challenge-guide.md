@@ -1,6 +1,6 @@
 # Let's Encrypt DNS Challenge via Cloudflare in NPM Proxy Manager
 
-> 🇬🇧 English first / 🇵🇱 Polski poniżej
+> 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
 
 ---
 
@@ -104,6 +104,10 @@ A: No. It just means the certificate hasn't been assigned to any proxy host yet.
 
 ## 🇵🇱 Polski
 
+> 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
+
+---
+
 ### Czym jest DNS Challenge i po co go używać?
 
 Let's Encrypt oferuje dwa sposoby weryfikacji własności domeny:
@@ -198,8 +202,13 @@ O: Nie. Oznacza to tylko, że certyfikat nie został jeszcze przypisany do żadn
 
 ---
 
+---
 
 ## 🇩🇪 Deutsch
+
+> 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
+
+---
 
 ### Was ist der DNS-Challenge und warum verwenden?
 
