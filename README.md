@@ -39,7 +39,7 @@ Full hardware and software inventory → [overview.md](infrastructure/overview.m
 
 | Repo | Purpose |
 |------|---------|
-| [homelab](https://gitea.damianzientek.de/damian/homelab) | Infrastructure as Code — Ansible, Terraform |
-| [scripts](https://gitea.damianzientek.de/damian/scripts) | Automation scripts — backups, maintenance |
-| [portfolio](https://gitea.damianzientek.de/damian/portfolio) | Personal portfolio website |
+| [homelab](https://github.com/damianztk/homelab) | Infrastructure as Code — Ansible, Terraform |
+| [scripts](https://github.com/damianztk/scripts) | Automation scripts — backups, maintenance |
+| [portfolio](https://github.com/damianztk/portfolio) | Personal portfolio website |
 
