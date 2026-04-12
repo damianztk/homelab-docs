@@ -64,9 +64,3 @@ To jest moje pierwsze repozytorium na własnym serwerze Gitea!
 
 > [!NOTE]
 > Zmienić plik README!! A info o Gitea do innego pliku!!
-
-### usunięcie no-subscription-message w Proxmox
-
-```bash
-sed -i "s/NotValidSubscription\!/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-```
