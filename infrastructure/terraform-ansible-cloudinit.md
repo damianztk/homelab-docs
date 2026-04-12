@@ -545,9 +545,11 @@ terraform destroy   # zniszcz wszystkie zasoby zdefiniowane w konfiguracji
 ```
 ~/ansible/
 ├── inventory/
-│   └── hosts.yml       # lista zarządzanych hostów
+│   └── hosts.yml          # lista zarządzanych hostów
 └── playbooks/
-    └── setup-base.yml  # playbook bazowej konfiguracji
+    └── setup-base.yml     # playbook bazowej konfiguracji
+    └── install-docker.yml # playbook instalacji Dockera
+    └── run-container.yml  # playbook uruchamiania kontenera (tutaj Nginx)
 ```
 
 ### inventory/hosts.yml
@@ -596,6 +598,119 @@ all:
       hostname:
         name: "{{ inventory_hostname }}"
 ```
+
+### playbooks/install-docker.yml
+
+```yaml
+# ~/ansible/playbooks/install-docker.yml
+---
+- name: Install Docker
+  hosts: proxmox_vms
+  become: true
+
+  vars:
+    docker_user: damian
+
+  tasks:
+
+    - name: Install prerequisite packages
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+        update_cache: true
+
+    - name: Create /etc/apt/keyrings directory
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: "0755"
+
+    - name: Download Docker GPG key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "0644"
+
+    - name: Get dpkg architecture
+      ansible.builtin.command: dpkg --print-architecture
+      register: dpkg_arch
+      changed_when: false
+
+    - name: Add Docker APT repository
+      ansible.builtin.deb822_repository:
+        name: docker
+        types: deb
+        uris: https://download.docker.com/linux/debian
+        suites: "{{ ansible_facts['distribution_release'] }}"
+        components: stable
+        architectures: "{{ dpkg_arch.stdout }}"
+        signed_by: /etc/apt/keyrings/docker.asc
+        state: present
+
+    - name: Install Docker packages
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+
+    - name: Enable and start Docker service
+      ansible.builtin.systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    - name: Add user to docker group
+      ansible.builtin.user:
+        name: "{{ docker_user }}"
+        groups: docker
+        append: true
+
+```
+
+> **Ważne**: Dla **Debian 13** użyto nowszego `deb822_repository`, ponieważ starszy `apt_repository` powodował błąd.
+
+### playbooks/run-container.yml
+
+> **Przed odpaleniem**: Taski wymagają modułów `community.docker`. Przed odpaleniem poniższego skryptu należy je doinstalować:  
+> `ansible-galaxy collection install community.docker`
+
+```yaml
+# ansible/playbooks/run-container.yml
+---
+- name: Run Docker container
+  hosts: proxmox_vms
+  become: true
+
+  vars:
+    container_name: nginx-test
+    container_image: nginx:alpine
+    container_port: 8080
+
+  tasks:
+
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ container_image }}"
+        source: pull
+
+    - name: Run container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ container_image }}"
+        state: started
+        restart_policy: unless-stopped
+        ports:
+          - "{{ container_port }}:80"
+```
+
 
 ### Komendy Ansible
 
