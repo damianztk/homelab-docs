@@ -15,6 +15,7 @@ konfiguracje, instrukcje i notatki diagnostyczne.
 
 ```
 homelab-docs/
+├── cheat-sheets/       # learning help, quick notes   
 ├── infrastructure/
 │   ├── proxmox/        # LXC setup, backups, Proxmox config
 │   ├── dell-wyse-3040/ # AdGuard Home, Unbound, Uptime Kuma
