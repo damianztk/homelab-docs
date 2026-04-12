@@ -5,7 +5,7 @@ To jest moje pierwsze repozytorium na własnym serwerze Gitea!
 ## Konfiguracja Gitea (15.03.2026)
 * **Kontener**: LXC ID 200 (Alpine Linux)
 * **Adres IP**: 10.100.20.200
-* **Hasło roota**: qVV3rTy619
+* **Hasło roota**: (usunąłem hasło dla bezpieczeństwa)
 * **Hasło Gitea / damian**: 5RuDN3#@$l0
 * **Przechowywanie**: Dane zmapowane do `/var/lib/vz/gitea-data` na SSD
 * **Backup**: Automatyczny co noc o 3:30 na dysk HDD
