@@ -2,7 +2,7 @@
 
 > 🇵🇱 [Polski](#-polski) | 🇬🇧 [English](#-english) | 🇩🇪 [Deutsch](#-deutsch)
 
-> [Proof of Concept](#-proof-of-concept)
+> [Proof of Concept](#proof-of-concept)
 
 ---
 
