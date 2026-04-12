@@ -18,12 +18,12 @@ homelab-docs/
 ├── infrastructure/
 │   ├── proxmox/        # LXC setup, backups, Proxmox config
 │   ├── dell-wyse-3040/ # AdGuard Home, Unbound, Uptime Kuma
-│   └── overview.md     # Full hardware & software inventory
+│   ├── overview.md     # Full hardware & software inventory
 │   └── terraform-ansible-cloudinit.md
 ├── networking/
 │   ├── dns/            # AdGuard Home, Unbound, DNS troubleshooting
-│   └── network-topology.md
-│   └── npm-lets-encrypt-dns-challenge-guide.md
+│   ├── network-topology.md
+│   ├── npm-lets-encrypt-dns-challenge-guide.md
 │   └── tp-link-switch-recovery.md
 ├── tailscale/          # Subnet router setup
 ├── screenshots/        # Visual proof of concept, diagrams, future guide helpers
