@@ -1,14 +1,14 @@
 # Backup Scripts — Installation Guide
 
-🌐 Language / Sprache / Język:  
-**[🇬🇧 English](#-english)** · [🇩🇪 Deutsch](#-deutsch) · [🇵🇱 Polski](#-polski)
+🌐 Language / Sprache / Język: 
+[🇬🇧 English](#-english) · [🇩🇪 Deutsch](#-deutsch) · [🇵🇱 Polski](#-polski)
 
 ---
 
 # 🇬🇧 English
 
-🌐 Language / Sprache / Język:
-[🇬🇧 English](#-english) · [🇩🇪 Deutsch](#-deutsch) · [🇵🇱 Polski](#-polski)
+🌐 Language / Sprache / Język:  
+**[🇬🇧 English](#-english)** · [🇩🇪 Deutsch](#-deutsch) · [🇵🇱 Polski](#-polski)
 
 ## Table of Contents
 
