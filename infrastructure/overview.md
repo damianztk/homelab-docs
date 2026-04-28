@@ -1,16 +1,16 @@
-# Homelab — Przegląd Infrastruktury
+# Homelab — Infrastructure Overview
 
 ## Hardware
 
-### Serwery
-| Node | Płyta | CPU | RAM | Storage |
+### Servrs
+| Node | Mainboard | CPU | RAM | Storage |
 |------|-------|-----|-----|---------|
 | Node 1 | Asus Prime B250M-A | i5-7400 | 16GB | 250GB SSD + 1TB HDD + 1TB HDD |
 | Node 2 | ASRock H270M Pro4 | i5-7600K | 32GB | 275GB m.2 SATA + 1TB HDD + 2TB HDD |
 | DELL Wyse 3040 | Terminal | Intel Atom | 2GB | 16GB eMMC |
 
-### Sieć
-| Urządzenie | Rola |
+### Network
+| Device | Role |
 |------------|------|
 | Vodafone Station | ISP Router |
 | Fortigate 60E | Firewall / Router |
@@ -19,8 +19,8 @@
 | FortiAP 231F | AP |
 | FortiAP U323EV-E | AP |
 
-## VLANy
-| VLAN | Nazwa | Sieć |
+## VLANs
+| VLAN | Name | Network |
 |------|-------|------|
 | 10 | HOME_LAN | 10.100.10.0/24 |
 | 20 | SERVER_LAN | 10.100.20.0/24 |
@@ -31,27 +31,30 @@
 | 100 | MEDIA_LAN | 10.100.100.0/24 |
 | 200 | GUEST_WLAN | 10.100.200.0/24 |
 
-> Sprawdzić/poprawić nazwy dokładniej
+> Check/fix names more precisely
 
 ## Software
 ### Node 1 (Proxmox VE 9)
 - Tailscale (LXC) - subnet router Tailnet
-- Adguard Home + Unbound + adguardhome-sync (LXC) - druga Instancja AGH
+- Adguard Home + Unbound + adguardhome-sync (LXC) - sencond Instance of AGH
 - NPM (LXC) — reverse proxy
-- Gitea (LXC) - kontrola wersji, git
-- Kavita (LXC) - cyfrowa Biblioteka
-- Home Assistant (VM) - mózg Smart Home
-...itd.
+- Gitea (LXC) - version control, git
+- Kavita (LXC) - digital eBook library
+- Home Assistant (VM) - brain of Smart Home
+...etc.
+
+### Node 2 (Proxmox VE 9)
+- Jellyfin (LXC) - Media Server
 
 ### Dell Wyse 3040 (Debian 13)
-- Adguard Home - główna instancja AGH, serwer DNS dla sieci
-- Unbound - prywatny resolver DNS z DNSSEC
-- Docker - do uruchomienia dodatkowych lekkich usług
-- Uptime Kuma (Docker Container) - monitoring całej infrastruktury
+- Adguard Home - main AGH Instance, network's DNS server
+- Unbound - private DNS resolver with DNSSEC
+- Docker - used to manage additionary, lighter services
+- Uptime Kuma (Docker Container) - infrastructure monitoring
 
 ---
 
-> Ostatnia aktualizacja: 2026-04-12
+> Last Update: 2026-04-28
 
 > [!NOTE]  
 > **Do dodania:**  
