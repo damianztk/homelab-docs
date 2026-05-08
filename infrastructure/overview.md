@@ -39,12 +39,15 @@
 - Adguard Home + Unbound + adguardhome-sync (LXC) - sencond Instance of AGH
 - NPM (LXC) — reverse proxy
 - Gitea (LXC) - version control, git
-- Kavita (LXC) - digital eBook library
+- Utility apps (LXC) - Docker with lightweight services for everyday use:
+  - Vaultwarden - Password Manager
+  - Kavita - digital eBook library (in deployment)
 - Home Assistant (VM) - brain of Smart Home
 ...etc.
 
 ### Node 2 (Proxmox VE 9)
 - Jellyfin (LXC) - Media Server
+- Frigate (LXC) - NVR for Home Surveillance System with advanced AI Object detection
 
 ### Dell Wyse 3040 (Debian 13)
 - Adguard Home - main AGH Instance, network's DNS server
