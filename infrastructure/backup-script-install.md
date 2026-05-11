@@ -88,7 +88,7 @@ backup.conf
 
 ---
 
-## Proxmox pve1 — proxmox_backup_telegram.sh
+## Proxmox pve1 — proxmox-full-backup-telegram.sh
 
 Runs `vzdump` on all LXC containers and VMs, sends a Telegram report with the log file attached.
 
@@ -107,7 +107,7 @@ bash /usr/local/bin/proxmox_backup_telegram.sh   # test run
 
 ---
 
-## Proxmox pve1 — proxmox_config_backup_v3.sh
+## Proxmox pve1 — proxmox-config-backup-and-pbs-check.sh
 
 Backs up host configuration and LXC bind mount data. Monitors PBS/vzdump job results via the Proxmox API and includes them in the Telegram report.
 
@@ -132,7 +132,7 @@ apt install zstd
 
 ---
 
-## Dell Wyse 3040 — wyse_backup.sh
+## Dell Wyse 3040 — wyse-backup.sh
 
 Packages AGH, Unbound and Docker data, transfers the archive to Proxmox via rsync over SSH.
 
@@ -324,7 +324,7 @@ backup.conf
 
 ---
 
-## Proxmox pve1 — proxmox_backup_telegram.sh {#proxmox-pve1--proxmox_backup_telegramsh-1}
+## Proxmox pve1 — proxmox-full-backup-telegram.sh {#proxmox-pve1--proxmox_backup_telegramsh-1}
 
 Führt `vzdump` für alle LXC-Container und VMs aus, sendet einen Telegram-Bericht mit Logdatei als Anhang.
 
@@ -343,7 +343,7 @@ bash /usr/local/bin/proxmox_backup_telegram.sh   # Testlauf
 
 ---
 
-## Proxmox pve1 — proxmox_config_backup_v3.sh {#proxmox-pve1--proxmox_config_backup_v3sh-1}
+## Proxmox pve1 — proxmox-config-backup-and-pbs-check.sh {#proxmox-pve1--proxmox_config_backup_v3sh-1}
 
 Sichert Host-Konfiguration und LXC-Bind-Mount-Daten. Überwacht PBS/vzdump-Jobs über die Proxmox-API und fügt Ergebnisse in den Telegram-Bericht ein.
 
@@ -368,7 +368,7 @@ apt install zstd
 
 ---
 
-## Dell Wyse 3040 — wyse_backup.sh {#dell-wyse-3040--wyse_backupsh-1}
+## Dell Wyse 3040 — wyse-backup.sh {#dell-wyse-3040--wyse_backupsh-1}
 
 Packt AGH-, Unbound- und Docker-Daten und überträgt das Archiv per rsync über SSH auf Proxmox.
 
@@ -560,7 +560,7 @@ backup.conf
 
 ---
 
-## Proxmox pve1 — proxmox_backup_telegram.sh {#proxmox-pve1--proxmox_backup_telegramsh-2}
+## Proxmox pve1 — proxmox-full-backup-telegram.sh {#proxmox-pve1--proxmox_backup_telegramsh-2}
 
 Wykonuje `vzdump` wszystkich kontenerów LXC i VM, wysyła raport na Telegram z plikiem logu jako załącznikiem.
 
@@ -579,7 +579,7 @@ bash /usr/local/bin/proxmox_backup_telegram.sh   # test ręczny
 
 ---
 
-## Proxmox pve1 — proxmox_config_backup_v3.sh {#proxmox-pve1--proxmox_config_backup_v3sh-2}
+## Proxmox pve1 — proxmox-config-backup-and-pbs-check.sh {#proxmox-pve1--proxmox_config_backup_v3sh-2}
 
 Backupuje konfigurację hosta i dane bind mountów LXC. Monitoruje wyniki zadań PBS/vzdump przez API Proxmoxa i uwzględnia je w raporcie Telegram.
 
@@ -604,7 +604,7 @@ apt install zstd
 
 ---
 
-## Dell Wyse 3040 — wyse_backup.sh {#dell-wyse-3040--wyse_backupsh-2}
+## Dell Wyse 3040 — wyse-backup.sh {#dell-wyse-3040--wyse_backupsh-2}
 
 Pakuje dane AGH, Unbound i Docker, przesyła archiwum przez rsync/SSH na Proxmox.
 
