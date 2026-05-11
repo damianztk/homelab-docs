@@ -14,9 +14,9 @@
 
 - [Architecture](#architecture)
 - [Configuration File](#configuration-file-backupconf)
-- [proxmox_backup_telegram.sh](#proxmox-pve1--proxmox_backup_telegramsh)
-- [proxmox_config_backup_v3.sh](#proxmox-pve1--proxmox_config_backup_v3sh)
-- [wyse_backup.sh](#dell-wyse-3040--wyse_backupsh)
+- [proxmox-full-backup-telegram.sh](#proxmox-pve1--proxmox-full-backup-telegramsh)
+- [proxmox-config-backup-and-pbs-check.sh](#proxmox-pve1--proxmox-config-backup-and-pbs-checksh)
+- [wyse-backup.sh](#dell-wyse-3040--wyse-backupsh)
 - [SSH Key: Wyse → Proxmox](#ssh-key-wyse--proxmox)
 - [Cron](#cron)
 - [Verification](#verification)
@@ -29,11 +29,11 @@
 ```
 Dell Wyse 3040                        Proxmox pve1
 ──────────────────────────            ──────────────────────────────────────
-wyse_backup.sh                        proxmox_backup_telegram.sh
+wyse-backup.sh                        proxmox-full-backup-telegram.sh
   └─ tar: AGH, Unbound, Docker          └─ vzdump: all LXC + VMs
   └─ rsync → pve1:/mnt/hdd-data/       └─ Telegram report + log file
              backups/dell-wyse/
-                                      proxmox_config_backup_v3.sh
+                                      proxmox-config-backup-and-pbs-check.sh
                                         └─ tar: /etc/pve, fstab, interfaces,
                                                /usr/local/bin/
                                         └─ tar: /opt/lxc-data/ (bind mounts)
@@ -43,8 +43,8 @@ wyse_backup.sh                        proxmox_backup_telegram.sh
 
 **Responsibilities:**
 - `vzdump` / PBS — rootfs snapshots of LXC containers and VMs
-- `proxmox_config_backup_v3.sh` — host config + bind mounts (invisible to PBS)
-- `wyse_backup.sh` — Dell Wyse backup transferred to Proxmox via rsync
+- `proxmox-config-backup-and-pbs-check.sh` — host config + bind mounts (invisible to PBS)
+- `wyse-backup.sh` — Dell Wyse backup transferred to Proxmox via rsync
 
 **Why a separate config file?**
 Sensitive data (tokens, IPs, SSH credentials) lives in `/etc/homelab/backup.conf` — outside the repository. Scripts load it via `source`. Only `backup.conf.example` with placeholders is committed to the repo.
@@ -94,8 +94,8 @@ Runs `vzdump` on all LXC containers and VMs, sends a Telegram report with the lo
 
 ```bash
 cp proxmox_backup_telegram.sh /usr/local/bin/
-chmod +x /usr/local/bin/proxmox_backup_telegram.sh
-bash /usr/local/bin/proxmox_backup_telegram.sh   # test run
+chmod +x /usr/local/bin/proxmox-full-backup-telegram.sh
+bash /usr/local/bin/proxmox-full-backup-telegram.sh   # test run
 ```
 
 | Variable | Default | Description |
@@ -112,9 +112,9 @@ bash /usr/local/bin/proxmox_backup_telegram.sh   # test run
 Backs up host configuration and LXC bind mount data. Monitors PBS/vzdump job results via the Proxmox API and includes them in the Telegram report.
 
 ```bash
-cp proxmox_config_backup_v3.sh /usr/local/bin/
-chmod +x /usr/local/bin/proxmox_config_backup_v3.sh
-bash /usr/local/bin/proxmox_config_backup_v3.sh  # test run
+cp proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
+chmod +x /usr/local/bin/proxmox-config-backup-and-pbs-check.sh
+bash /usr/local/bin/proxmox-config-backup-and-pbs-check.sh  # test run
 ```
 
 | Variable | Default | Description |
@@ -143,12 +143,12 @@ apt install zstd rsync
 
 ```bash
 cp wyse_backup.sh /usr/local/bin/
-chmod +x /usr/local/bin/wyse_backup.sh
+chmod +x /usr/local/bin/wyse-backup.sh
 mkdir -p /etc/homelab
 cp backup.conf.example /etc/homelab/backup.conf
 chmod 600 /etc/homelab/backup.conf
 nano /etc/homelab/backup.conf
-bash /usr/local/bin/wyse_backup.sh   # test run
+bash /usr/local/bin/wyse-backup.sh   # test run
 ```
 
 | Variable | Default | Description |
@@ -185,17 +185,17 @@ ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
 
 ```cron
 # vzdump backup — daily at 02:00
-0 2 * * * /usr/local/bin/proxmox_backup_telegram.sh
+0 2 * * * /usr/local/bin/proxmox-full-backup-telegram.sh
 
 # Host config + bind mount backup — daily at 03:00 (after vzdump, avoids I/O contention)
-0 3 * * * /usr/local/bin/proxmox_config_backup_v3.sh
+0 3 * * * /usr/local/bin/proxmox-config-backup-and-pbs-check.sh
 ```
 
 ### Dell Wyse
 
 ```cron
 # Wyse → Proxmox — daily at 04:00
-0 4 * * * /usr/local/bin/wyse_backup.sh
+0 4 * * * /usr/local/bin/wyse-backup.sh
 ```
 
 ---
@@ -250,9 +250,9 @@ mountpoint /mnt/hdd-data && pvesm status
 
 - [Architektur](#architektur)
 - [Konfigurationsdatei](#konfigurationsdatei-backupconf)
-- [proxmox_backup_telegram.sh](#proxmox-pve1--proxmox_backup_telegramsh-1)
-- [proxmox_config_backup_v3.sh](#proxmox-pve1--proxmox_config_backup_v3sh-1)
-- [wyse_backup.sh](#dell-wyse-3040--wyse_backupsh-1)
+- [proxmox-full-backup-telegram.sh](#proxmox-pve1--proxmox-full-backup-telegramsh-1)
+- [proxmox-config-backup-and-pbs-check.sh](#proxmox-pve1--proxmox-config-backup-and-pbs-check-1)
+- [wyse-backup.sh](#dell-wyse-3040--wyse-backupsh-1)
 - [SSH-Schlüssel: Wyse → Proxmox](#ssh-schlüssel-wyse--proxmox)
 - [Cron](#cron-1)
 - [Überprüfung](#überprüfung)
@@ -265,11 +265,11 @@ mountpoint /mnt/hdd-data && pvesm status
 ```
 Dell Wyse 3040                        Proxmox pve1
 ──────────────────────────            ──────────────────────────────────────
-wyse_backup.sh                        proxmox_backup_telegram.sh
+wyse-backup.sh                        proxmox-full-backup-telegram.sh
   └─ tar: AGH, Unbound, Docker          └─ vzdump: alle LXC + VMs
   └─ rsync → pve1:/mnt/hdd-data/       └─ Telegram-Bericht + Logdatei
              backups/dell-wyse/
-                                      proxmox_config_backup_v3.sh
+                                      proxmox-config-backup-and-pbs-check.sh
                                         └─ tar: /etc/pve, fstab, interfaces,
                                                /usr/local/bin/
                                         └─ tar: /opt/lxc-data/ (Bind-Mounts)
@@ -279,8 +279,8 @@ wyse_backup.sh                        proxmox_backup_telegram.sh
 
 **Aufgabenteilung:**
 - `vzdump` / PBS — Rootfs-Snapshots von LXC-Containern und VMs
-- `proxmox_config_backup_v3.sh` — Host-Konfiguration + Bind-Mounts (für PBS unsichtbar)
-- `wyse_backup.sh` — Dell-Wyse-Backup, übertragen per rsync auf Proxmox
+- `proxmox-config-backup-and-pbs-check.sh` — Host-Konfiguration + Bind-Mounts (für PBS unsichtbar)
+- `wyse-backup.sh` — Dell-Wyse-Backup, übertragen per rsync auf Proxmox
 
 **Warum eine separate Konfigurationsdatei?**
 Sensible Daten (Tokens, IPs, SSH-Zugangsdaten) werden in `/etc/homelab/backup.conf` gespeichert — außerhalb des Repositories. Skripte laden diese Datei per `source`. Nur `backup.conf.example` mit Platzhaltern wird ins Repository eingecheckt.
@@ -329,9 +329,9 @@ backup.conf
 Führt `vzdump` für alle LXC-Container und VMs aus, sendet einen Telegram-Bericht mit Logdatei als Anhang.
 
 ```bash
-cp proxmox_backup_telegram.sh /usr/local/bin/
-chmod +x /usr/local/bin/proxmox_backup_telegram.sh
-bash /usr/local/bin/proxmox_backup_telegram.sh   # Testlauf
+cp proxmox-full-backup-telegram.sh /usr/local/bin/
+chmod +x /usr/local/bin/proxmox-full-backup-telegram.sh
+bash /usr/local/bin/proxmox-full-backup-telegram.sh   # Testlauf
 ```
 
 | Variable | Standard | Beschreibung |
@@ -348,9 +348,9 @@ bash /usr/local/bin/proxmox_backup_telegram.sh   # Testlauf
 Sichert Host-Konfiguration und LXC-Bind-Mount-Daten. Überwacht PBS/vzdump-Jobs über die Proxmox-API und fügt Ergebnisse in den Telegram-Bericht ein.
 
 ```bash
-cp proxmox_config_backup_v3.sh /usr/local/bin/
-chmod +x /usr/local/bin/proxmox_config_backup_v3.sh
-bash /usr/local/bin/proxmox_config_backup_v3.sh  # Testlauf
+cp proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
+chmod +x /usr/local/bin/proxmox-config-backup-and-pbs-check.sh
+bash /usr/local/bin/proxmox-config-backup-and-pbs-check.sh  # Testlauf
 ```
 
 | Variable | Standard | Beschreibung |
@@ -379,12 +379,12 @@ apt install zstd rsync
 
 ```bash
 cp wyse_backup.sh /usr/local/bin/
-chmod +x /usr/local/bin/wyse_backup.sh
+chmod +x /usr/local/bin/wyse-backup.sh
 mkdir -p /etc/homelab
 cp backup.conf.example /etc/homelab/backup.conf
 chmod 600 /etc/homelab/backup.conf
 nano /etc/homelab/backup.conf
-bash /usr/local/bin/wyse_backup.sh   # Testlauf
+bash /usr/local/bin/wyse-backup.sh   # Testlauf
 ```
 
 | Variable | Standard | Beschreibung |
@@ -421,17 +421,17 @@ ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
 
 ```cron
 # vzdump-Backup — täglich um 02:00
-0 2 * * * /usr/local/bin/proxmox_backup_telegram.sh
+0 2 * * * /usr/local/bin/proxmox-full-backup-telegram.sh
 
 # Host-Konfiguration + Bind-Mounts — täglich um 03:00 (nach vzdump, kein I/O-Konflikt)
-0 3 * * * /usr/local/bin/proxmox_config_backup_v3.sh
+0 3 * * * /usr/local/bin/proxmox-config-backup-and-pbs-check.sh
 ```
 
 ### Dell Wyse
 
 ```cron
 # Wyse → Proxmox — täglich um 04:00
-0 4 * * * /usr/local/bin/wyse_backup.sh
+0 4 * * * /usr/local/bin/wyse-backup.sh
 ```
 
 ---
@@ -486,9 +486,9 @@ mountpoint /mnt/hdd-data && pvesm status
 
 - [Architektura](#architektura)
 - [Plik konfiguracyjny](#plik-konfiguracyjny-backupconf)
-- [proxmox_backup_telegram.sh](#proxmox-pve1--proxmox_backup_telegramsh-2)
-- [proxmox_config_backup_v3.sh](#proxmox-pve1--proxmox_config_backup_v3sh-2)
-- [wyse_backup.sh](#dell-wyse-3040--wyse_backupsh-2)
+- [proxmox-full-backup-telegram.sh](#proxmox-pve1--proxmox-full-backup-telegramsh-2)
+- [proxmox-config-backup-and-pbs-check.sh](#proxmox-pve1--proxmox-config-backup-and-pbs-check-2)
+- [wyse-backup.sh](#dell-wyse-3040--wyse-backupsh-2)
 - [Klucz SSH: Wyse → Proxmox](#klucz-ssh-wyse--proxmox)
 - [Cron](#cron-2)
 - [Weryfikacja](#weryfikacja)
@@ -501,11 +501,11 @@ mountpoint /mnt/hdd-data && pvesm status
 ```
 Dell Wyse 3040                        Proxmox pve1
 ──────────────────────────            ──────────────────────────────────────
-wyse_backup.sh                        proxmox_backup_telegram.sh
+wyse-backup.sh                        proxmox-full-backup-telegram.sh
   └─ tar: AGH, Unbound, Docker          └─ vzdump: wszystkie LXC + VM
   └─ rsync → pve1:/mnt/hdd-data/       └─ raport Telegram + plik logu
              backups/dell-wyse/
-                                      proxmox_config_backup_v3.sh
+                                      proxmox-config-backup-and-pbs-check.sh
                                         └─ tar: /etc/pve, fstab, interfaces,
                                                /usr/local/bin/
                                         └─ tar: /opt/lxc-data/ (bind mounty)
@@ -515,8 +515,8 @@ wyse_backup.sh                        proxmox_backup_telegram.sh
 
 **Podział odpowiedzialności:**
 - `vzdump` / PBS — snapshoty rootfs kontenerów LXC i VM
-- `proxmox_config_backup_v3.sh` — konfiguracja hosta + bind mounty (niewidoczne dla PBS)
-- `wyse_backup.sh` — backup Dell Wyse przesyłany przez rsync na Proxmox
+- `proxmox-config-backup-and-pbs-check.sh` — konfiguracja hosta + bind mounty (niewidoczne dla PBS)
+- `wyse-backup.sh` — backup Dell Wyse przesyłany przez rsync na Proxmox
 
 **Dlaczego osobny plik konfiguracyjny?**
 Wrażliwe dane (tokeny, IP, dane SSH) żyją w `/etc/homelab/backup.conf` — poza repozytorium. Skrypty wczytują go przez `source`. Do repo trafia tylko `backup.conf.example` z placeholderami.
@@ -560,14 +560,14 @@ backup.conf
 
 ---
 
-## Proxmox pve1 — proxmox-full-backup-telegram.sh {#proxmox-pve1--proxmox_backup_telegramsh-2}
+## Proxmox pve1 — proxmox-full-backup-telegram.sh {#proxmox-pve1--proxmox-full-backup-telegramsh-2}
 
 Wykonuje `vzdump` wszystkich kontenerów LXC i VM, wysyła raport na Telegram z plikiem logu jako załącznikiem.
 
 ```bash
-cp proxmox_backup_telegram.sh /usr/local/bin/
-chmod +x /usr/local/bin/proxmox_backup_telegram.sh
-bash /usr/local/bin/proxmox_backup_telegram.sh   # test ręczny
+cp proxmox-full-backup-telegram.sh /usr/local/bin/
+chmod +x /usr/local/bin/proxmox-full-backup-telegram.sh
+bash /usr/local/bin/proxmox-full-backup-telegram.sh   # test ręczny
 ```
 
 | Zmienna | Domyślna wartość | Opis |
@@ -579,14 +579,14 @@ bash /usr/local/bin/proxmox_backup_telegram.sh   # test ręczny
 
 ---
 
-## Proxmox pve1 — proxmox-config-backup-and-pbs-check.sh {#proxmox-pve1--proxmox_config_backup_v3sh-2}
+## Proxmox pve1 — proxmox-config-backup-and-pbs-check.sh {#proxmox-pve1--proxmox-config-backup-and-pbs-checksh-2}
 
 Backupuje konfigurację hosta i dane bind mountów LXC. Monitoruje wyniki zadań PBS/vzdump przez API Proxmoxa i uwzględnia je w raporcie Telegram.
 
 ```bash
-cp proxmox_config_backup_v3.sh /usr/local/bin/
-chmod +x /usr/local/bin/proxmox_config_backup_v3.sh
-bash /usr/local/bin/proxmox_config_backup_v3.sh  # test ręczny
+cp proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
+chmod +x /usr/local/bin/proxmox-config-backup-and-pbs-check.sh
+bash /usr/local/bin/proxmox-config-backup-and-pbs-check.sh  # test ręczny
 ```
 
 | Zmienna | Domyślna wartość | Opis |
@@ -604,7 +604,7 @@ apt install zstd
 
 ---
 
-## Dell Wyse 3040 — wyse-backup.sh {#dell-wyse-3040--wyse_backupsh-2}
+## Dell Wyse 3040 — wyse-backup.sh {#dell-wyse-3040--wyse-backupsh-2}
 
 Pakuje dane AGH, Unbound i Docker, przesyła archiwum przez rsync/SSH na Proxmox.
 
@@ -615,12 +615,12 @@ apt install zstd rsync
 
 ```bash
 cp wyse_backup.sh /usr/local/bin/
-chmod +x /usr/local/bin/wyse_backup.sh
+chmod +x /usr/local/bin/wyse-backup.sh
 mkdir -p /etc/homelab
 cp backup.conf.example /etc/homelab/backup.conf
 chmod 600 /etc/homelab/backup.conf
 nano /etc/homelab/backup.conf
-bash /usr/local/bin/wyse_backup.sh   # test ręczny
+bash /usr/local/bin/wyse-backup.sh   # test ręczny
 ```
 
 | Zmienna | Domyślna wartość | Opis |
@@ -657,17 +657,17 @@ ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
 
 ```cron
 # Backup VM/LXC (vzdump) — codziennie o 02:00
-0 2 * * * /usr/local/bin/proxmox_backup_telegram.sh
+0 2 * * * /usr/local/bin/proxmox-full-backup-telegram.sh
 
 # Backup konfiguracji + bind mountów — codziennie o 03:00 (po vzdump, bez konfliktu I/O)
-0 3 * * * /usr/local/bin/proxmox_config_backup_v3.sh
+0 3 * * * /usr/local/bin/proxmox-config-backup-and-pbs-check.sh
 ```
 
 ### Dell Wyse
 
 ```cron
 # Backup Wyse → Proxmox — codziennie o 04:00
-0 4 * * * /usr/local/bin/wyse_backup.sh
+0 4 * * * /usr/local/bin/wyse-backup.sh
 ```
 
 ---
