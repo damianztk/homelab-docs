@@ -346,7 +346,7 @@ pvesh get /nodes/pve1/tasks --typefilter vzdump --limit 5 --output-format json
 Dell Wyse 3040                        Proxmox pve1 + pve2
 ──────────────────────────            ──────────────────────────────────────
 wyse-backup.sh                        PBS (Proxmox Backup Server, LXC 900)
-  └─ tar: AGH, Unbound, Docker          └─ inkrementelle Snapshots: alle LXC + VMs
+  └─ tar: AGH, Unbound, Docker         └─ inkrementelle Snapshots: alle LXC + VMs
   └─ rsync → pve1:/mnt/hdd-data/       └─ Deduplizierung, Retention via Datastore
              backups/dell-wyse/        └─ Zeitplan: 03:30 täglich (PVE Datacenter → Backup)
 
@@ -574,7 +574,7 @@ ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
 
 | Uhrzeit | Host | Job |
 |---------|------|-----|
-| 03:30 | pve1 + pve2 | PBS-Backup (alle LXC + VMs) — konfiguriert in PVE Datacenter → Backup |
+| 03:30 | pve1 + pve2 | **PBS-Backup** (alle LXC + VMs) — konfiguriert in PVE Datacenter → Backup |
 | 04:00 | Dell Wyse | wyse-backup.sh → rsync zu pve1 |
 | 04:30 | pve1 | proxmox-config-backup-and-pbs-check.sh |
 | 04:45 | pve2 | proxmox-config-backup-and-pbs-check.sh → rsync zu pve1 |
@@ -657,7 +657,7 @@ pvesh get /nodes/pve1/tasks --typefilter vzdump --limit 5 --output-format json
 Dell Wyse 3040                        Proxmox pve1 + pve2
 ──────────────────────────            ──────────────────────────────────────
 wyse-backup.sh                        PBS (Proxmox Backup Server, LXC 900)
-  └─ tar: AGH, Unbound, Docker          └─ inkrementalne snapshoty: wszystkie LXC + VM
+  └─ tar: AGH, Unbound, Docker         └─ inkrementalne snapshoty: wszystkie LXC + VM
   └─ rsync → pve1:/mnt/hdd-data/       └─ deduplikacja, retencja przez datastore
              backups/dell-wyse/        └─ harmonogram: 03:30 codziennie (PVE Datacenter → Backup)
 
@@ -885,7 +885,7 @@ ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
 
 | Godzina | Host | Zadanie |
 |---------|------|---------|
-| 03:30 | pve1 + pve2 | PBS backup (wszystkie LXC + VM) — skonfigurowany w PVE Datacenter → Backup |
+| 03:30 | pve1 + pve2 | **PBS backup** (wszystkie LXC + VM) — skonfigurowany w PVE Datacenter → Backup |
 | 04:00 | Dell Wyse | wyse-backup.sh → rsync na pve1 |
 | 04:30 | pve1 | proxmox-config-backup-and-pbs-check.sh |
 | 04:45 | pve2 | proxmox-config-backup-and-pbs-check.sh → rsync na pve1 |
