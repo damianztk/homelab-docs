@@ -15,7 +15,7 @@
 **LXC ID:** 300
 **IP:** `10.100.20.30`
 **OS:** Debian 13 (Trixie)
-**RAM:** 4096 MB | **CPU:** 2 cores | **Disk:** 8 GB (local-lvm)
+**RAM:** 4096 MB | **CPU:** 2 cores | **Disk:** 16 GB (local-lvm)
 **Nesting:** enabled (required for Docker)
 
 ---
