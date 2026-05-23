@@ -125,6 +125,25 @@ mosquitto_pub -h 10.100.20.100 -p 1883 -u frigate -P 'PASSWORD' -t test -m hello
 ssh root@10.100.20.32 "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
 ```
 
+### Authentication
+
+Frigate enforces authentication only on port `8971` (HTTPS). Port `5000` is unauthenticated — used by HA integration.
+
+**Config:**
+```yaml
+auth:
+  enabled: true
+  trusted_proxies:
+    - 10.100.20.24/32    # NPM IP
+```
+
+**NPM configuration for `frigate.damianzientek.de`:**
+- Forward scheme: `https`
+- Forward port: `8971`
+- SSL verify: off (Frigate uses self-signed cert)
+
+**Admin password** is stored in `/opt/docker-data/frigate/frigate.db`. Set via UI on first login.
+
 ### Known Issues and Solutions
 
 **Issue:** go2rtc doesn't start RTSP (port 8554 unavailable)
@@ -271,6 +290,25 @@ Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kon
 - Frigate HACS-Integration v5.15.3: URL `http://10.100.20.32:5000`
 
 **Ergebnis in HA:** 8 Geräte, 153 Entitäten — Server, 3 Kameras, 4 Mazda-Zonen als separate Geräte.
+
+### Authentifizierung
+
+Frigate erzwingt Authentifizierung nur auf Port `8971` (HTTPS). Port `5000` ist nicht authentifiziert — wird von der HA-Integration verwendet.
+
+**Konfiguration:**
+```yaml
+auth:
+  enabled: true
+  trusted_proxies:
+    - 10.100.20.24/32    # NPM IP
+```
+
+**NPM-Konfiguration für `frigate.damianzientek.de`:**
+- Forward scheme: `https`
+- Forward port: `8971`
+- SSL verify: off (Frigate verwendet selbstsigniertes Zertifikat)
+
+**Admin-Passwort** wird in `/opt/docker-data/frigate/frigate.db` gespeichert. Beim ersten Login über die UI festlegen.
 
 ### Bekannte Probleme und Lösungen
 
@@ -420,6 +458,25 @@ mosquitto_pub -h 10.100.20.100 -p 1883 -u frigate -P 'HASLO' -t test -m hello -d
 # Logi MQTT w Frigate
 ssh root@10.100.20.32 "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
 ```
+
+### Autentykacja
+
+Frigate wymusza autentykację tylko na porcie `8971` (HTTPS). Port `5000` jest nieuwierzytelniony — używany przez integrację HA.
+
+**Config:**
+```yaml
+auth:
+  enabled: true
+  trusted_proxies:
+    - 10.100.20.24/32    # IP NPM
+```
+
+**Konfiguracja NPM dla `frigate.damianzientek.de`:**
+- Forward scheme: `https`
+- Forward port: `8971`
+- SSL verify: off (Frigate używa self-signed cert)
+
+**Hasło admina** przechowywane w `/opt/docker-data/frigate/frigate.db`. Ustawiane przez UI przy pierwszym logowaniu.
 
 ### Znane problemy i rozwiązania
 
