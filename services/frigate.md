@@ -9,6 +9,7 @@
 ---
 
 <a name="en"></a>
+
 ## 🇬🇧 English
 
 > [English](#en) | [Deutsch](#de) | [Polski](#pl)
@@ -46,6 +47,7 @@ Frigate is a self-hosted NVR (Network Video Recorder) running in a Docker contai
 ### IaC Management
 
 **Terraform** (create/destroy LXC):
+
 ```bash
 cd ~/homelab-iac/terraform/lxc/pve2
 terraform plan
@@ -53,6 +55,7 @@ terraform apply
 ```
 
 **After every terraform apply** — bind mounts and passthrough manually on pve2:
+
 ```bash
 pct stop 320
 pct set 320 --mp0 /opt/lxc-data/frigate-data,mp=/data
@@ -66,12 +69,14 @@ pct start 320
 ```
 
 **Ansible** (configuration and deployment):
+
 ```bash
 cd ~/homelab-iac
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-frigate.yml -l frigate
 ```
 
 **After config changes** — force container restart (Ansible only restarts when docker-compose.yml changes):
+
 ```bash
 ssh root@10.100.20.32 "cd /opt/docker-data && docker compose down && docker compose up -d"
 ```
@@ -83,12 +88,14 @@ Main configuration in `ansible/files/frigate-config.yml.j2`. Camera passwords an
 **go2rtc stream architecture:**
 
 Each camera has two separate named streams in go2rtc:
+
 - `<name>_main` — full resolution, used for `record` and `stream`
 - `<name>_sub` — low resolution, used for `detect` only
 
 This is critical — using a single stream for both roles causes VAAPI context exhaustion and ffmpeg crashes.
 
 **Key settings:**
+
 - go2rtc as RTSP proxy (solves Reolink camera connection limit)
 - `ffmpeg.hwaccel_args: []` — hardware decode explicitly disabled (iGPU shared with Jellyfin; auto-detection would cause context exhaustion with 6 simultaneous ffmpeg processes)
 - CPU detector (`cpu1`, 3 threads) — no Coral TPU
@@ -99,6 +106,7 @@ This is critical — using a single stream for both roles causes VAAPI context e
 - Pre-capture buffer: 25 seconds, post-capture: 10 seconds
 
 **Detection zones (Mazda camera):**
+
 - `parking_til_1`, `parking_til_2` — neighbor's parking spots
 - `parking_motocykl` — motorcycle spot
 - `parking_mazda` — car spot
@@ -109,6 +117,7 @@ This is critical — using a single stream for both roles causes VAAPI context e
 Frigate sends events to Mosquitto broker (HA add-on) via MQTT. Home Assistant receives these events through the MQTT integration and Frigate HACS integration.
 
 **Components:**
+
 - Mosquitto broker: HA add-on, port 1883, user `frigate`
 - MQTT credentials: stored in `ansible/secrets.yml` (`mqtt_username`, `mqtt_password`)
 - HA MQTT integration: configured with same `frigate` credentials
@@ -117,6 +126,7 @@ Frigate sends events to Mosquitto broker (HA add-on) via MQTT. Home Assistant re
 **Result in HA:** 8 devices, 153 entities — server, 3 cameras, 4 Mazda zones as separate devices.
 
 **Troubleshooting MQTT:**
+
 ```bash
 # Test connectivity from Frigate LXC
 mosquitto_pub -h 10.100.20.100 -p 1883 -u frigate -P 'PASSWORD' -t test -m hello -d
@@ -130,6 +140,7 @@ ssh root@10.100.20.32 "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
 Frigate enforces authentication only on port `8971` (HTTPS). Port `5000` is unauthenticated — used by HA integration.
 
 **Config:**
+
 ```yaml
 auth:
   enabled: true
@@ -138,6 +149,7 @@ auth:
 ```
 
 **NPM configuration for `frigate.damianzientek.de`:**
+
 - Forward scheme: `https`
 - Forward port: `8971`
 - SSL verify: off (Frigate uses self-signed cert)
@@ -186,6 +198,7 @@ auth:
 ---
 
 <a name="de"></a>
+
 ## 🇩🇪 Deutsch
 
 > [English](#en) | [Deutsch](#de) | [Polski](#pl)
@@ -223,6 +236,7 @@ Frigate ist ein self-hosted NVR (Network Video Recorder), der in einem Docker-Co
 ### IaC-Verwaltung
 
 **Terraform** (LXC erstellen/löschen):
+
 ```bash
 cd ~/homelab-iac/terraform/lxc/pve2
 terraform plan
@@ -230,6 +244,7 @@ terraform apply
 ```
 
 **Nach jedem terraform apply** — Bind Mounts und Passthrough manuell auf pve2:
+
 ```bash
 pct stop 320
 pct set 320 --mp0 /opt/lxc-data/frigate-data,mp=/data
@@ -243,12 +258,14 @@ pct start 320
 ```
 
 **Ansible** (Konfiguration und Deployment):
+
 ```bash
 cd ~/homelab-iac
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-frigate.yml -l frigate
 ```
 
 **Nach Konfigurationsänderungen** — Container-Neustart erzwingen:
+
 ```bash
 ssh root@10.100.20.32 "cd /opt/docker-data && docker compose down && docker compose up -d"
 ```
@@ -260,12 +277,14 @@ Hauptkonfiguration in `ansible/files/frigate-config.yml.j2`. Kamerapasswörter u
 **go2rtc Stream-Architektur:**
 
 Jede Kamera hat zwei separate benannte Streams in go2rtc:
+
 - `<name>_main` — volle Auflösung, für `record` und `stream`
 - `<name>_sub` — niedrige Auflösung, nur für `detect`
 
 Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kontexterschöpfung und ffmpeg-Abstürzen.
 
 **Wichtige Einstellungen:**
+
 - go2rtc als RTSP-Proxy (löst das Verbindungslimit der Reolink-Kameras)
 - `ffmpeg.hwaccel_args: []` — Hardware-Dekodierung explizit deaktiviert (iGPU wird mit Jellyfin geteilt)
 - CPU-Detektor (`cpu1`, 3 Threads) — kein Coral TPU
@@ -276,6 +295,7 @@ Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kon
 - Pre-Capture-Puffer: 25 Sekunden, Post-Capture: 10 Sekunden
 
 **Erkennungszonen (Mazda-Kamera):**
+
 - `parking_til_1`, `parking_til_2` — Parkplätze des Nachbarn
 - `parking_motocykl` — Motorradstellplatz
 - `parking_mazda` — Autostellplatz
@@ -284,6 +304,7 @@ Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kon
 ### MQTT-Integration
 
 **Komponenten:**
+
 - Mosquitto-Broker: HA Add-on, Port 1883, Benutzer `frigate`
 - MQTT-Zugangsdaten: in `ansible/secrets.yml` (`mqtt_username`, `mqtt_password`)
 - HA MQTT-Integration: mit denselben `frigate`-Zugangsdaten konfiguriert
@@ -296,6 +317,7 @@ Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kon
 Frigate erzwingt Authentifizierung nur auf Port `8971` (HTTPS). Port `5000` ist nicht authentifiziert — wird von der HA-Integration verwendet.
 
 **Konfiguration:**
+
 ```yaml
 auth:
   enabled: true
@@ -304,6 +326,7 @@ auth:
 ```
 
 **NPM-Konfiguration für `frigate.damianzientek.de`:**
+
 - Forward scheme: `https`
 - Forward port: `8971`
 - SSL verify: off (Frigate verwendet selbstsigniertes Zertifikat)
@@ -343,6 +366,7 @@ auth:
 ---
 
 <a name="pl"></a>
+
 ## 🇵🇱 Polski
 
 > [English](#en) | [Deutsch](#de) | [Polski](#pl)
@@ -380,6 +404,7 @@ Frigate to self-hosted NVR (Network Video Recorder) działający w kontenerze Do
 ### Zarządzanie IaC
 
 **Terraform** (tworzenie/usuwanie LXC):
+
 ```bash
 cd ~/homelab-iac/terraform/lxc/pve2
 terraform plan
@@ -387,6 +412,7 @@ terraform apply
 ```
 
 **Po każdym terraform apply** — bind mounty i passthrough ręcznie na pve2:
+
 ```bash
 pct stop 320
 pct set 320 --mp0 /opt/lxc-data/frigate-data,mp=/data
@@ -400,12 +426,14 @@ pct start 320
 ```
 
 **Ansible** (konfiguracja i deploy):
+
 ```bash
 cd ~/homelab-iac
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-frigate.yml -l frigate
 ```
 
 **Po zmianach w configu** — wymuś restart kontenera (Ansible restartuje tylko gdy zmienia się docker-compose.yml):
+
 ```bash
 ssh root@10.100.20.32 "cd /opt/docker-data && docker compose down && docker compose up -d"
 ```
@@ -417,12 +445,14 @@ Główna konfiguracja w `ansible/files/frigate-config.yml.j2`. Hasła kamer i cr
 **Architektura streamów go2rtc:**
 
 Każda kamera ma dwa osobne strumienie w go2rtc:
+
 - `<nazwa>_main` — pełna rozdzielczość, dla `record` i `stream`
 - `<nazwa>_sub` — niska rozdzielczość, wyłącznie dla `detect`
 
 To jest krytyczne — użycie jednego strumienia dla obu ról powoduje wyczerpanie kontekstów VAAPI i crashe ffmpeg.
 
 **Kluczowe ustawienia:**
+
 - go2rtc jako RTSP proxy (rozwiązuje limit połączeń kamer Reolink)
 - `ffmpeg.hwaccel_args: []` — hardware decode jawnie wyłączony (iGPU współdzielone z Jellyfinem; auto-detekcja przy 6 procesach ffmpeg wyczerpuje konteksty iGPU)
 - Detektor CPU (`cpu1`, 3 wątki) — brak Coral TPU
@@ -433,6 +463,7 @@ To jest krytyczne — użycie jednego strumienia dla obu ról powoduje wyczerpan
 - Pre-capture buffer: 25 sekund, post-capture: 10 sekund
 
 **Strefy detekcji (kamera Mazda):**
+
 - `parking_til_1`, `parking_til_2` — miejsca parkingowe sąsiada
 - `parking_motocykl` — miejsce motocykla
 - `parking_mazda` — miejsce samochodu
@@ -443,6 +474,7 @@ To jest krytyczne — użycie jednego strumienia dla obu ról powoduje wyczerpan
 Frigate wysyła zdarzenia do Mosquitto brokera (HA add-on) przez MQTT. Home Assistant odbiera te zdarzenia przez integrację MQTT i integrację Frigate (HACS).
 
 **Komponenty:**
+
 - Mosquitto broker: HA add-on, port 1883, user `frigate`
 - Credentials MQTT: w `ansible/secrets.yml` (`mqtt_username`, `mqtt_password`)
 - Integracja MQTT w HA: skonfigurowana z tymi samymi credentials `frigate`
@@ -451,6 +483,7 @@ Frigate wysyła zdarzenia do Mosquitto brokera (HA add-on) przez MQTT. Home Assi
 **Efekt w HA:** 8 urządzeń, 153 encje — serwer, 3 kamery, 4 strefy Mazda jako osobne urządzenia.
 
 **Diagnostyka MQTT:**
+
 ```bash
 # Test połączenia z LXC Frigate
 mosquitto_pub -h 10.100.20.100 -p 1883 -u frigate -P 'HASLO' -t test -m hello -d
@@ -464,6 +497,7 @@ ssh root@10.100.20.32 "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
 Frigate wymusza autentykację tylko na porcie `8971` (HTTPS). Port `5000` jest nieuwierzytelniony — używany przez integrację HA.
 
 **Config:**
+
 ```yaml
 auth:
   enabled: true
@@ -472,6 +506,7 @@ auth:
 ```
 
 **Konfiguracja NPM dla `frigate.damianzientek.de`:**
+
 - Forward scheme: `https`
 - Forward port: `8971`
 - SSL verify: off (Frigate używa self-signed cert)
