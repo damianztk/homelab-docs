@@ -356,7 +356,7 @@ W tym LXC działają dwa niezależne projekty Docker Compose.
 #### Stack: utility-apps (`/opt/docker-data/docker-compose.yml`)
 
 | Usługa | Port (host→kontener) | URL | Uwagi |
-| ------ | --------------------- | ----- | ------- |
+|--------|---------------------|-----|-------|
 | Vaultwarden | 8080→80 | https://vault.damianzientek.de | Menedżer haseł |
 | Kavita | 5000→5000 | https://kavita.damianzientek.de | Biblioteka e-booków (zmigrowana z osobnego LXC) |
 | Actual Budget | 5006→5006 | https://budzet.damianzientek.de | Budżet domowy |
@@ -549,4 +549,4 @@ Moduł Ansible może zgłaszać błędy w trybie `--check` których nie ma w rze
 
 ---
 
-*Ostatnia aktualizacja: 2026-05 | Sesja: utility-apps full stack deployment*
+*Ostatnia aktualizacja: 2026-05-30 | Sesja: utility-apps full stack deployment*
