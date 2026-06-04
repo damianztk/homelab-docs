@@ -6,6 +6,7 @@
 ---
 
 <a name="english"></a>
+
 ## 🇬🇧 English
 
 [🇩🇪 Deutsch](#deutsch) | [🇵🇱 Polski](#polski)
@@ -64,7 +65,7 @@ kubectl get nodes
 ### 2. Core kubectl Commands
 
 | Command | Description |
-|---------|-------------|
+| --------- | ------------- |
 | `kubectl get nodes` | List cluster nodes with status |
 | `kubectl get pods -A` | List all pods across all namespaces |
 | `kubectl get pods -n <ns>` | List pods in a specific namespace |
@@ -82,6 +83,7 @@ kubectl get nodes
 | `kubectl port-forward svc/<name> <local>:<remote> -n <ns>` | Temporary port tunnel for debugging |
 
 **Useful flags:**
+
 - `-n <namespace>` — target a specific namespace
 - `-A` — all namespaces
 - `-o yaml` — output full resource definition as YAML
@@ -119,6 +121,7 @@ kubectl delete namespace portfolio   # deletes ALL resources inside
 ```
 
 Default namespaces in k3s:
+
 - `default` — where resources land if no namespace is specified
 - `kube-system` — k3s system components (CoreDNS, Traefik, etc.)
 - `kube-public`, `kube-node-lease` — internal Kubernetes use
@@ -170,6 +173,7 @@ spec:
 ```
 
 Service types:
+
 - `ClusterIP` — internal cluster access only (default, recommended with Ingress)
 - `NodePort` — exposes port directly on VM — avoid in production
 - `LoadBalancer` — for cloud providers — not used in homelab
@@ -382,6 +386,7 @@ Prometheus and Alertmanager data sources are pre-configured automatically by the
 #### `kubectl` connection refused
 
 kubeconfig still points to `127.0.0.1`:
+
 ```bash
 sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
 ```
@@ -389,6 +394,7 @@ sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
 #### Pod stuck in `Pending`
 
 Usually insufficient resources. Check:
+
 ```bash
 kubectl describe pod <name> -n <namespace>
 # Look for "Insufficient memory" or "Insufficient cpu" in Events
@@ -397,6 +403,7 @@ kubectl describe pod <name> -n <namespace>
 #### Pod stuck in `2/3` or `CrashLoopBackOff`
 
 Check logs:
+
 ```bash
 kubectl logs <pod> -n <namespace> --all-containers
 ```
@@ -404,6 +411,7 @@ kubectl logs <pod> -n <namespace> --all-containers
 #### Grafana `context deadline exceeded` / handler timeout
 
 Grafana 13 unified storage requires adequate CPU. Increase limits in `monitoring-values.yml`:
+
 ```yaml
 grafana:
   resources:
@@ -411,11 +419,13 @@ grafana:
       cpu: 500m      # was 200m
       memory: 512Mi  # was 256Mi
 ```
+
 Then: `helm upgrade monitoring prometheus-community/kube-prometheus-stack --namespace monitoring -f k8s/monitoring-values.yml`
 
 #### `OOMKilled` — pod killed by out-of-memory
 
 VM ran out of memory. Check real usage:
+
 ```bash
 ssh k3s "free -h"
 # "available" column shows actual free memory
@@ -425,6 +435,7 @@ ssh k3s "free -h"
 #### `502 Bad Gateway` from NPM
 
 Port binding issue or Traefik not routing. Verify Ingress exists:
+
 ```bash
 kubectl get ingress -A
 ```
@@ -436,6 +447,7 @@ Cosmetic — Grafana tries to fetch optional plugins from grafana.com on startup
 ---
 
 <a name="deutsch"></a>
+
 ## 🇩🇪 Deutsch
 
 [🇬🇧 English](#english) | [🇵🇱 Polski](#polski)
@@ -492,7 +504,7 @@ kubectl get nodes
 ### 2. Wichtige kubectl-Befehle
 
 | Befehl | Beschreibung |
-|--------|--------------|
+| -------- | -------------- |
 | `kubectl get nodes` | Cluster-Knoten mit Status auflisten |
 | `kubectl get pods -A` | Alle Pods in allen Namespaces |
 | `kubectl get pods -n <ns>` | Pods in einem bestimmten Namespace |
@@ -529,6 +541,7 @@ Deklariert den gewünschten Zustand: „Ich möchte 1 Replik von nginx laufend h
 Gibt Pods eine stabile Netzwerkadresse. Pods sind ephemer — ihre IPs ändern sich beim Neustart. Ein Service hat eine feste ClusterIP und einen DNS-Namen.
 
 Service-Typen:
+
 - `ClusterIP` — nur interner Cluster-Zugriff (Standard, empfohlen mit Ingress)
 - `NodePort` — exponiert Port direkt auf der VM — in Produktion vermeiden
 - `LoadBalancer` — für Cloud-Anbieter — im Homelab nicht verwendet
@@ -629,6 +642,7 @@ helm install monitoring prometheus-community/kube-prometheus-stack \
 #### Grafana `context deadline exceeded`
 
 CPU-Limit zu niedrig für Grafana 13. In `monitoring-values.yml` erhöhen:
+
 ```yaml
 grafana:
   resources:
@@ -636,11 +650,13 @@ grafana:
       cpu: 500m
       memory: 512Mi
 ```
+
 Dann: `helm upgrade monitoring prometheus-community/kube-prometheus-stack --namespace monitoring -f k8s/monitoring-values.yml`
 
 #### `OOMKilled` — Pod durch Speichermangel beendet
 
 Tatsächlichen Speicher prüfen:
+
 ```bash
 ssh k3s "free -h"
 # Proxmox-UI zeigt used+cache — irreführend
@@ -656,6 +672,7 @@ kubectl describe pod <name> -n <namespace>
 ---
 
 <a name="polski"></a>
+
 ## 🇵🇱 Polski
 
 [🇬🇧 English](#english) | [🇩🇪 Deutsch](#deutsch)
@@ -714,7 +731,7 @@ kubectl get nodes
 ### 2. Podstawowe komendy kubectl
 
 | Komenda | Opis |
-|---------|------|
+| --------- | ------ |
 | `kubectl get nodes` | Lista węzłów klastra ze statusem |
 | `kubectl get pods -A` | Lista wszystkich podów we wszystkich namespace'ach |
 | `kubectl get pods -n <ns>` | Pody w konkretnym namespace |
@@ -731,6 +748,7 @@ kubectl get nodes
 | `kubectl port-forward svc/<name> <local>:<remote> -n <ns>` | Tymczasowy tunel portów do debugowania |
 
 **Przydatne flagi:**
+
 - `-n <namespace>` — wskaż konkretny namespace
 - `-A` — wszystkie namespace'y
 - `-o yaml` — pełna definicja zasobu jako YAML
@@ -759,6 +777,7 @@ kubectl delete namespace portfolio   # usuwa WSZYSTKIE zasoby w środku
 ```
 
 Domyślne namespace'y w k3s:
+
 - `default` — tu trafiają zasoby gdy nie podasz namespace'u
 - `kube-system` — komponenty systemowe k3s (CoreDNS, Traefik itd.)
 - `kube-public`, `kube-node-lease` — wewnętrzne użycie Kubernetes
@@ -810,6 +829,7 @@ spec:
 ```
 
 Typy Service:
+
 - `ClusterIP` — tylko dostęp wewnątrz klastra (domyślny, zalecany z Ingressem)
 - `NodePort` — wystawia port bezpośrednio na VM — unikać w produkcji
 - `LoadBalancer` — dla chmury — nie używamy w homelabie
@@ -1008,6 +1028,7 @@ Prometheus i Alertmanager są automatycznie skonfigurowane jako data sources prz
 #### kubectl — connection refused
 
 kubeconfig nadal wskazuje na `127.0.0.1`:
+
 ```bash
 sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
 ```
@@ -1015,6 +1036,7 @@ sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
 #### Pod utknął w `Pending`
 
 Zwykle niewystarczające zasoby. Sprawdź:
+
 ```bash
 kubectl describe pod <name> -n <namespace>
 # Szukaj "Insufficient memory" lub "Insufficient cpu" w sekcji Events
@@ -1023,6 +1045,7 @@ kubectl describe pod <name> -n <namespace>
 #### Pod utknął w `2/3` lub `CrashLoopBackOff`
 
 Sprawdź logi:
+
 ```bash
 kubectl logs <pod> -n <namespace> --all-containers
 ```
@@ -1030,6 +1053,7 @@ kubectl logs <pod> -n <namespace> --all-containers
 #### Grafana `context deadline exceeded` / handler timeout
 
 Grafana 13 unified storage wymaga odpowiedniego CPU. Zwiększ limity w `monitoring-values.yml`:
+
 ```yaml
 grafana:
   resources:
@@ -1037,11 +1061,13 @@ grafana:
       cpu: 500m      # było 200m
       memory: 512Mi  # było 256Mi
 ```
+
 Następnie: `helm upgrade monitoring prometheus-community/kube-prometheus-stack --namespace monitoring -f k8s/monitoring-values.yml`
 
 #### `OOMKilled` — pod zabity przez brak pamięci
 
 VM skończyła pamięć. Sprawdź rzeczywiste zużycie:
+
 ```bash
 ssh k3s "free -h"
 # Kolumna "available" pokazuje faktycznie wolną pamięć
@@ -1053,6 +1079,7 @@ Proxmox pokazuje `used + buff/cache` jako zajęte. Linux agresywnie cachuje pami
 #### `502 Bad Gateway` z NPM
 
 Sprawdź czy Ingress istnieje:
+
 ```bash
 kubectl get ingress -A
 ```

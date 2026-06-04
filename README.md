@@ -38,8 +38,7 @@ Full hardware and software inventory → [overview.md](infrastructure/overview.m
 ## Related repositories
 
 | Repo | Purpose |
-|------|---------|
-| [homelab](https://github.com/damianztk/homelab) | Infrastructure as Code — Ansible, Terraform |
-| [scripts](https://github.com/damianztk/scripts) | Automation scripts — backups, maintenance |
-| [portfolio](https://github.com/damianztk/portfolio) | Personal portfolio website |
-
+| ---- | ------- |
+| `homelab-iac` | Infrastructure as Code - Ansible, Terraform (private) |
+| [scripts](https://github.com/damianztk/scripts) | Automation scripts - backups, maintenance |
+| [portfolio](https://github.com/damianztk/portfolio) | Personal portfolio website (not yet ready) |
