@@ -1,6 +1,5 @@
 # Homelab — Network Topology (Mermaid)
 
-
 ## Topologia fizyczna + DNS flow + IaC pipeline
 
 ```mermaid
