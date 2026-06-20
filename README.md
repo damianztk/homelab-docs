@@ -20,6 +20,7 @@ Homelab-Infrastruktur — Konfigurationen, Anleitungen und Notizen.
 konfiguracje, instrukcje i notatki diagnostyczne.
 </div>
 <!-- markdownlint-enable MD033 -->
+
 ---
 
 ## Structure
