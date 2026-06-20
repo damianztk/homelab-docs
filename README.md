@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD033 -->
 <div align="center">
 
-# Homelab
+# Homelab-docs
 
 ![Proxmox](https://img.shields.io/badge/Proxmox-VE_9-E57000?style=flat-square&logo=proxmox&logoColor=white) ![Fortigate](https://img.shields.io/badge/Fortinet-Fortigate_60E-EE3124?style=flat-square&logo=fortinet&logoColor=white) ![Cloudflare](https://img.shields.io/badge/Cloudflare-Tunnel-F38020?style=flat-square&logo=cloudflare&logoColor=white)
 
