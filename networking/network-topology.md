@@ -13,12 +13,12 @@ flowchart TD
     FGT["🛡️ Fortigate 60E\nFirewall / Router / VLAN"]
     ISP_RT --> FGT
 
-    NETGEAR["🔀 Netgear GS308E\nVLAN10 · VLAN100"]
-    TPLINK["🔀 TP-Link TL-SG108PE\nVLAN20 · VLAN90 · PoE"]
-    FGT -- "P1 VLAN10·100" --> NETGEAR
-    FGT -- "P2 VLAN20·90" --> TPLINK
+    NETGEAR["🔀 Netgear GS308E\nVLAN10 · VLAN"]
+    TPLINK["🔀 TP-Link TL-SG108PE\nVLAN20 · VLAN · PoE"]
+    FGT -- "P1 VLAN" --> NETGEAR
+    FGT -- "P2 VLAN" --> TPLINK
 
-    WYSE["💻 DELL Wyse 3040\nDebian 13 · 10.100.30.2\nCorosync QDevice"]
+    WYSE["💻 DELL Wyse 3040\nDebian 13 · \nCorosync QDevice"]
     AGH1["🛡️ AdGuard Home\nGłówna instancja"]
     UB1["🔍 Unbound\nResolver"]
     KUMA["📊 Uptime Kuma"]
@@ -26,21 +26,21 @@ flowchart TD
     WYSE --> AGH1 & UB1 & KUMA
     AGH1 --> UB1
 
-    AP1["📡 FortiAP 231F\nIndoor · VLAN40·50·90"]
-    AP2["📡 FortiAP U323EV-E\nOutdoor · VLAN40·50·90"]
+    AP1["📡 FortiAP 231F\nIndoor · VLAN"]
+    AP2["📡 FortiAP U323EV-E\nOutdoor · VLAN"]
     FGT -- "P7 PoE" --> AP1
     TPLINK -- "P4 PoE" --> AP2
 
-    PC["🖥️ PC · Win11 + WSL\nVLAN10 HOME"]
+    PC["🖥️ PC · Win11 + WSL\nVLAN HOME"]
     LAPTOP["💻 Laptop · Debian 13\nWLAN HOME"]
-    SAT["📺 Dekoder SAT\nVLAN100"]
-    PS5["🎮 PS5 · VLAN100"]
+    SAT["📺 Dekoder SAT\nVLAN"]
+    PS5["🎮 PS5 · VLAN"]
     NETGEAR --> PC & SAT & PS5
     AP1 -. "WiFi VLAN40" .-> LAPTOP
 
-    CAM1["📷 Reolink RLC-510A\nKamera 1 · VLAN90"]
-    CAM2["📷 Reolink RLC-510A\nKamera 2 · VLAN90"]
-    SHELLY["🔌 Shelly IoT\nPro 3EM · 1PM · VLAN90"]
+    CAM1["📷 Reolink RLC-510A\nKamera 1 · VLAN"]
+    CAM2["📷 Reolink RLC-510A\nKamera 2 · VLAN"]
+    SHELLY["🔌 Shelly IoT\nPro 3EM · 1PM · VLAN"]
     PV["☀️ Balkonkraftwerk\n2×430W + 800W"]
     TPLINK -- "P1 PoE" --> CAM1
     TPLINK -- "P2 PoE" --> CAM2
@@ -49,8 +49,8 @@ flowchart TD
 
     PVE1["⚙️ pve1 · 10.100.20.10\ni5-7400 · 16GB"]
     PVE2["⚙️ pve2 · 10.100.20.11\ni5-7600K · 32GB"]
-    TPLINK -- "P7 VLAN20" --> PVE1
-    TPLINK -- "P6 VLAN20" --> PVE2
+    TPLINK -- "P7 VLAN" --> PVE1
+    TPLINK -- "P6 VLAN" --> PVE2
 
     PVE1 <-. "Corosync HA\n3 votes · quorum:2" .-> PVE2
     WYSE -. "QDevice" .-> PVE1
