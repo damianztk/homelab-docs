@@ -1,0 +1,104 @@
+[
+  {
+    "id": "adguardhome-sync-installation",
+    "source": "networking/dns/adguardhome-sync-installation.md",
+    "status": "pending",
+    "priority": 1
+  },
+  {
+    "id": "unbound-installation",
+    "source": "networking/dns/unbound-installation.md",
+    "status": "pending",
+    "priority": 2
+  },
+  {
+    "id": "k3s-install",
+    "source": "infrastructure/kubernetes/k3s-install.md",
+    "status": "pending",
+    "priority": 3
+  },
+  {
+    "id": "k3s-operations",
+    "source": "infrastructure/kubernetes/k3s-operations.md",
+    "status": "pending",
+    "priority": 4
+  },
+  {
+    "id": "terraform-ansible-cloudinit",
+    "source": "infrastructure/terraform-ansible-cloudinit.md",
+    "status": "pending",
+    "priority": 5
+  },
+  {
+    "id": "pbs-setup",
+    "source": "infrastructure/proxmox/pbs-setup.md",
+    "status": "pending",
+    "priority": 6
+  },
+  {
+    "id": "ansible-basics",
+    "source": "infrastructure/infrastructure-as-code/ansible-basics.md",
+    "status": "pending",
+    "priority": 7
+  },
+  {
+    "id": "terraform-basics",
+    "source": "infrastructure/infrastructure-as-code/terraform-basics.md",
+    "status": "pending",
+    "priority": 8
+  },
+  {
+    "id": "network-topology",
+    "source": "networking/network-topology.md",
+    "status": "pending",
+    "priority": 9
+  },
+  {
+    "id": "frigate",
+    "source": "services/frigate.md",
+    "status": "pending",
+    "priority": 10
+  },
+  {
+    "id": "n8n",
+    "source": "services/n8n.md",
+    "status": "pending",
+    "priority": 11
+  },
+  {
+    "id": "tailscale-tutorial",
+    "source": "tailscale/tailscale-tutorial.md",
+    "status": "pending",
+    "priority": 12
+  },
+  {
+    "id": "tailscale-debian-to-alpine",
+    "source": "tailscale/tailscale-debian-to-alpine-switch.md",
+    "status": "pending",
+    "priority": 13
+  },
+  {
+    "id": "npm-lets-encrypt-dns-challenge",
+    "source": "networking/dns/npm-lets-encrypt-dns-challenge-guide.md",
+    "status": "pending",
+    "priority": 14
+  },
+  {
+    "id": "lxc-data-migration",
+    "source": "infrastructure/proxmox/lxc-data-migration.md",
+    "status": "pending",
+    "priority": 15
+  },
+  {
+    "id": "backup-script-install",
+    "source": "infrastructure/backup-script-install.md",
+    "status": "pending",
+    "priority": 16
+  },
+  {
+    "id": "fan-control",
+    "source": "infrastructure/proxmox/fan-control.md",
+    "status": "pending",
+    "priority": 17
+  }
+]
