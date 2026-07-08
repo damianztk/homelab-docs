@@ -14,7 +14,7 @@
   {
     "id": "k3s-install",
     "source": "infrastructure/kubernetes/k3s-install.md",
-    "status": "pending",
+    "status": "rejected",
     "priority": 3
   },
   {
