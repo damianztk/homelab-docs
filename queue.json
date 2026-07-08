@@ -8,25 +8,25 @@
   {
     "id": "unbound-installation",
     "source": "networking/dns/unbound-installation.md",
-    "status": "rejected",
+    "status": "pending",
     "priority": 2
   },
   {
     "id": "k3s-install",
     "source": "infrastructure/kubernetes/k3s-install.md",
-    "status": "rejected",
+    "status": "pending",
     "priority": 3
   },
   {
     "id": "k3s-operations",
     "source": "infrastructure/kubernetes/k3s-operations.md",
-    "status": "rejected",
+    "status": "pending",
     "priority": 4
   },
   {
     "id": "terraform-ansible-cloudinit",
     "source": "infrastructure/terraform-ansible-cloudinit.md",
-    "status": "rejected",
+    "status": "pending",
     "priority": 5
   },
   {
