@@ -26,7 +26,7 @@
   {
     "id": "terraform-ansible-cloudinit",
     "source": "infrastructure/terraform-ansible-cloudinit.md",
-    "status": "pending",
+    "status": "rejected",
     "priority": 5
   },
   {
