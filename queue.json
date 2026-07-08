@@ -8,13 +8,13 @@
   {
     "id": "unbound-installation",
     "source": "networking/dns/unbound-installation.md",
-    "status": "rejected",
+    "status": "pending",
     "priority": 2
   },
   {
     "id": "k3s-install",
     "source": "infrastructure/kubernetes/k3s-install.md",
-    "status": "rejected",
+    "status": "pending",
     "priority": 3
   },
   {
