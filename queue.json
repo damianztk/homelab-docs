@@ -36,24 +36,6 @@
     "priority": 6
   },
   {
-    "id": "ansible-basics",
-    "source": "infrastructure/infrastructure-as-code/ansible-basics.md",
-    "status": "pending",
-    "priority": 7
-  },
-  {
-    "id": "terraform-basics",
-    "source": "infrastructure/infrastructure-as-code/terraform-basics.md",
-    "status": "pending",
-    "priority": 8
-  },
-  {
-    "id": "network-topology",
-    "source": "networking/network-topology.md",
-    "status": "pending",
-    "priority": 9
-  },
-  {
     "id": "frigate",
     "source": "services/frigate.md",
     "status": "pending",
