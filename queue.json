@@ -8,7 +8,7 @@
   {
     "id": "unbound-installation",
     "source": "networking/dns/unbound-installation.md",
-    "status": "pending",
+    "status": "rejected",
     "priority": 2
   },
   {
