@@ -36,6 +36,18 @@
     "priority": 6
   },
   {
+    "id": "dns-troubleshooting-systemd-resolved",
+    "source": "networking/dns/dns-troubleshooting-ubuntu-server-(systemd-resolved).md",
+    "status": "pending",
+    "priority": 7
+  },
+  {
+    "id": "proxmox-hostname-change-troubleshooting",
+    "source": "infrastructure/proxmox/proxmox-hostname-change-troubleshooting.md",
+    "status": "pending",
+    "priority": 8
+  },
+  {
     "id": "frigate",
     "source": "services/frigate.md",
     "status": "pending",
