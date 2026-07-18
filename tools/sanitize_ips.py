@@ -29,7 +29,7 @@ def sanitize_text(text: str) -> tuple[str, int]:
 
 def main():
     apply_changes = '--apply' in sys.argv
-    repo_root = Path(__file__).parent
+    repo_root = Path(__file__).parent.parent
 
     files_changed = 0
     replacements = 0
