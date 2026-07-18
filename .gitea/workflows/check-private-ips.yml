@@ -17,4 +17,6 @@ jobs:
       - name: Notify via ntfy
         if: failure()
         run: |
-          curl -d "Niezamaskowane IP wykryte w homelab-docs (main)!" https://ntfy.damianzientek.de/homelab-docs-alerts
+          curl -H "Authorization: Bearer ${{ secrets.NTFY_TOKEN }}" \
+               -d "Niezamaskowane IP wykryte w homelab-docs (main)!" \
+               https://ntfy.damianzientek.de/homelab-docs-alerts

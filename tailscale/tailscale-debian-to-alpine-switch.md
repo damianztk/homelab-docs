@@ -133,5 +133,3 @@ Jak wszystko działa - usuń Debian LXC przez GUI (lub `pct destroy <stary_id>` 
 
 > [!IMPORTANT]
 > Jedyne miejsce gdzie może być niespodzianka to **krok 17** - jeśli flagi `tailscale up` różnią się od tych z którymi był zarejestrowany węzeł, Tailscale może poprosić o potwierdzenie w Admin Console (nie o pełny re-auth). Dlatego **krok 2** jest ważny - żebyś wiedział dokładnie jakich flag używać.
-
-10.99.99.99
