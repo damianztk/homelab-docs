@@ -98,7 +98,7 @@ Zatrzymaj Debian LXC przez GUI lub `pct stop 101`
     Uruchom Tailscale z tymi samymi flagami co na Debianie:
 
     ```bash
-    tailscale up --advertise-routes=10.100.10.0/24,10.100.20.0/24,... --accept-dns=false
+    tailscale up --advertise-routes=10.x.x.x/24,10.x.x.x/24,... --accept-dns=false
     ```
     > [!NOTE]
     > Dzięki istniejącemu `tailscaled.state` - bez re-authu, bez nowego urządzenia w Admin Console

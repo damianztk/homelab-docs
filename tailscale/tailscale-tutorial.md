@@ -57,7 +57,7 @@ Subnet Router to urządzenie w Twojej sieci (np. LXC na Proxmoxie), które **rep
 
 ```bash
 tailscale up \
-  --advertise-routes=10.100.1.0/24,10.100.10.0/24,10.100.20.0/24,10.100.30.0/24,10.100.40.0/24,10.100.50.0/24,10.100.90.0/24,10.100.100.0/24 \
+  --advertise-routes=10.x.x.x/24,10.x.x.x/24,10.x.x.x/24,10.x.x.x/24,10.x.x.x/24,10.x.x.x/24,10.x.x.x/24,10.x.x.x/24 \
   --accept-routes \
   --ssh
 ```
@@ -72,14 +72,14 @@ Przemyśl które podsieci faktycznie potrzebujesz zdalnie:
 
 | Podsieć | Opis | Rozgłaszać? |
 |---|---|---|
-| 10.100.1.0/24 | Management | Tak |
-| 10.100.10.0/24 | HOME LAN | Tak |
-| 10.100.20.0/24 | SERVER (Proxmox) | Tak |
-| 10.100.30.0/24 | DNS (AGH, Uptime Kuma) | Tak |
-| 10.100.40.0/24 | WLAN HOME (drukarka) | Tak |
-| 10.100.50.0/24 | WLAN VPN | Zależnie od planu |
-| 10.100.90.0/24 | IoT (kamery, Shelly) | Tak |
-| 10.100.100.0/24 | MEDIA | Tak |
+| 10.x.x.x/24 | Management | Tak |
+| 10.x.x.x/24 | HOME LAN | Tak |
+| 10.x.x.x/24 | SERVER (Proxmox) | Tak |
+| 10.x.x.x/24 | DNS (AGH, Uptime Kuma) | Tak |
+| 10.x.x.x/24 | WLAN HOME (drukarka) | Tak |
+| 10.x.x.x/24 | WLAN VPN | Zależnie od planu |
+| 10.x.x.x/24 | IoT (kamery, Shelly) | Tak |
+| 10.x.x.x/24 | MEDIA | Tak |
 
 Podsieci WLAN gdzie siedzą telefony i laptopy możesz pominąć — urządzenia te nie są "stałe" i poza domem ich w tej sieci nie ma.
 
@@ -225,14 +225,14 @@ Eliminuje ręczne zatwierdzanie subnet routes w panelu admina:
 {
   "autoApprovers": {
     "routes": {
-      "10.100.0.0/16": ["tag:subnet-router"]
+      "10.x.x.x/16": ["tag:subnet-router"]
     },
     "exitNode": ["tag:exit-node"]
   }
 }
 ```
 
-Każde urządzenie z tagiem `subnet-router` może automatycznie rozgłaszać podsieci z zakresu `10.100.0.0/16` bez ręcznej akcji w panelu. Kluczowe gdy stawiasz maszyny przez Ansible lub Terraform.
+Każde urządzenie z tagiem `subnet-router` może automatycznie rozgłaszać podsieci z zakresu `10.x.x.x/16` bez ręcznej akcji w panelu. Kluczowe gdy stawiasz maszyny przez Ansible lub Terraform.
 
 ### Tailscale SSH
 
@@ -371,7 +371,7 @@ Kompletny przykład ACL dla homelabu z VLANami, żoną i zero-trust:
 
   "autoApprovers": {
     "routes": {
-      "10.100.0.0/16": ["tag:subnet-router"]
+      "10.x.x.x/16": ["tag:subnet-router"]
     },
     "exitNode": ["tag:exit-node"]
   },

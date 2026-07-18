@@ -21,10 +21,10 @@ Proxmox Backup Server 4.x (PBS) runs in a privileged LXC container on pve1. It h
 
 | Parameter | Value |
 |-----------|-------|
-| Host | pve1 (`10.100.20.10`) |
+| Host | pve1 (`10.x.x.x`) |
 | LXC ID | 900 |
-| IP | `10.100.20.90` |
-| Web UI | `https://10.100.20.90:8007` / `https://pbs.damianzientek.de` |
+| IP | `10.x.x.x` |
+| Web UI | `https://10.x.x.x:8007` / `https://pbs.damianzientek.de` |
 | PBS Version | 4.2 (Debian 13 Trixie) |
 | Unprivileged | No (privileged required for loop devices) |
 
@@ -97,10 +97,10 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-pbs.ym
 
 **After Ansible** — manual one-time setup:
 1. Set root password: `pct exec 900 -- passwd`
-2. Open PBS Web UI: `https://10.100.20.90:8007`
+2. Open PBS Web UI: `https://10.x.x.x:8007`
 3. Add datastore: **Datastore → Add** → path `/mnt/datastore`, name `pve-backup`
 4. Add PBS to PVE: **Datacenter → Storage → Add → Proxmox Backup Server**
-   - ID: `pbs-main`, Server: `10.100.20.90`, Datastore: `pve-backup`
+   - ID: `pbs-main`, Server: `10.x.x.x`, Datastore: `pve-backup`
    - Fingerprint: copy from PBS Dashboard → Certificates
 
 ### Known Issues and Solutions
@@ -145,10 +145,10 @@ Proxmox Backup Server 4.x (PBS) läuft in einem privilegierten LXC-Container auf
 
 | Parameter | Wert |
 |-----------|------|
-| Host | pve1 (`10.100.20.10`) |
+| Host | pve1 (`10.x.x.x`) |
 | LXC ID | 900 |
-| IP | `10.100.20.90` |
-| Web UI | `https://10.100.20.90:8007` / `https://pbs.damianzientek.de` |
+| IP | `10.x.x.x` |
+| Web UI | `https://10.x.x.x:8007` / `https://pbs.damianzientek.de` |
 | PBS Version | 4.2 (Debian 13 Trixie) |
 | Unprivilegiert | Nein (privilegiert erforderlich für Loop-Devices) |
 
@@ -221,10 +221,10 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-pbs.ym
 
 **Nach Ansible** — Einmalige manuelle Einrichtung:
 1. Root-Passwort setzen: `pct exec 900 -- passwd`
-2. PBS Web UI öffnen: `https://10.100.20.90:8007`
+2. PBS Web UI öffnen: `https://10.x.x.x:8007`
 3. Datastore hinzufügen: **Datastore → Add** → Pfad `/mnt/datastore`, Name `pve-backup`
 4. PBS zu PVE hinzufügen: **Datacenter → Storage → Add → Proxmox Backup Server**
-   - ID: `pbs-main`, Server: `10.100.20.90`, Datastore: `pve-backup`
+   - ID: `pbs-main`, Server: `10.x.x.x`, Datastore: `pve-backup`
    - Fingerprint: von PBS Dashboard → Certificates kopieren
 
 ### Bekannte Probleme und Lösungen
@@ -269,10 +269,10 @@ Proxmox Backup Server 4.x (PBS) działa w privileged kontenerze LXC 900 na pve1.
 
 | Parametr | Wartość |
 |----------|---------|
-| Host | pve1 (`10.100.20.10`) |
+| Host | pve1 (`10.x.x.x`) |
 | LXC ID | 900 |
-| IP | `10.100.20.90` |
-| Web UI | `https://10.100.20.90:8007` / `https://pbs.damianzientek.de` |
+| IP | `10.x.x.x` |
+| Web UI | `https://10.x.x.x:8007` / `https://pbs.damianzientek.de` |
 | Wersja PBS | 4.2 (Debian 13 Trixie) |
 | Unprivileged | Nie (privileged wymagany dla loop devices) |
 
@@ -345,10 +345,10 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-pbs.ym
 
 **Po Ansible** — jednorazowa konfiguracja ręczna:
 1. Ustaw hasło roota: `pct exec 900 -- passwd`
-2. Otwórz PBS Web UI: `https://10.100.20.90:8007`
+2. Otwórz PBS Web UI: `https://10.x.x.x:8007`
 3. Dodaj datastore: **Datastore → Add** → ścieżka `/mnt/datastore`, nazwa `pve-backup`
 4. Dodaj PBS do PVE: **Datacenter → Storage → Add → Proxmox Backup Server**
-   - ID: `pbs-main`, Server: `10.100.20.90`, Datastore: `pve-backup`
+   - ID: `pbs-main`, Server: `10.x.x.x`, Datastore: `pve-backup`
    - Fingerprint: skopiuj z PBS Dashboard → Certificates
 
 ### Znane problemy i rozwiązania

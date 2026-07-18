@@ -11,9 +11,9 @@
 
 `utility-apps` is a Debian 13 LXC container on pve1 acting as a Docker host for lightweight user-facing applications. It replaced the former dedicated Kavita LXC (also ID 300) and follows the same Docker-host pattern as `arr-stack` on pve2.
 
-**Node:** pve1 (`10.100.20.10`)
+**Node:** pve1 (`10.x.x.x`)
 **LXC ID:** 300
-**IP:** `10.100.20.30`
+**IP:** `10.x.x.x`
 **OS:** Debian 13 (Trixie)
 **RAM:** 4096 MB | **CPU:** 2 cores | **Disk:** 16 GB (local-lvm)
 **Nesting:** enabled (required for Docker)
@@ -159,7 +159,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-wger.ym
 4. `git add -A && git commit -m "feat: add <service>" && git push`
 5. `ansible-playbook -i ... deploy-utility-apps.yml --check`
 6. `ansible-playbook -i ... deploy-utility-apps.yml`
-7. Add proxy host in NPM (`10.100.20.30:<port>`)
+7. Add proxy host in NPM (`10.x.x.x:<port>`)
 
 ---
 
@@ -224,9 +224,9 @@ Local subdomains (`*.damianzientek.de`) resolve via AdGuard Home wildcard rewrit
 
 `utility-apps` ist ein Debian-13-LXC-Container auf pve1, der als Docker-Host für leichtgewichtige Benutzeranwendungen dient. Er ersetzt den früheren dedizierten Kavita-LXC (ebenfalls ID 300) und folgt demselben Docker-Host-Muster wie `arr-stack` auf pve2.
 
-**Node:** pve1 (`10.100.20.10`)
+**Node:** pve1 (`10.x.x.x`)
 **LXC-ID:** 300
-**IP:** `10.100.20.30`
+**IP:** `10.x.x.x`
 **OS:** Debian 13 (Trixie)
 **RAM:** 4096 MB | **CPU:** 2 Kerne | **Disk:** 16 GB (local-lvm)
 **Nesting:** aktiviert (erforderlich für Docker)
@@ -340,9 +340,9 @@ ssh pve1 "pct resize 300 rootfs 16G"
 
 `utility-apps` to kontener LXC z Debianem 13 na pve1, pełniący rolę hosta Dockera dla lekkich aplikacji użytkowych. Zastępuje wcześniejszy dedykowany LXC Kavity (również ID 300) i podąża za tym samym wzorcem Docker-host co `arr-stack` na pve2.
 
-**Node:** pve1 (`10.100.20.10`)
+**Node:** pve1 (`10.x.x.x`)
 **ID LXC:** 300
-**IP:** `10.100.20.30`
+**IP:** `10.x.x.x`
 **OS:** Debian 13 (Trixie)
 **RAM:** 4096 MB | **CPU:** 2 rdzenie | **Dysk:** 16 GB (local-lvm)
 **Nesting:** włączony (wymagany dla Dockera)
@@ -488,7 +488,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-wger.ym
 4. `git add -A && git commit -m "feat: add <serwis>" && git push`
 5. `ansible-playbook -i ... deploy-utility-apps.yml --check`
 6. `ansible-playbook -i ... deploy-utility-apps.yml`
-7. Dodaj proxy host w NPM (`10.100.20.30:<port>`)
+7. Dodaj proxy host w NPM (`10.x.x.x:<port>`)
 
 ---
 

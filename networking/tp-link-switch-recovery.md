@@ -7,16 +7,16 @@ Planowe przygotowanie portu pod Node 2 (Proxmox) przerodziło się w całkowitą
 ## 🔴 Przebieg awarii
 
 1. Trigger: Próba zmiany konfiguracji portu zakończona utratą kontaktu ze switchem.
-2. Problem: Switch po resecie wrócił do IP `192.168.0.1`.
-3. Konflikt: FortiGate widział ten sam adres MAC w dwóch podsieciach jednocześnie (`192.168.0.1` w WAN/Vodafone oraz `10.100.1.13` w Management VLAN), co powodowało błędy w inwentarzu urządzeń.
+2. Problem: Switch po resecie wrócił do IP `192.168.x.x`.
+3. Konflikt: FortiGate widział ten sam adres MAC w dwóch podsieciach jednocześnie (`192.168.x.x` w WAN/Vodafone oraz `10.x.x.x` w Management VLAN), co powodowało błędy w inwentarzu urządzeń.
 
 ## 🔧 Kroki naprawcze (Troubleshooting)
 
-1. Odzyskanie dostępu: Ustawienie statycznego IP na laptopie (`192.168.0.100`) i bezpośrednie wpięcie w switch w celu zmiany adresu na docelowy.
+1. Odzyskanie dostępu: Ustawienie statycznego IP na laptopie (`192.168.x.x`) i bezpośrednie wpięcie w switch w celu zmiany adresu na docelowy.
 2. Czyszczenie FortiGate:
   - Wyczyszczenie bazy inwentarza: `diagnose user device clear.`
   - Wyczyszczenie tablicy ARP: `execute clear system arp table.`
-3. DHCP Reservation: Upewnienie się, że MAC switcha ma rezerwację na `10.100.1.13`.
+3. DHCP Reservation: Upewnienie się, że MAC switcha ma rezerwację na `10.x.x.x`.
 4. Wymuszenie IP na kamerach: Użycie funkcji `Port Config` (Disable/Enable) w celu zrestartowania linku i wymuszenia pobrania IP z właściwego VLAN 90.
 
 ## 🕸️ Docelowa konfiguracja VLAN (TP-Link)

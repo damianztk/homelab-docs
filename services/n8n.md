@@ -17,7 +17,7 @@ n8n is a self-hosted workflow automation platform. In this homelab it serves as 
 - Contact form handling: webhook → analysis → Telegram notification
 - Future: CI/CD triggers, monitoring integrations, homelab event automation
 
-**LXC:** 201 | **IP:** `10.100.20.21` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
+**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
 
 ### Architecture
 
@@ -87,7 +87,7 @@ pct reboot 201
 
 ```bash
 # Accept SSH fingerprint first
-ssh-keyscan 10.100.20.21 >> ~/.ssh/known_hosts
+ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts
 
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/setup-base.yml -l n8n
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-docker.yml -l n8n
@@ -96,7 +96,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-n8n.yml
 
 #### 6. NPM reverse proxy
 
-Forward: `n8n.damianzientek.de` → `http://10.100.20.21:5678`
+Forward: `n8n.damianzientek.de` → `http://10.x.x.x:5678`
 
 Options: Force SSL ✓ | HTTP/2 ✓ | Websockets ✓
 
@@ -142,8 +142,8 @@ ports:
 
 SSH fingerprint not yet accepted. Run:
 ```bash
-ssh-keyscan 10.100.20.21 >> ~/.ssh/known_hosts
-# or: ssh root@10.100.20.21  (accept manually)
+ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts
+# or: ssh root@10.x.x.x  (accept manually)
 ```
 
 ---
@@ -160,7 +160,7 @@ n8n ist eine selbst gehostete Workflow-Automatisierungsplattform. Im Homelab die
 - Kontaktformular: Webhook → Analyse → Telegram-Benachrichtigung
 - Zukünftig: CI/CD-Trigger, Monitoring-Integrationen, Homelab-Event-Automatisierung
 
-**LXC:** 201 | **IP:** `10.100.20.21` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
+**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
 
 ### Architektur
 
@@ -229,7 +229,7 @@ pct reboot 201
 
 ```bash
 # SSH-Fingerprint zuerst akzeptieren
-ssh-keyscan 10.100.20.21 >> ~/.ssh/known_hosts
+ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts
 
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/setup-base.yml -l n8n
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-docker.yml -l n8n
@@ -238,7 +238,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-n8n.yml
 
 #### 6. NPM Reverse Proxy
 
-Weiterleitung: `n8n.damianzientek.de` → `http://10.100.20.21:5678`
+Weiterleitung: `n8n.damianzientek.de` → `http://10.x.x.x:5678`
 
 Optionen: Force SSL ✓ | HTTP/2 ✓ | Websockets ✓
 
@@ -284,7 +284,7 @@ ports:
 
 SSH-Fingerprint noch nicht akzeptiert:
 ```bash
-ssh-keyscan 10.100.20.21 >> ~/.ssh/known_hosts
+ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts
 ```
 
 ---
@@ -301,7 +301,7 @@ n8n to samodzielnie hostowana platforma automatyzacji workflow. W homelabie peł
 - Obsługa formularza kontaktowego: webhook → analiza → powiadomienie Telegram
 - W przyszłości: triggery CI/CD, integracje monitoringu, automatyzacja zdarzeń homelabowych
 
-**LXC:** 201 | **IP:** `10.100.20.21` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
+**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
 
 ### Architektura
 
@@ -371,7 +371,7 @@ pct reboot 201
 
 ```bash
 # Najpierw zaakceptować fingerprint SSH
-ssh-keyscan 10.100.20.21 >> ~/.ssh/known_hosts
+ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts
 
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/setup-base.yml -l n8n
 ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-docker.yml -l n8n
@@ -380,7 +380,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-n8n.yml
 
 #### 6. Reverse proxy NPM
 
-Przekierowanie: `n8n.damianzientek.de` → `http://10.100.20.21:5678`
+Przekierowanie: `n8n.damianzientek.de` → `http://10.x.x.x:5678`
 
 Opcje: Force SSL ✓ | HTTP/2 ✓ | Websockets ✓
 
@@ -426,5 +426,5 @@ ports:
 
 Fingerprint SSH nie został jeszcze zaakceptowany:
 ```bash
-ssh-keyscan 10.100.20.21 >> ~/.ssh/known_hosts
+ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts
 ```

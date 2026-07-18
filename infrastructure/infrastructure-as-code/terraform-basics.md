@@ -69,7 +69,7 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint  = "https://10.100.20.10:8006"   # pve1
+  endpoint  = "https://10.x.x.x:8006"   # pve1
   api_token = var.proxmox_api_token
   insecure  = true                           # self-signed cert
 }
@@ -102,7 +102,7 @@ resource "proxmox_virtual_environment_vm" "ansible_test" {
 
   initialization {
     ip_config {
-      ipv4 { address = "10.100.20.40/24"; gateway = "10.100.20.254" }
+      ipv4 { address = "10.x.x.x/24"; gateway = "10.x.x.x" }
     }
     user_account {
       username = "damian"
@@ -169,7 +169,7 @@ resource "proxmox_virtual_environment_container" "utility_apps" {
   initialization {
     hostname = "utility-apps"
     ip_config {
-      ipv4 { address = "10.100.20.30/24"; gateway = "10.100.20.254" }
+      ipv4 { address = "10.x.x.x/24"; gateway = "10.x.x.x" }
     }
     user_account {
       keys = ["ssh-ed25519 AAAA... damian-pc-wsl"]

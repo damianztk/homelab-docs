@@ -21,7 +21,7 @@ hostnamectl set-hostname pve1.damiannazwisko.de
 Edytuj `/etc/hosts` — zmień linię ze starą nazwą:
 
 ```
-10.100.20.10    pve1.damiannazwisko.de    pve1
+10.x.x.x    pve1.damiannazwisko.de    pve1
 ```
 
 Weryfikacja:

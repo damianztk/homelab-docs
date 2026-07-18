@@ -47,8 +47,8 @@ flowchart TD
     AP1 -. "WiFi VLAN90" .-> SHELLY
     SHELLY --> PV
 
-    PVE1["⚙️ pve1 · 10.100.20.10\ni5-7400 · 16GB"]
-    PVE2["⚙️ pve2 · 10.100.20.11\ni5-7600K · 32GB"]
+    PVE1["⚙️ pve1 · 10.x.x.x\ni5-7400 · 16GB"]
+    PVE2["⚙️ pve2 · 10.x.x.x\ni5-7600K · 32GB"]
     TPLINK -- "P7 VLAN" --> PVE1
     TPLINK -- "P6 VLAN" --> PVE2
 

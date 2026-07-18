@@ -32,7 +32,7 @@ pct create <ID> $TEMPLATE \ # zastąpić <ID> numerem ID kontenera
   --memory 512 \ # Zrewidować
   --swap 512 \ # Zrewidować
   --rootfs local-lvm:2 \
-  --net0 name=eth0,bridge=vmbr0,ip=10.100.20.<ADRES_IP>/24,gw=10.100.20.254 \ # Zastąpić <ADRES_IP> końcowym numerem adresu IP
+  --net0 name=eth0,bridge=vmbr0,ip=10.100.20.<ADRES_IP>/24,gw=10.x.x.x \ # Zastąpić <ADRES_IP> końcowym numerem adresu IP
   --onboot 1 \
   --password <HASŁO> # Wybrać silne hasło!
 ```

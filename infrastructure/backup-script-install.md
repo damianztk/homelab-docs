@@ -86,7 +86,7 @@ TELEGRAM_CHAT_ID="987654321"
 # Dell Wyse only — Proxmox SERVER_LAN IP (not Management VLAN)
 # Comment out on pve1 and pve2 (not used by the Proxmox script)
 # REMOTE_USER="root"
-# REMOTE_HOST="10.100.20.10"
+# REMOTE_HOST="10.x.x.x"
 # REMOTE_PATH="/mnt/hdd-data/backups/dell-wyse"
 ```
 
@@ -148,7 +148,7 @@ cp proxmox/proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
 | `LXC_RETENTION_DAYS` | `7` | Retention for lxc_data and docker_data archives |
 | `LXC_DATA_SOURCE` | `/opt/lxc-data/` | LXC bind mount directory |
 | `DOCKER_DATA_SOURCE` | `/opt/docker-data/` | Docker stack data directory |
-| `REMOTE_HOST` | `10.100.20.10` | pve2 only — target host for rsync transfer |
+| `REMOTE_HOST` | `10.x.x.x` | pve2 only — target host for rsync transfer |
 | `REMOTE_PATH` | `/mnt/hdd-data/backups/pve-configs` | pve2 only — target path on pve1 |
 
 **Dependencies:**
@@ -207,16 +207,16 @@ Required for `wyse-backup.sh` — rsync transfer runs as root.
 
 ```bash
 # On Dell Wyse (as root)
-ssh-keyscan -H 10.100.20.10 | tee /root/.ssh/known_hosts
+ssh-keyscan -H 10.x.x.x | tee /root/.ssh/known_hosts
 # Key should already exist at /root/.ssh/id_ed25519
 # If not: ssh-keygen -t ed25519 -C "wyse-backup" -f /root/.ssh/id_ed25519
-# Then: ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.100.20.10
+# Then: ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.x.x.x
 
 # Verify
-sudo ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
+sudo ssh -o BatchMode=yes root@10.x.x.x "echo OK"
 ```
 
-> Use the SERVER_LAN IP (`10.100.20.10`), not the Management VLAN (`10.100.1.x`).
+> Use the SERVER_LAN IP (`10.x.x.x`), not the Management VLAN (`10.100.1.x`).
 
 ### pve2 → pve1
 
@@ -225,13 +225,13 @@ Required for `proxmox-config-backup-and-pbs-check.sh` on pve2 — rsync transfer
 ```bash
 # On pve2 — key should already exist at /root/.ssh/id_ed25519
 # If not: ssh-keygen -t ed25519 -C "pve2-backup" -f /root/.ssh/id_ed25519
-#         ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.100.20.10
+#         ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.x.x.x
 
 # Add pve1 to known_hosts
-ssh-keyscan -H 10.100.20.10 >> /root/.ssh/known_hosts
+ssh-keyscan -H 10.x.x.x >> /root/.ssh/known_hosts
 
 # Verify
-ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
+ssh -o BatchMode=yes root@10.x.x.x "echo OK"
 ```
 
 ---
@@ -303,8 +303,8 @@ curl -s -X POST "https://api.telegram.org/bot<TOKEN>/sendMessage" \
 
 **SSH error (Wyse or pve2)**
 ```bash
-ssh -v -o BatchMode=yes root@10.100.20.10 "echo OK"
-# Host key verification failed → ssh-keyscan -H 10.100.20.10 >> /root/.ssh/known_hosts
+ssh -v -o BatchMode=yes root@10.x.x.x "echo OK"
+# Host key verification failed → ssh-keyscan -H 10.x.x.x >> /root/.ssh/known_hosts
 # Key rejected → repeat ssh-copy-id
 ```
 
@@ -400,7 +400,7 @@ TELEGRAM_CHAT_ID="987654321"
 # Nur Dell Wyse — Proxmox SERVER_LAN IP (nicht Management VLAN)
 # Auf pve1 und pve2 auskommentieren (vom Proxmox-Skript nicht verwendet)
 # REMOTE_USER="root"
-# REMOTE_HOST="10.100.20.10"
+# REMOTE_HOST="10.x.x.x"
 # REMOTE_PATH="/mnt/hdd-data/backups/dell-wyse"
 ```
 
@@ -462,7 +462,7 @@ cp proxmox/proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
 | `LXC_RETENTION_DAYS` | `7` | Aufbewahrung für lxc_data- und docker_data-Archive |
 | `LXC_DATA_SOURCE` | `/opt/lxc-data/` | LXC Bind-Mount-Verzeichnis |
 | `DOCKER_DATA_SOURCE` | `/opt/docker-data/` | Docker-Stack-Datenverzeichnis |
-| `REMOTE_HOST` | `10.100.20.10` | Nur pve2 — Zielhost für rsync-Transfer |
+| `REMOTE_HOST` | `10.x.x.x` | Nur pve2 — Zielhost für rsync-Transfer |
 | `REMOTE_PATH` | `/mnt/hdd-data/backups/pve-configs` | Nur pve2 — Zielpfad auf pve1 |
 
 **Abhängigkeiten:**
@@ -521,16 +521,16 @@ Erforderlich für `wyse-backup.sh` — rsync-Transfer läuft als root.
 
 ```bash
 # Auf Dell Wyse (als root)
-ssh-keyscan -H 10.100.20.10 | tee /root/.ssh/known_hosts
+ssh-keyscan -H 10.x.x.x | tee /root/.ssh/known_hosts
 # Schlüssel sollte bereits unter /root/.ssh/id_ed25519 vorhanden sein
 # Falls nicht: ssh-keygen -t ed25519 -C "wyse-backup" -f /root/.ssh/id_ed25519
-# Dann: ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.100.20.10
+# Dann: ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.x.x.x
 
 # Verifizierung
-sudo ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
+sudo ssh -o BatchMode=yes root@10.x.x.x "echo OK"
 ```
 
-> SERVER_LAN IP verwenden (`10.100.20.10`), nicht das Management VLAN (`10.100.1.x`).
+> SERVER_LAN IP verwenden (`10.x.x.x`), nicht das Management VLAN (`10.100.1.x`).
 
 ### pve2 → pve1
 
@@ -539,10 +539,10 @@ Erforderlich für `proxmox-config-backup-and-pbs-check.sh` auf pve2 — rsync-Tr
 ```bash
 # Auf pve2 — Schlüssel sollte bereits unter /root/.ssh/id_ed25519 vorhanden sein
 # pve1 zu known_hosts hinzufügen
-ssh-keyscan -H 10.100.20.10 >> /root/.ssh/known_hosts
+ssh-keyscan -H 10.x.x.x >> /root/.ssh/known_hosts
 
 # Verifizierung
-ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
+ssh -o BatchMode=yes root@10.x.x.x "echo OK"
 ```
 
 ---
@@ -614,8 +614,8 @@ curl -s -X POST "https://api.telegram.org/bot<TOKEN>/sendMessage" \
 
 **SSH-Fehler (Wyse oder pve2)**
 ```bash
-ssh -v -o BatchMode=yes root@10.100.20.10 "echo OK"
-# Host key verification failed → ssh-keyscan -H 10.100.20.10 >> /root/.ssh/known_hosts
+ssh -v -o BatchMode=yes root@10.x.x.x "echo OK"
+# Host key verification failed → ssh-keyscan -H 10.x.x.x >> /root/.ssh/known_hosts
 # Schlüssel abgelehnt → ssh-copy-id wiederholen
 ```
 
@@ -711,7 +711,7 @@ TELEGRAM_CHAT_ID="987654321"
 # Tylko Dell Wyse — IP Proxmoxa z SERVER_LAN (nie Management VLAN)
 # Na pve1 i pve2 zahashować (skrypt Proxmoxa tych zmiennych nie używa)
 # REMOTE_USER="root"
-# REMOTE_HOST="10.100.20.10"
+# REMOTE_HOST="10.x.x.x"
 # REMOTE_PATH="/mnt/hdd-data/backups/dell-wyse"
 ```
 
@@ -773,7 +773,7 @@ cp proxmox/proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
 | `LXC_RETENTION_DAYS` | `7` | Retencja dla archiwów lxc_data i docker_data |
 | `LXC_DATA_SOURCE` | `/opt/lxc-data/` | Katalog bind mountów LXC |
 | `DOCKER_DATA_SOURCE` | `/opt/docker-data/` | Katalog danych stacków Docker |
-| `REMOTE_HOST` | `10.100.20.10` | Tylko pve2 — host docelowy dla transferu rsync |
+| `REMOTE_HOST` | `10.x.x.x` | Tylko pve2 — host docelowy dla transferu rsync |
 | `REMOTE_PATH` | `/mnt/hdd-data/backups/pve-configs` | Tylko pve2 — ścieżka docelowa na pve1 |
 
 **Zależności:**
@@ -832,16 +832,16 @@ Wymagany dla `wyse-backup.sh` — transfer rsync działa jako root.
 
 ```bash
 # Na Dell Wyse (jako root)
-ssh-keyscan -H 10.100.20.10 | tee /root/.ssh/known_hosts
+ssh-keyscan -H 10.x.x.x | tee /root/.ssh/known_hosts
 # Klucz powinien już istnieć w /root/.ssh/id_ed25519
 # Jeśli nie: ssh-keygen -t ed25519 -C "wyse-backup" -f /root/.ssh/id_ed25519
-# Następnie: ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.100.20.10
+# Następnie: ssh-copy-id -i /root/.ssh/id_ed25519.pub root@10.x.x.x
 
 # Weryfikacja
-sudo ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
+sudo ssh -o BatchMode=yes root@10.x.x.x "echo OK"
 ```
 
-> Użyj IP z SERVER_LAN (`10.100.20.10`), nie z Management VLAN (`10.100.1.x`).
+> Użyj IP z SERVER_LAN (`10.x.x.x`), nie z Management VLAN (`10.100.1.x`).
 
 ### pve2 → pve1
 
@@ -850,10 +850,10 @@ Wymagany dla `proxmox-config-backup-and-pbs-check.sh` na pve2 — transfer rsync
 ```bash
 # Na pve2 — klucz powinien już istnieć w /root/.ssh/id_ed25519
 # Dodaj pve1 do known_hosts
-ssh-keyscan -H 10.100.20.10 >> /root/.ssh/known_hosts
+ssh-keyscan -H 10.x.x.x >> /root/.ssh/known_hosts
 
 # Weryfikacja
-ssh -o BatchMode=yes root@10.100.20.10 "echo OK"
+ssh -o BatchMode=yes root@10.x.x.x "echo OK"
 ```
 
 ---
@@ -925,8 +925,8 @@ curl -s -X POST "https://api.telegram.org/bot<TOKEN>/sendMessage" \
 
 **Błąd SSH (Wyse lub pve2)**
 ```bash
-ssh -v -o BatchMode=yes root@10.100.20.10 "echo OK"
-# Host key verification failed → ssh-keyscan -H 10.100.20.10 >> /root/.ssh/known_hosts
+ssh -v -o BatchMode=yes root@10.x.x.x "echo OK"
+# Host key verification failed → ssh-keyscan -H 10.x.x.x >> /root/.ssh/known_hosts
 # Klucz odrzucony → powtórz ssh-copy-id
 ```
 

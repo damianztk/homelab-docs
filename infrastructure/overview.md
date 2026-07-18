@@ -22,14 +22,14 @@
 ## VLANs
 | VLAN | Name | Network |
 |------|-------|------|
-| 10 | HOME_LAN | 10.100.10.0/24 |
-| 20 | SERVER_LAN | 10.100.20.0/24 |
-| 30 | DNS_LAN | 10.100.30.0/24 |
-| 40 | HOME_WLAN | 10.100.40.0/24 |
-| 50 | PL_WLAN | 10.100.50.0/24 |
-| 90 | IOT_VLAN | 10.100.90.0/24 |
-| 100 | MEDIA_LAN | 10.100.100.0/24 |
-| 200 | GUEST_WLAN | 10.100.200.0/24 |
+| 10 | HOME_LAN | 10.x.x.x/24 |
+| 20 | SERVER_LAN | 10.x.x.x/24 |
+| 30 | DNS_LAN | 10.x.x.x/24 |
+| 40 | HOME_WLAN | 10.x.x.x/24 |
+| 50 | PL_WLAN | 10.x.x.x/24 |
+| 90 | IOT_VLAN | 10.x.x.x/24 |
+| 100 | MEDIA_LAN | 10.x.x.x/24 |
+| 200 | GUEST_WLAN | 10.x.x.x/24 |
 
 > Check/fix names more precisely
 

@@ -22,19 +22,19 @@ Frigate is a self-hosted NVR (Network Video Recorder) running in a Docker contai
 
 | Parameter | Value |
 |-----------|-------|
-| Host | pve2 (`10.100.20.11`) |
+| Host | pve2 (`10.x.x.x`) |
 | LXC ID | 320 |
-| IP | `10.100.20.32` |
-| Web UI | `http://10.100.20.32:5000` / `https://frigate.damianzientek.de` |
-| go2rtc API | `http://10.100.20.32:1984` |
+| IP | `10.x.x.x` |
+| Web UI | `http://10.x.x.x:5000` / `https://frigate.damianzientek.de` |
+| go2rtc API | `http://10.x.x.x:1984` |
 
 ### Cameras
 
 | Name | Model | IP | Main stream | Substream |
 |------|-------|-----|------------|-----------|
-| skoda | Reolink RLC-510A | `10.100.90.11` | H.265 2880×1616 | H.264 640×480 |
-| mazda | Reolink RLC-510A | `10.100.90.12` | H.265 2880×1616 | H.264 640×480 |
-| sypialnia | Reolink E1 Pro | `10.100.90.14` | H.264 2880×1616 | H.264 896×512 |
+| skoda | Reolink RLC-510A | `10.x.x.x` | H.265 2880×1616 | H.264 640×480 |
+| mazda | Reolink RLC-510A | `10.x.x.x` | H.265 2880×1616 | H.264 640×480 |
+| sypialnia | Reolink E1 Pro | `10.x.x.x` | H.264 2880×1616 | H.264 896×512 |
 
 ### Bind Mounts (pve2 host)
 
@@ -78,7 +78,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-frigate
 **After config changes** — force container restart (Ansible only restarts when docker-compose.yml changes):
 
 ```bash
-ssh root@10.100.20.32 "cd /opt/docker-data && docker compose down && docker compose up -d"
+ssh root@10.x.x.x "cd /opt/docker-data && docker compose down && docker compose up -d"
 ```
 
 ### Frigate Configuration
@@ -101,7 +101,7 @@ This is critical — using a single stream for both roles causes VAAPI context e
 - CPU detector (`cpu1`, 3 threads) — no Coral TPU
 - `fps: 5` on detect for all cameras (sufficient for object detection, reduces CPU load)
 - `shm_size: 512mb` — required for pre_capture buffering with 3 cameras
-- MQTT → Mosquitto broker on HA (`10.100.20.100`), user `frigate`
+- MQTT → Mosquitto broker on HA (`10.x.x.x`), user `frigate`
 - Event retention: 14 days
 - Pre-capture buffer: 25 seconds, post-capture: 10 seconds
 
@@ -121,7 +121,7 @@ Frigate sends events to Mosquitto broker (HA add-on) via MQTT. Home Assistant re
 - Mosquitto broker: HA add-on, port 1883, user `frigate`
 - MQTT credentials: stored in `ansible/secrets.yml` (`mqtt_username`, `mqtt_password`)
 - HA MQTT integration: configured with same `frigate` credentials
-- Frigate HACS integration v5.15.3: URL `http://10.100.20.32:5000`
+- Frigate HACS integration v5.15.3: URL `http://10.x.x.x:5000`
 
 **Result in HA:** 8 devices, 153 entities — server, 3 cameras, 4 Mazda zones as separate devices.
 
@@ -129,10 +129,10 @@ Frigate sends events to Mosquitto broker (HA add-on) via MQTT. Home Assistant re
 
 ```bash
 # Test connectivity from Frigate LXC
-mosquitto_pub -h 10.100.20.100 -p 1883 -u frigate -P 'PASSWORD' -t test -m hello -d
+mosquitto_pub -h 10.x.x.x -p 1883 -u frigate -P 'PASSWORD' -t test -m hello -d
 
 # Check Frigate logs for MQTT
-ssh root@10.100.20.32 "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
+ssh root@10.x.x.x "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
 ```
 
 ### Authentication
@@ -145,7 +145,7 @@ Frigate enforces authentication only on port `8971` (HTTPS). Port `5000` is unau
 auth:
   enabled: true
   trusted_proxies:
-    - 10.100.20.24/32    # NPM IP
+    - 10.x.x.x/32    # NPM IP
 ```
 
 **NPM configuration for `frigate.damianzientek.de`:**
@@ -184,13 +184,13 @@ auth:
 ### Network
 
 - VLAN 90 (IoT) → VLAN 20 (SERVER): FortiGate rule `Frigate_to_Cams`
-- Access: SERVER_LAN (Frigate IP `10.100.20.32`) → cameras (VLAN90), RTSP port
+- Access: SERVER_LAN (Frigate IP `10.x.x.x`) → cameras (VLAN90), RTSP port
 - Recordings excluded from rsync (`--exclude='frigate/'` in rsync-hdd-backup.sh on pve2)
 
 ### Home Assistant Integration
 
 - Frigate integration via HACS (v5.15.3)
-- Frigate URL in HA: `http://10.100.20.32:5000`, SSL disabled
+- Frigate URL in HA: `http://10.x.x.x:5000`, SSL disabled
 - MQTT: Mosquitto broker as HA Add-on, user `frigate`
 - 8 devices visible: Frigate server + 3 cameras + 4 Mazda parking zones
 - HA can use zone data in automations: "person detected in parking_mazda"
@@ -211,19 +211,19 @@ Frigate ist ein self-hosted NVR (Network Video Recorder), der in einem Docker-Co
 
 | Parameter | Wert |
 |-----------|------|
-| Host | pve2 (`10.100.20.11`) |
+| Host | pve2 (`10.x.x.x`) |
 | LXC ID | 320 |
-| IP | `10.100.20.32` |
-| Web UI | `http://10.100.20.32:5000` / `https://frigate.damianzientek.de` |
-| go2rtc API | `http://10.100.20.32:1984` |
+| IP | `10.x.x.x` |
+| Web UI | `http://10.x.x.x:5000` / `https://frigate.damianzientek.de` |
+| go2rtc API | `http://10.x.x.x:1984` |
 
 ### Kameras
 
 | Name | Modell | IP | Hauptstream | Substream |
 |------|--------|-----|------------|-----------|
-| skoda | Reolink RLC-510A | `10.100.90.11` | H.265 2880×1616 | H.264 640×480 |
-| mazda | Reolink RLC-510A | `10.100.90.12` | H.265 2880×1616 | H.264 640×480 |
-| sypialnia | Reolink E1 Pro | `10.100.90.14` | H.264 2880×1616 | H.264 896×512 |
+| skoda | Reolink RLC-510A | `10.x.x.x` | H.265 2880×1616 | H.264 640×480 |
+| mazda | Reolink RLC-510A | `10.x.x.x` | H.265 2880×1616 | H.264 640×480 |
+| sypialnia | Reolink E1 Pro | `10.x.x.x` | H.264 2880×1616 | H.264 896×512 |
 
 ### Bind Mounts (pve2 Host)
 
@@ -267,7 +267,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-frigate
 **Nach Konfigurationsänderungen** — Container-Neustart erzwingen:
 
 ```bash
-ssh root@10.100.20.32 "cd /opt/docker-data && docker compose down && docker compose up -d"
+ssh root@10.x.x.x "cd /opt/docker-data && docker compose down && docker compose up -d"
 ```
 
 ### Frigate-Konfiguration
@@ -290,7 +290,7 @@ Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kon
 - CPU-Detektor (`cpu1`, 3 Threads) — kein Coral TPU
 - `fps: 5` für detect bei allen Kameras
 - `shm_size: 512mb` — erforderlich für Pre-Capture-Pufferung mit 3 Kameras
-- MQTT → Mosquitto-Broker auf HA (`10.100.20.100`), Benutzer `frigate`
+- MQTT → Mosquitto-Broker auf HA (`10.x.x.x`), Benutzer `frigate`
 - Event-Aufbewahrung: 14 Tage
 - Pre-Capture-Puffer: 25 Sekunden, Post-Capture: 10 Sekunden
 
@@ -308,7 +308,7 @@ Dies ist kritisch — ein einzelner Stream für beide Rollen führt zu VAAPI-Kon
 - Mosquitto-Broker: HA Add-on, Port 1883, Benutzer `frigate`
 - MQTT-Zugangsdaten: in `ansible/secrets.yml` (`mqtt_username`, `mqtt_password`)
 - HA MQTT-Integration: mit denselben `frigate`-Zugangsdaten konfiguriert
-- Frigate HACS-Integration v5.15.3: URL `http://10.100.20.32:5000`
+- Frigate HACS-Integration v5.15.3: URL `http://10.x.x.x:5000`
 
 **Ergebnis in HA:** 8 Geräte, 153 Entitäten — Server, 3 Kameras, 4 Mazda-Zonen als separate Geräte.
 
@@ -322,7 +322,7 @@ Frigate erzwingt Authentifizierung nur auf Port `8971` (HTTPS). Port `5000` ist 
 auth:
   enabled: true
   trusted_proxies:
-    - 10.100.20.24/32    # NPM IP
+    - 10.x.x.x/32    # NPM IP
 ```
 
 **NPM-Konfiguration für `frigate.damianzientek.de`:**
@@ -353,13 +353,13 @@ auth:
 ### Netzwerk
 
 - VLAN 90 (IoT) → VLAN 20 (SERVER): FortiGate-Regel `Frigate_to_Cams`
-- Zugriff: SERVER_LAN (Frigate IP `10.100.20.32`) → Kameras (VLAN90), RTSP-Port
+- Zugriff: SERVER_LAN (Frigate IP `10.x.x.x`) → Kameras (VLAN90), RTSP-Port
 - Aufnahmen von rsync ausgeschlossen (`--exclude='frigate/'` in rsync-hdd-backup.sh auf pve2)
 
 ### Home Assistant Integration
 
 - Frigate-Integration über HACS (v5.15.3)
-- Frigate URL in HA: `http://10.100.20.32:5000`, SSL deaktiviert
+- Frigate URL in HA: `http://10.x.x.x:5000`, SSL deaktiviert
 - MQTT: Mosquitto-Broker als HA Add-on, Benutzer `frigate`
 - 8 Geräte sichtbar: Frigate-Server + 3 Kameras + 4 Mazda-Parkzonen
 
@@ -379,19 +379,19 @@ Frigate to self-hosted NVR (Network Video Recorder) działający w kontenerze Do
 
 | Parametr | Wartość |
 |----------|---------|
-| Host | pve2 (`10.100.20.11`) |
+| Host | pve2 (`10.x.x.x`) |
 | LXC ID | 320 |
-| IP | `10.100.20.32` |
-| Web UI | `http://10.100.20.32:5000` / `https://frigate.damianzientek.de` |
-| go2rtc API | `http://10.100.20.32:1984` |
+| IP | `10.x.x.x` |
+| Web UI | `http://10.x.x.x:5000` / `https://frigate.damianzientek.de` |
+| go2rtc API | `http://10.x.x.x:1984` |
 
 ### Kamery
 
 | Nazwa | Model | IP | Strumień główny | Substream |
 |-------|-------|-----|----------------|-----------|
-| skoda | Reolink RLC-510A | `10.100.90.11` | H.265 2880×1616 | H.264 640×480 |
-| mazda | Reolink RLC-510A | `10.100.90.12` | H.265 2880×1616 | H.264 640×480 |
-| sypialnia | Reolink E1 Pro | `10.100.90.14` | H.264 2880×1616 | H.264 896×512 |
+| skoda | Reolink RLC-510A | `10.x.x.x` | H.265 2880×1616 | H.264 640×480 |
+| mazda | Reolink RLC-510A | `10.x.x.x` | H.265 2880×1616 | H.264 640×480 |
+| sypialnia | Reolink E1 Pro | `10.x.x.x` | H.264 2880×1616 | H.264 896×512 |
 
 ### Bind Mounty (pve2 host)
 
@@ -435,7 +435,7 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-frigate
 **Po zmianach w configu** — wymuś restart kontenera (Ansible restartuje tylko gdy zmienia się docker-compose.yml):
 
 ```bash
-ssh root@10.100.20.32 "cd /opt/docker-data && docker compose down && docker compose up -d"
+ssh root@10.x.x.x "cd /opt/docker-data && docker compose down && docker compose up -d"
 ```
 
 ### Konfiguracja Frigate
@@ -458,7 +458,7 @@ To jest krytyczne — użycie jednego strumienia dla obu ról powoduje wyczerpan
 - Detektor CPU (`cpu1`, 3 wątki) — brak Coral TPU
 - `fps: 5` dla detect na każdej kamerze (wystarczające do detekcji, odciąża CPU)
 - `shm_size: 512mb` — wymagane do buforowania pre_capture przy 3 kamerach
-- MQTT → Mosquitto broker na HA (`10.100.20.100`), user `frigate`
+- MQTT → Mosquitto broker na HA (`10.x.x.x`), user `frigate`
 - Retencja eventów: 14 dni
 - Pre-capture buffer: 25 sekund, post-capture: 10 sekund
 
@@ -478,7 +478,7 @@ Frigate wysyła zdarzenia do Mosquitto brokera (HA add-on) przez MQTT. Home Assi
 - Mosquitto broker: HA add-on, port 1883, user `frigate`
 - Credentials MQTT: w `ansible/secrets.yml` (`mqtt_username`, `mqtt_password`)
 - Integracja MQTT w HA: skonfigurowana z tymi samymi credentials `frigate`
-- Integracja Frigate HACS v5.15.3: URL `http://10.100.20.32:5000`
+- Integracja Frigate HACS v5.15.3: URL `http://10.x.x.x:5000`
 
 **Efekt w HA:** 8 urządzeń, 153 encje — serwer, 3 kamery, 4 strefy Mazda jako osobne urządzenia.
 
@@ -486,10 +486,10 @@ Frigate wysyła zdarzenia do Mosquitto brokera (HA add-on) przez MQTT. Home Assi
 
 ```bash
 # Test połączenia z LXC Frigate
-mosquitto_pub -h 10.100.20.100 -p 1883 -u frigate -P 'HASLO' -t test -m hello -d
+mosquitto_pub -h 10.x.x.x -p 1883 -u frigate -P 'HASLO' -t test -m hello -d
 
 # Logi MQTT w Frigate
-ssh root@10.100.20.32 "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
+ssh root@10.x.x.x "docker logs frigate 2>&1 | grep -i mqtt | tail -10"
 ```
 
 ### Autentykacja
@@ -502,7 +502,7 @@ Frigate wymusza autentykację tylko na porcie `8971` (HTTPS). Port `5000` jest n
 auth:
   enabled: true
   trusted_proxies:
-    - 10.100.20.24/32    # IP NPM
+    - 10.x.x.x/32    # IP NPM
 ```
 
 **Konfiguracja NPM dla `frigate.damianzientek.de`:**
@@ -541,13 +541,13 @@ auth:
 ### Sieć
 
 - VLAN 90 (IoT) → VLAN 20 (SERVER): reguła FortiGate `Frigate_to_Cams`
-- Dostęp: SERVER_LAN (Frigate IP `10.100.20.32`) → kamery (VLAN90), port RTSP
+- Dostęp: SERVER_LAN (Frigate IP `10.x.x.x`) → kamery (VLAN90), port RTSP
 - Nagrania wykluczone z rsync (`--exclude='frigate/'` w rsync-hdd-backup.sh na pve2)
 
 ### Integracja Home Assistant
 
 - Integracja Frigate przez HACS (v5.15.3)
-- Frigate URL w HA: `http://10.100.20.32:5000`, SSL odznaczony
+- Frigate URL w HA: `http://10.x.x.x:5000`, SSL odznaczony
 - MQTT: Mosquitto broker jako Add-on w HA, user `frigate`
 - 8 urządzeń widocznych: serwer Frigate + 3 kamery + 4 strefy parkingowe Mazda
 - HA może używać danych stref w automatyzacjach: "wykryto osobę w strefie parking_mazda"

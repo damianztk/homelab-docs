@@ -70,25 +70,25 @@ all:
     proxmox_vms:
       hosts:
         ansible-test:
-          ansible_host: 10.100.20.40
+          ansible_host: 10.x.x.x
           ansible_user: damian
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
         k3s:
-          ansible_host: 10.100.20.41
+          ansible_host: 10.x.x.x
           ansible_user: damian
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
     proxmox_lxc:
       hosts:
         utility-apps:
-          ansible_host: 10.100.20.30
+          ansible_host: 10.x.x.x
           ansible_user: root
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
         frigate:
-          ansible_host: 10.100.20.32
+          ansible_host: 10.x.x.x
           ansible_user: root
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
         pbs:
-          ansible_host: 10.100.20.90
+          ansible_host: 10.x.x.x
           ansible_user: root
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
 ```

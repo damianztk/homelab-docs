@@ -15,7 +15,7 @@
 
 This guide covers day-to-day operations of the k3s cluster: kubectl setup, core Kubernetes concepts, Helm package manager, and the monitoring stack. It assumes k3s is already installed (see `k3s-install.md`).
 
-**Cluster:** Single-node k3s on VM 410 (`10.100.20.41`, pve2, 10GB RAM, 2 vCPU, 40GB disk)
+**Cluster:** Single-node k3s on VM 410 (`10.x.x.x`, pve2, 10GB RAM, 2 vCPU, 40GB disk)
 
 ---
 
@@ -48,7 +48,7 @@ ssh k3s "rm /home/damian/k3s.yaml"
 The default kubeconfig points to `127.0.0.1` (localhost of the VM). Change it to the actual VM IP:
 
 ```bash
-sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
+sed -i 's/127.0.0.1/10.x.x.x/' ~/.kube/config
 ```
 
 #### Verify
@@ -58,7 +58,7 @@ kubectl get nodes
 # Expected: NAME=k3s  STATUS=Ready  ROLES=control-plane
 ```
 
-> **Note:** After VM destroy+recreate with the same IP, run `ssh-keygen -R 10.100.20.41` and `ssh-keyscan 10.100.20.41 >> ~/.ssh/known_hosts` before copying kubeconfig again.
+> **Note:** After VM destroy+recreate with the same IP, run `ssh-keygen -R 10.x.x.x` and `ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts` before copying kubeconfig again.
 
 ---
 
@@ -264,16 +264,16 @@ Browser
   ↓
 Cloudflare Tunnel (future — for public traffic)
   ↓
-NPM (10.100.20.4) — homelab-wide reverse proxy
+NPM (10.x.x.x) — homelab-wide reverse proxy
   ↓
-Traefik (10.100.20.41:80) — k3s Ingress controller
+Traefik (10.x.x.x:80) — k3s Ingress controller
   ↓
 Service (ClusterIP) — stable internal address
   ↓
 Pod — running container
 ```
 
-**DNS resolution:** AdGuard Home wildcard `*.damianzientek.de → 10.100.20.4` covers everything. NPM proxy host forwards specific domains to Traefik at `10.100.20.41`.
+**DNS resolution:** AdGuard Home wildcard `*.damianzientek.de → 10.x.x.x` covers everything. NPM proxy host forwards specific domains to Traefik at `10.x.x.x`.
 
 **NPM settings for k3s services:** Force SSL ✓ | HTTP/2 ✓ | Websockets ✓ (for Grafana/n8n) | Block Common Exploits ✗
 
@@ -374,7 +374,7 @@ kubectl top pods -n monitoring
 
 #### Access
 
-NPM proxy host: `grafana.damianzientek.de` → `http://10.100.20.41:80`
+NPM proxy host: `grafana.damianzientek.de` → `http://10.x.x.x:80`
 Login: `admin` / password from `grafana-secret.yml`
 
 Prometheus and Alertmanager data sources are pre-configured automatically by the chart.
@@ -388,7 +388,7 @@ Prometheus and Alertmanager data sources are pre-configured automatically by the
 kubeconfig still points to `127.0.0.1`:
 
 ```bash
-sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
+sed -i 's/127.0.0.1/10.x.x.x/' ~/.kube/config
 ```
 
 #### Pod stuck in `Pending`
@@ -456,7 +456,7 @@ Cosmetic — Grafana tries to fetch optional plugins from grafana.com on startup
 
 Dieser Leitfaden behandelt den täglichen Betrieb des k3s-Clusters: kubectl-Einrichtung, Kubernetes-Grundkonzepte, Helm-Paketmanager und den Monitoring-Stack. k3s muss bereits installiert sein (siehe `k3s-install.md`).
 
-**Cluster:** Single-Node k3s auf VM 410 (`10.100.20.41`, pve2, 10 GB RAM, 2 vCPU, 40 GB Disk)
+**Cluster:** Single-Node k3s auf VM 410 (`10.x.x.x`, pve2, 10 GB RAM, 2 vCPU, 40 GB Disk)
 
 ---
 
@@ -489,7 +489,7 @@ ssh k3s "rm /home/damian/k3s.yaml"
 Die Standard-kubeconfig zeigt auf `127.0.0.1` (localhost der VM). Auf die tatsächliche VM-IP ändern:
 
 ```bash
-sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
+sed -i 's/127.0.0.1/10.x.x.x/' ~/.kube/config
 ```
 
 #### Überprüfung
@@ -573,16 +573,16 @@ Browser
   ↓
 Cloudflare Tunnel (zukünftig — für öffentlichen Traffic)
   ↓
-NPM (10.100.20.4) — homelab-weiter Reverse Proxy
+NPM (10.x.x.x) — homelab-weiter Reverse Proxy
   ↓
-Traefik (10.100.20.41:80) — k3s Ingress Controller
+Traefik (10.x.x.x:80) — k3s Ingress Controller
   ↓
 Service (ClusterIP) — stabile interne Adresse
   ↓
 Pod — laufender Container
 ```
 
-**DNS-Auflösung:** AdGuard Home Wildcard `*.damianzientek.de → 10.100.20.4`. NPM-Proxy-Host leitet spezifische Domains an Traefik weiter.
+**DNS-Auflösung:** AdGuard Home Wildcard `*.damianzientek.de → 10.x.x.x`. NPM-Proxy-Host leitet spezifische Domains an Traefik weiter.
 
 **NPM-Einstellungen für k3s-Dienste:** Force SSL ✓ | HTTP/2 ✓ | Websockets ✓ | Block Common Exploits ✗
 
@@ -633,7 +633,7 @@ helm install monitoring prometheus-community/kube-prometheus-stack \
   -f k8s/monitoring-values.yml
 ```
 
-**Zugriff:** NPM-Proxy-Host `grafana.damianzientek.de` → `http://10.100.20.41:80`
+**Zugriff:** NPM-Proxy-Host `grafana.damianzientek.de` → `http://10.x.x.x:80`
 
 ---
 
@@ -681,7 +681,7 @@ kubectl describe pod <name> -n <namespace>
 
 Ten przewodnik obejmuje codzienną obsługę klastra k3s: konfigurację kubectl, podstawowe koncepty Kubernetes, menedżer pakietów Helm i stack monitoringu. k3s musi być już zainstalowany (patrz `k3s-install.md`).
 
-**Klaster:** Single-node k3s na VM 410 (`10.100.20.41`, pve2, 10 GB RAM, 2 vCPU, dysk 40 GB)
+**Klaster:** Single-node k3s na VM 410 (`10.x.x.x`, pve2, 10 GB RAM, 2 vCPU, dysk 40 GB)
 
 ---
 
@@ -714,7 +714,7 @@ ssh k3s "rm /home/damian/k3s.yaml"
 Domyślny kubeconfig wskazuje na `127.0.0.1` (localhost VM). Zmień na rzeczywisty IP VM:
 
 ```bash
-sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
+sed -i 's/127.0.0.1/10.x.x.x/' ~/.kube/config
 ```
 
 #### Weryfikacja
@@ -724,7 +724,7 @@ kubectl get nodes
 # Oczekiwane: NAME=k3s  STATUS=Ready  ROLES=control-plane
 ```
 
-> **Uwaga:** Po destroy+recreate VM z tym samym IP uruchom `ssh-keygen -R 10.100.20.41` i `ssh-keyscan 10.100.20.41 >> ~/.ssh/known_hosts` przed ponownym kopiowaniem kubeconfig.
+> **Uwaga:** Po destroy+recreate VM z tym samym IP uruchom `ssh-keygen -R 10.x.x.x` i `ssh-keyscan 10.x.x.x >> ~/.ssh/known_hosts` przed ponownym kopiowaniem kubeconfig.
 
 ---
 
@@ -906,16 +906,16 @@ Przeglądarka
   ↓
 Cloudflare Tunnel (docelowo — dla ruchu publicznego)
   ↓
-NPM (10.100.20.4) — reverse proxy dla całego homelabu
+NPM (10.x.x.x) — reverse proxy dla całego homelabu
   ↓
-Traefik (10.100.20.41:80) — Ingress controller k3s
+Traefik (10.x.x.x:80) — Ingress controller k3s
   ↓
 Service (ClusterIP) — stały adres wewnętrzny
   ↓
 Pod — działający kontener
 ```
 
-**Rozwiązywanie DNS:** Wildcard AdGuard Home `*.damianzientek.de → 10.100.20.4` pokrywa wszystko. NPM proxy host przekierowuje konkretne domeny do Traefika na `10.100.20.41`.
+**Rozwiązywanie DNS:** Wildcard AdGuard Home `*.damianzientek.de → 10.x.x.x` pokrywa wszystko. NPM proxy host przekierowuje konkretne domeny do Traefika na `10.x.x.x`.
 
 **Ustawienia NPM dla usług k3s:** Force SSL ✓ | HTTP/2 ✓ | Websockets ✓ (Grafana, n8n) | Block Common Exploits ✗
 
@@ -1016,7 +1016,7 @@ kubectl top pods -n monitoring
 
 #### Dostęp
 
-NPM proxy host: `grafana.damianzientek.de` → `http://10.100.20.41:80`
+NPM proxy host: `grafana.damianzientek.de` → `http://10.x.x.x:80`
 Login: `admin` / hasło z `grafana-secret.yml`
 
 Prometheus i Alertmanager są automatycznie skonfigurowane jako data sources przez chart.
@@ -1030,7 +1030,7 @@ Prometheus i Alertmanager są automatycznie skonfigurowane jako data sources prz
 kubeconfig nadal wskazuje na `127.0.0.1`:
 
 ```bash
-sed -i 's/127.0.0.1/10.100.20.41/' ~/.kube/config
+sed -i 's/127.0.0.1/10.x.x.x/' ~/.kube/config
 ```
 
 #### Pod utknął w `Pending`

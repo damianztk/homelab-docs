@@ -132,7 +132,7 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint  = "https://10.100.20.10:8006"
+  endpoint  = "https://10.x.x.x:8006"
   api_token = var.proxmox_api_token
   insecure  = true
 }
@@ -159,8 +159,8 @@ resource "proxmox_virtual_environment_vm" "ansible_test" {
   initialization {
     ip_config {
       ipv4 {
-        address = "10.100.20.40/24"
-        gateway = "10.100.20.254"
+        address = "10.x.x.x/24"
+        gateway = "10.x.x.x"
       }
     }
     user_account {
@@ -241,7 +241,7 @@ all:
     proxmox_vms:
       hosts:
         ansible-test:
-          ansible_host: 10.100.20.40
+          ansible_host: 10.x.x.x
           ansible_user: damian
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
 ```
@@ -449,7 +449,7 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint  = "https://10.100.20.10:8006"
+  endpoint  = "https://10.x.x.x:8006"
   api_token = var.proxmox_api_token
   insecure  = true
 }
@@ -476,8 +476,8 @@ resource "proxmox_virtual_environment_vm" "ansible_test" {
   initialization {
     ip_config {
       ipv4 {
-        address = "10.100.20.40/24"
-        gateway = "10.100.20.254"
+        address = "10.x.x.x/24"
+        gateway = "10.x.x.x"
       }
     }
     user_account {
@@ -560,7 +560,7 @@ all:
     proxmox_vms:
       hosts:
         ansible-test:
-          ansible_host: 10.100.20.40
+          ansible_host: 10.x.x.x
           ansible_user: damian
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
 ```
@@ -881,7 +881,7 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint  = "https://10.100.20.10:8006"
+  endpoint  = "https://10.x.x.x:8006"
   api_token = var.proxmox_api_token
   insecure  = true
 }
@@ -908,8 +908,8 @@ resource "proxmox_virtual_environment_vm" "ansible_test" {
   initialization {
     ip_config {
       ipv4 {
-        address = "10.100.20.40/24"
-        gateway = "10.100.20.254"
+        address = "10.x.x.x/24"
+        gateway = "10.x.x.x"
       }
     }
     user_account {
@@ -990,7 +990,7 @@ all:
     proxmox_vms:
       hosts:
         ansible-test:
-          ansible_host: 10.100.20.40
+          ansible_host: 10.x.x.x
           ansible_user: damian
           ansible_ssh_private_key_file: ~/.ssh/id_ed25519
 ```

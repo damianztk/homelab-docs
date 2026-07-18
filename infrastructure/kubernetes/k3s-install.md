@@ -21,10 +21,10 @@ k3s is a lightweight, certified Kubernetes distribution packaged as a single bin
 
 | Parameter | Value |
 |-----------|-------|
-| Host | pve2 (`10.100.20.11`) |
+| Host | pve2 (`10.x.x.x`) |
 | VM ID | 410 |
 | VM Name | k3s |
-| IP | `10.100.20.41` |
+| IP | `10.x.x.x` |
 | RAM | 10 GB |
 | CPU | 2 vCPU |
 | Disk | 40 GB (local-lvm) |
@@ -54,7 +54,7 @@ resource "proxmox_virtual_environment_vm" "k3s" {
   name      = "k3s"
   node_name = "pve2"
   vm_id     = 410
-  # Cloud-Init: IP 10.100.20.41, user damian, SSH key from WSL
+  # Cloud-Init: IP 10.x.x.x, user damian, SSH key from WSL
 }
 ```
 
@@ -175,8 +175,8 @@ See the k3s operations guide for full kubectl usage documentation.
 **Cause:** VM was destroyed and recreated with same IP — new SSH host key
 **Solution:**
 ```bash
-ssh-keygen -R 10.100.20.41
-ssh-keyscan -H 10.100.20.41 >> ~/.ssh/known_hosts
+ssh-keygen -R 10.x.x.x
+ssh-keyscan -H 10.x.x.x >> ~/.ssh/known_hosts
 ```
 
 **Issue:** `terraform apply` fails with cross-node clone error
@@ -209,7 +209,7 @@ ssh {
   username = "root"
   node {
     name    = "pve2"
-    address = "10.100.20.11"
+    address = "10.x.x.x"
   }
 }
 ```
@@ -229,10 +229,10 @@ k3s ist eine leichtgewichtige, zertifizierte Kubernetes-Distribution, verpackt a
 
 | Parameter | Wert |
 |-----------|------|
-| Host | pve2 (`10.100.20.11`) |
+| Host | pve2 (`10.x.x.x`) |
 | VM ID | 410 |
 | VM Name | k3s |
-| IP | `10.100.20.41` |
+| IP | `10.x.x.x` |
 | RAM | 10 GB |
 | CPU | 2 vCPU |
 | Disk | 40 GB (local-lvm) |
@@ -275,8 +275,8 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/install-k3s.ym
 **Problem:** SSH `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED` nach VM-Neuerstellung
 **Lösung:**
 ```bash
-ssh-keygen -R 10.100.20.41
-ssh-keyscan -H 10.100.20.41 >> ~/.ssh/known_hosts
+ssh-keygen -R 10.x.x.x
+ssh-keyscan -H 10.x.x.x >> ~/.ssh/known_hosts
 ```
 
 **Problem:** `terraform apply` schlägt mit Cross-Node-Klon-Fehler fehl
@@ -302,10 +302,10 @@ k3s to lekka, certyfikowana dystrybucja Kubernetes spakowana jako jeden plik bin
 
 | Parametr | Wartość |
 |----------|---------|
-| Host | pve2 (`10.100.20.11`) |
+| Host | pve2 (`10.x.x.x`) |
 | VM ID | 410 |
 | Nazwa VM | k3s |
-| IP | `10.100.20.41` |
+| IP | `10.x.x.x` |
 | RAM | 10 GB |
 | CPU | 2 vCPU |
 | Dysk | 40 GB (local-lvm) |
@@ -403,8 +403,8 @@ Po instalacji skonfiguruj dla wygodniejszego użycia:
 **Przyczyna:** VM została zniszczona i odtworzona z tym samym IP — nowy klucz SSH hosta
 **Rozwiązanie:**
 ```bash
-ssh-keygen -R 10.100.20.41
-ssh-keyscan -H 10.100.20.41 >> ~/.ssh/known_hosts
+ssh-keygen -R 10.x.x.x
+ssh-keyscan -H 10.x.x.x >> ~/.ssh/known_hosts
 ```
 
 **Problem:** `terraform apply` wywala błąd cross-node clone

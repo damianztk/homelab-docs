@@ -73,7 +73,7 @@ network:
       dhcp4-overrides:
         use-dns: false
       nameservers:
-        addresses: [10.100.30.2]
+        addresses: [10.x.x.x]
   version: 2
 ```
 
@@ -116,12 +116,12 @@ sudo systemctl restart systemd-resolved
 Global
      Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
 resolv.conf mode: stub
-     DNS Servers: 10.100.30.2
+     DNS Servers: 10.x.x.x
 
 Link 2 (ens18)
   Current Scopes: DNS
        Protocols: +DefaultRoute ...
-     DNS Servers: 10.100.30.2
+     DNS Servers: 10.x.x.x
 ```
 
 Verify DNS is actually working:
@@ -135,9 +135,9 @@ dig google.com
 ## Environment Context
 
 - **VM**: Ubuntu Server on Proxmox VE 9
-- **Network**: SERVER_LAN (VLAN 20) — `10.100.20.0/24`
-- **DNS**: AdGuard Home + Unbound on DELL Wyse 3040 — `10.100.30.2`
-- **Previous DNS**: Pi-hole at `192.168.2.50` (old network `192.168.2.0/24`)
+- **Network**: SERVER_LAN (VLAN 20) — `10.x.x.x/24`
+- **DNS**: AdGuard Home + Unbound on DELL Wyse 3040 — `10.x.x.x`
+- **Previous DNS**: Pi-hole at `192.168.x.x` (old network `192.168.x.x/24`)
 
 ---
 ---
@@ -211,7 +211,7 @@ network:
       dhcp4-overrides:
         use-dns: false
       nameservers:
-        addresses: [10.100.30.2]
+        addresses: [10.x.x.x]
   version: 2
 ```
 
@@ -254,12 +254,12 @@ sudo systemctl restart systemd-resolved
 Global
      Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
 resolv.conf mode: stub
-     DNS Servers: 10.100.30.2
+     DNS Servers: 10.x.x.x
 
 Link 2 (ens18)
   Current Scopes: DNS
        Protocols: +DefaultRoute ...
-     DNS Servers: 10.100.30.2
+     DNS Servers: 10.x.x.x
 ```
 
 Sprawdzenie czy DNS faktycznie działa:
@@ -273,9 +273,9 @@ dig google.com
 ## Kontekst środowiska
 
 - **VM**: Ubuntu Server na Proxmox VE 9
-- **Sieć**: SERVER_LAN (VLAN 20) — `10.100.20.0/24`
-- **DNS**: AdGuard Home + Unbound na DELL Wyse 3040 — `10.100.30.2`
-- **Poprzedni DNS**: Pi-hole na `192.168.2.50` (stara sieć `192.168.2.0/24`)
+- **Sieć**: SERVER_LAN (VLAN 20) — `10.x.x.x/24`
+- **DNS**: AdGuard Home + Unbound na DELL Wyse 3040 — `10.x.x.x`
+- **Poprzedni DNS**: Pi-hole na `192.168.x.x` (stara sieć `192.168.x.x/24`)
 
 ---
 ---
@@ -349,7 +349,7 @@ network:
       dhcp4-overrides:
         use-dns: false
       nameservers:
-        addresses: [10.100.30.2]
+        addresses: [10.x.x.x]
   version: 2
 ```
 
@@ -392,12 +392,12 @@ sudo systemctl restart systemd-resolved
 Global
      Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
 resolv.conf mode: stub
-     DNS Servers: 10.100.30.2
+     DNS Servers: 10.x.x.x
 
 Link 2 (ens18)
   Current Scopes: DNS
        Protocols: +DefaultRoute ...
-     DNS Servers: 10.100.30.2
+     DNS Servers: 10.x.x.x
 ```
 
 Überprüfen, ob DNS tatsächlich funktioniert:
@@ -411,6 +411,6 @@ dig google.com
 ## Umgebungskontext
 
 - **VM**: Ubuntu Server auf Proxmox VE 9
-- **Netzwerk**: SERVER_LAN (VLAN 20) — `10.100.20.0/24`
-- **DNS**: AdGuard Home + Unbound auf DELL Wyse 3040 — `10.100.30.2`
-- **Vorheriger DNS**: Pi-hole unter `192.168.2.50` (altes Netzwerk `192.168.2.0/24`)
+- **Netzwerk**: SERVER_LAN (VLAN 20) — `10.x.x.x/24`
+- **DNS**: AdGuard Home + Unbound auf DELL Wyse 3040 — `10.x.x.x`
+- **Vorheriger DNS**: Pi-hole unter `192.168.x.x` (altes Netzwerk `192.168.x.x/24`)
