@@ -1,0 +1,20 @@
+name: Check for unmasked private IPs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check-ips:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for unmasked private IPs
+        run: python3 tools/sanitize_ips.py --check
+
+      - name: Notify via ntfy
+        if: failure()
+        run: |
+          curl -d "Niezamaskowane IP wykryte w homelab-docs (main)!" https://ntfy.damianzientek.de/homelab-docs-alerts

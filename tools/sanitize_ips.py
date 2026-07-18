@@ -63,15 +63,28 @@ def sanitize_text(text: str) -> tuple[str, int]:
 
 def main():
     apply_changes = '--apply' in sys.argv
-    repo_root = Path(__file__).parent.parent  # tools/ -> repo root
+    check_mode = '--check' in sys.argv
+    repo_root = Path(__file__).parent.parent
+
+    # W trybie --check można podać konkretne pliki jako argumenty
+    # (np. tylko te ze stage'a gita), zamiast skanować całe repo.
+    file_args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    if file_args:
+        target_files = [Path(f) for f in file_args]
+    else:
+        target_files = sorted(repo_root.rglob('*.md'))
 
     files_changed = 0
     replacements = 0
 
-    for md_file in sorted(repo_root.rglob('*.md')):
-        rel_path = md_file.relative_to(repo_root)
+    for md_file in target_files:
+        if not md_file.exists():
+            continue
+        try:
+            rel_path = md_file.relative_to(repo_root)
+        except ValueError:
+            rel_path = md_file  # ścieżka podana ręcznie, np. relatywna ze staged
 
-        # Pomiń pliki w wykluczonych katalogach
         if any(part in SKIP_DIRS for part in rel_path.parts):
             continue
 
@@ -83,14 +96,20 @@ def main():
 
         files_changed += 1
         replacements += count
-        print(f"{rel_path}: {count} zamian")
+        print(f"{rel_path}: {count} niezamaskowanych IP")
 
         if apply_changes:
             md_file.write_text(sanitized, encoding='utf-8')
 
+    if check_mode:
+        if files_changed > 0:
+            print(f"\n❌ Znaleziono niezamaskowane IP w {files_changed} plik(ach).")
+            sys.exit(1)
+        print("✅ OK — brak niezamaskowanych prywatnych IP.")
+        sys.exit(0)
+
     print(f"\n{'ZAPISANO' if apply_changes else 'DRY-RUN (nic nie zapisano)'}: "
           f"{files_changed} plików, {replacements} zamian")
-
     if not apply_changes and files_changed > 0:
         print("Uruchom z --apply, żeby zapisać.")
 
