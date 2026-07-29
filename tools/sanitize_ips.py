@@ -16,6 +16,11 @@ PATTERNS = [
     (re.compile(r'\b(10)\.\d{1,3}\.\d{1,3}\.\d{1,3}\b'), r'\1.x.x.x'),
     (re.compile(r'\b(192)\.168\.\d{1,3}\.\d{1,3}\b'), r'\1.168.x.x'),
     (re.compile(r'\b(172)\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}\b'), r'\1.x.x.x'),
+    # Subdomeny realnej domeny -> generyczny placeholder. Zachowuje nazwę
+    # usługi (uczy wzorca "serwis pod subdomeną"), usuwa powiązanie z
+    # rzeczywistą domeną/nazwiskiem. Sama "damianzientek.de" (bez subdomeny,
+    # np. link do portfolio w README) NIE jest tu dotykana — celowo publiczne.
+    (re.compile(r'\b([\w-]+)\.damianzientek\.de\b'), r'\1.example.com'),
 ]
 
 # Dokładne, kanoniczne deklaracje CAŁEGO zakresu RFC1918 — generyczne,
@@ -96,16 +101,16 @@ def main():
 
         files_changed += 1
         replacements += count
-        print(f"{rel_path}: {count} niezamaskowanych IP")
+        print(f"{rel_path}: {count} niezamaskowanych IP/domen")
 
         if apply_changes:
             md_file.write_text(sanitized, encoding='utf-8')
 
     if check_mode:
         if files_changed > 0:
-            print(f"\n❌ Znaleziono niezamaskowane IP w {files_changed} plik(ach).")
+            print(f"\n❌ Znaleziono niezamaskowane IP/domeny w {files_changed} plik(ach).")
             sys.exit(1)
-        print("✅ OK — brak niezamaskowanych prywatnych IP.")
+        print("✅ OK — brak niezamaskowanych prywatnych IP/domen.")
         sys.exit(0)
 
     print(f"\n{'ZAPISANO' if apply_changes else 'DRY-RUN (nic nie zapisano)'}: "

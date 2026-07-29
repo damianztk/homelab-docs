@@ -88,5 +88,5 @@ A few documents that show the lab end-to-end:
 | Repo | Purpose |
 | ---- | ------- |
 | `homelab-iac` | Infrastructure as Code — Ansible, Terraform (private) |
-| [scripts](https://github.com/damianztk/scripts) | Automation scripts — backups, maintenance |
+| [scripts](https://github.com/damianztk/scripts) | Automation scripts — backups, maintenance, not yet on GitHub |
 | [portfolio](https://github.com/damianztk/portfolio) | Personal portfolio website ([damianzientek.de](https://damianzientek.de)) |
