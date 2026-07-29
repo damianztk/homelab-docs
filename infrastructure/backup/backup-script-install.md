@@ -115,7 +115,7 @@ Backs up host configuration, LXC bind mount data and Docker stack data. Automati
 ```bash
 # Clone repo (first time only)
 apt install git -y
-git clone https://gitea.damianzientek.de/damian/scripts.git ~/scripts
+git clone https://gitea.example.com/damian/scripts.git ~/scripts
 
 # Deploy
 cp ~/scripts/proxmox/proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
@@ -170,7 +170,7 @@ apt install zstd rsync
 
 ```bash
 # Clone repo (first time only)
-git clone https://gitea.damianzientek.de/damian/scripts.git ~/scripts
+git clone https://gitea.example.com/damian/scripts.git ~/scripts
 
 # Deploy
 sudo cp ~/scripts/dell-wyse/wyse-backup.sh /usr/local/bin/
@@ -429,7 +429,7 @@ Sichert Host-Konfiguration, LXC-Bind-Mount-Daten und Docker-Stack-Daten. Erkennt
 ```bash
 # Repo klonen (nur beim ersten Mal)
 apt install git -y
-git clone https://gitea.damianzientek.de/damian/scripts.git ~/scripts
+git clone https://gitea.example.com/damian/scripts.git ~/scripts
 
 # Deployment
 cp ~/scripts/proxmox/proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
@@ -484,7 +484,7 @@ apt install zstd rsync
 
 ```bash
 # Repo klonen (nur beim ersten Mal)
-git clone https://gitea.damianzientek.de/damian/scripts.git ~/scripts
+git clone https://gitea.example.com/damian/scripts.git ~/scripts
 
 # Deployment
 sudo cp ~/scripts/dell-wyse/wyse-backup.sh /usr/local/bin/
@@ -740,7 +740,7 @@ Backupuje konfigurację hosta, dane bind mountów LXC i dane stacków Docker. Au
 ```bash
 # Klonowanie repo (tylko za pierwszym razem)
 apt install git -y
-git clone https://gitea.damianzientek.de/damian/scripts.git ~/scripts
+git clone https://gitea.example.com/damian/scripts.git ~/scripts
 
 # Wdrożenie
 cp ~/scripts/proxmox/proxmox-config-backup-and-pbs-check.sh /usr/local/bin/
@@ -795,7 +795,7 @@ apt install zstd rsync
 
 ```bash
 # Klonowanie repo (tylko za pierwszym razem)
-git clone https://gitea.damianzientek.de/damian/scripts.git ~/scripts
+git clone https://gitea.example.com/damian/scripts.git ~/scripts
 
 # Wdrożenie
 sudo cp ~/scripts/dell-wyse/wyse-backup.sh /usr/local/bin/

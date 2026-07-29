@@ -17,7 +17,7 @@ n8n is a self-hosted workflow automation platform. In this homelab it serves as 
 - Contact form handling: webhook → analysis → Telegram notification
 - Future: CI/CD triggers, monitoring integrations, homelab event automation
 
-**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
+**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.example.com`
 
 ### Architecture
 
@@ -96,13 +96,13 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-n8n.yml
 
 #### 6. NPM reverse proxy
 
-Forward: `n8n.damianzientek.de` → `http://10.x.x.x:5678`
+Forward: `n8n.example.com` → `http://10.x.x.x:5678`
 
 Options: Force SSL ✓ | HTTP/2 ✓ | Websockets ✓
 
 #### 7. First-run setup
 
-Open `https://n8n.damianzientek.de` → create owner account → complete onboarding → activate community license (Settings → License).
+Open `https://n8n.example.com` → create owner account → complete onboarding → activate community license (Settings → License).
 
 ### Troubleshooting
 
@@ -160,7 +160,7 @@ n8n ist eine selbst gehostete Workflow-Automatisierungsplattform. Im Homelab die
 - Kontaktformular: Webhook → Analyse → Telegram-Benachrichtigung
 - Zukünftig: CI/CD-Trigger, Monitoring-Integrationen, Homelab-Event-Automatisierung
 
-**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
+**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.example.com`
 
 ### Architektur
 
@@ -238,13 +238,13 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-n8n.yml
 
 #### 6. NPM Reverse Proxy
 
-Weiterleitung: `n8n.damianzientek.de` → `http://10.x.x.x:5678`
+Weiterleitung: `n8n.example.com` → `http://10.x.x.x:5678`
 
 Optionen: Force SSL ✓ | HTTP/2 ✓ | Websockets ✓
 
 #### 7. Ersteinrichtung
 
-`https://n8n.damianzientek.de` öffnen → Owner-Account erstellen → Onboarding abschließen → Community-Lizenz aktivieren (Einstellungen → Lizenz).
+`https://n8n.example.com` öffnen → Owner-Account erstellen → Onboarding abschließen → Community-Lizenz aktivieren (Einstellungen → Lizenz).
 
 ### Fehlerbehebung
 
@@ -301,7 +301,7 @@ n8n to samodzielnie hostowana platforma automatyzacji workflow. W homelabie peł
 - Obsługa formularza kontaktowego: webhook → analiza → powiadomienie Telegram
 - W przyszłości: triggery CI/CD, integracje monitoringu, automatyzacja zdarzeń homelabowych
 
-**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.damianzientek.de`
+**LXC:** 201 | **IP:** `10.x.x.x` | **Node:** pve1 | **URL:** `n8n.example.com`
 
 ### Architektura
 
@@ -380,13 +380,13 @@ ansible-playbook -i ansible/inventory/hosts.yml ansible/playbooks/deploy-n8n.yml
 
 #### 6. Reverse proxy NPM
 
-Przekierowanie: `n8n.damianzientek.de` → `http://10.x.x.x:5678`
+Przekierowanie: `n8n.example.com` → `http://10.x.x.x:5678`
 
 Opcje: Force SSL ✓ | HTTP/2 ✓ | Websockets ✓
 
 #### 7. Pierwsze uruchomienie
 
-Otworzyć `https://n8n.damianzientek.de` → utworzyć konto właściciela → zakończyć onboarding → aktywować licencję community (Ustawienia → Licencja).
+Otworzyć `https://n8n.example.com` → utworzyć konto właściciela → zakończyć onboarding → aktywować licencję community (Ustawienia → Licencja).
 
 ### Rozwiązywanie problemów
 

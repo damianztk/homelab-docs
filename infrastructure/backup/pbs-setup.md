@@ -24,7 +24,7 @@ Proxmox Backup Server 4.x (PBS) runs in a privileged LXC container on pve1. It h
 | Host | pve1 (`10.x.x.x`) |
 | LXC ID | 900 |
 | IP | `10.x.x.x` |
-| Web UI | `https://10.x.x.x:8007` / `https://pbs.damianzientek.de` |
+| Web UI | `https://10.x.x.x:8007` / `https://pbs.example.com` |
 | PBS Version | 4.2 (Debian 13 Trixie) |
 | Unprivileged | No (privileged required for loop devices) |
 
@@ -148,7 +148,7 @@ Proxmox Backup Server 4.x (PBS) läuft in einem privilegierten LXC-Container auf
 | Host | pve1 (`10.x.x.x`) |
 | LXC ID | 900 |
 | IP | `10.x.x.x` |
-| Web UI | `https://10.x.x.x:8007` / `https://pbs.damianzientek.de` |
+| Web UI | `https://10.x.x.x:8007` / `https://pbs.example.com` |
 | PBS Version | 4.2 (Debian 13 Trixie) |
 | Unprivilegiert | Nein (privilegiert erforderlich für Loop-Devices) |
 
@@ -272,7 +272,7 @@ Proxmox Backup Server 4.x (PBS) działa w privileged kontenerze LXC 900 na pve1.
 | Host | pve1 (`10.x.x.x`) |
 | LXC ID | 900 |
 | IP | `10.x.x.x` |
-| Web UI | `https://10.x.x.x:8007` / `https://pbs.damianzientek.de` |
+| Web UI | `https://10.x.x.x:8007` / `https://pbs.example.com` |
 | Wersja PBS | 4.2 (Debian 13 Trixie) |
 | Unprivileged | Nie (privileged wymagany dla loop devices) |
 
