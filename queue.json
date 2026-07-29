@@ -25,19 +25,19 @@
   },
   {
     "id": "terraform-ansible-cloudinit",
-    "source": "infrastructure/terraform-ansible-cloudinit.md",
+    "source": "infrastructure/iac/vm-provisioning-terraform-ansible-cloudinit.md",
     "status": "pending",
     "priority": 10
   },
   {
     "id": "pbs-setup",
-    "source": "infrastructure/proxmox/pbs-setup.md",
+    "source": "infrastructure/backup/pbs-setup.md",
     "status": "pending",
     "priority": 13
   },
   {
     "id": "dns-troubleshooting-systemd-resolved",
-    "source": "networking/dns/dns-troubleshooting-ubuntu-server-(systemd-resolved).md",
+    "source": "networking/dns/dns-troubleshooting-systemd-resolved.md",
     "status": "pending",
     "priority": 8
   },
@@ -61,7 +61,7 @@
   },
   {
     "id": "tailscale-tutorial",
-    "source": "tailscale/tailscale-tutorial.md",
+    "source": "networking/vpn/tailscale-tutorial.md",
     "status": "pending",
     "priority": 3
   },
@@ -79,7 +79,7 @@
   },
   {
     "id": "backup-script-install",
-    "source": "infrastructure/backup-script-install.md",
+    "source": "infrastructure/backup/backup-script-install.md",
     "status": "pending",
     "priority": 6
   },
