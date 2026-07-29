@@ -82,7 +82,6 @@ A few documents that show the lab end-to-end:
 | Provisioning VMs with Terraform + Cloud-Init + Ansible | [`infrastructure/iac/`](infrastructure/iac/) |
 | 2-node Proxmox cluster with a QDevice tie-breaker | [`infrastructure/proxmox/cluster/qdevice-tutorial.md`](infrastructure/proxmox/cluster/qdevice-tutorial.md) |
 | Backup strategy: PBS + automated config backups | [`infrastructure/backup/`](infrastructure/backup/) |
-| Network topology (sanitized diagram) | [`networking/network-topology.md`](networking/network-topology.md) |
 
 ## Related repositories
 
