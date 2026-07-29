@@ -11,13 +11,14 @@
 ![Gitea](https://img.shields.io/badge/Gitea-Git_Server-609926?style=flat-square&logo=gitea&logoColor=white) ![AdGuard](https://img.shields.io/badge/AdGuard-DNS-68BC71?style=flat-square&logo=adguard&logoColor=white)
 
 🇬🇧 Personal knowledge base documenting my homelab infrastructure —
-configurations, guides, and troubleshooting notes.
+configurations, guides, incident reports and troubleshooting notes.
 
 🇩🇪 Persönliche Wissensdatenbank zur Dokumentation meiner
-Homelab-Infrastruktur — Konfigurationen, Anleitungen und Notizen.
+Homelab-Infrastruktur — Konfigurationen, Anleitungen, Incident-Berichte
+und Notizen.
 
 🇵🇱 Osobista baza wiedzy dokumentująca moją infrastrukturę homelab —
-konfiguracje, instrukcje i notatki diagnostyczne.
+konfiguracje, instrukcje, raporty z incydentów i notatki diagnostyczne.
 </div>
 <!-- markdownlint-enable MD033 -->
 
@@ -27,31 +28,65 @@ konfiguracje, instrukcje i notatki diagnostyczne.
 
 ```text
 homelab-docs/
-├── cheat-sheets/               # learning help, quick notes   
+├── cheat-sheets/            # Quick reference notes (Polish)
+├── ci-cd/                   # Gitea Actions runner, build pipeline, private
+│                            #   registry, multi-stage Docker builds
+├── dev-environment/         # Workstation & tooling: WSL/VS Code, Node via nvm,
+│                            #   AI pair programming (Aider)
 ├── infrastructure/
-│   ├── dell-wyse-3040/         # Dell Wyse 3040 Terminal-related instructions
-│   ├── infrastructure-as-code/ # Ansible/Terraform instructions
-│   ├── kubernetes/             # k8s instructions
-│   ├── proxmox/                # LXC setup, backups, Proxmox config
-│   └── overview.md             # Full hardware & software inventory
+│   ├── backup/              # Backup strategy: PBS + host config backup scripts
+│   ├── dell-wyse-3040/      # Thin-client specific tuning and procedures
+│   ├── iac/                 # Terraform & Ansible: basics, VM/LXC provisioning
+│   │                        #   workflows, role composition, Vault, gotchas
+│   ├── kubernetes/          # k3s install & operations, Helm, Grafana+Prometheus
+│   └── proxmox/             # LXC procedures, UID mapping, NFS between nodes,
+│       │                    #   host configuration
+│       └── cluster/         # Corosync QDevice as cluster tie-breaker
 ├── networking/
-│   ├── dns/                    # DNS instructions and troubleshooting
-│   └── network-topology.md
-├── portfolio/                  # Portfolio Website-related docs
-├── screenshots/                # Visual proof of concept, diagrams, future guide helpers
-├── services/                   # install-guides for services and apps deployed in my homelab
-├── tailscale/                  # Subnet router setup and more
+│   ├── dns/                 # AdGuard Home, Unbound, sync, TLS via DNS challenge
+│   ├── vpn/                 # Tailscale, FortiGate dial-up IPSec
+│   ├── cloudflare-tunnel-setup.md
+│   ├── network-topology.md
+│   └── tp-link-switch-recovery.md
+├── screenshots/             # Images referenced by documents
+├── services/                # Deployment docs & incident reports for hosted
+│                            #   services (Gitea, n8n, Frigate, code-server,
+│                            #   utility-apps…)
+├── tools/                   # Repo maintenance scripts (IP sanitizer)
+├── web-dev/                 # Portfolio website: Astro 6, Tailwind v4, components
+├── queue.json               # Source queue for the AI blog pipeline (n8n)
 └── README.md
 ```
 
-## Infrastructure
+## Conventions
 
-Full hardware and software inventory → [overview.md](infrastructure/overview.md)
+- **Trilingual by default.** Most documents contain 🇬🇧 English, 🇩🇪 German and
+  🇵🇱 Polish sections in a single file, with anchor-based navigation at the top.
+- **Cheat-sheets are Polish-only** — they are personal quick references, not
+  guides.
+- **No real private addressing.** All private IPs are masked (`10.x.x.x`) before
+  publishing. This is enforced by [`tools/sanitize_ips.py`](tools/sanitize_ips.py)
+  and a [Gitea Actions check](.gitea/workflows/check-private-ips.yml) that runs
+  on every push.
+- **Documents are written from real sessions** — including the failures. Incident
+  reports and troubleshooting notes describe what actually broke and how it was
+  diagnosed, not idealized happy paths.
+
+## Start here
+
+A few documents that show the lab end-to-end:
+
+| Topic | Document |
+| ----- | -------- |
+| Full CI/CD chain: push → build → registry → k3s deploy | [`ci-cd/gitea-actions-pipeline.md`](ci-cd/gitea-actions-pipeline.md) |
+| Provisioning VMs with Terraform + Cloud-Init + Ansible | [`infrastructure/iac/`](infrastructure/iac/) |
+| 2-node Proxmox cluster with a QDevice tie-breaker | [`infrastructure/proxmox/cluster/qdevice-tutorial.md`](infrastructure/proxmox/cluster/qdevice-tutorial.md) |
+| Backup strategy: PBS + automated config backups | [`infrastructure/backup/`](infrastructure/backup/) |
 
 ## Related repositories
 
 | Repo | Purpose |
 | ---- | ------- |
-| `homelab-iac` | Infrastructure as Code - Ansible, Terraform (private) |
-| [scripts](https://github.com/damianztk/scripts) | Automation scripts - backups, maintenance |
-| [portfolio](https://github.com/damianztk/portfolio) | Personal portfolio website (not yet ready) |
+| `homelab-iac` | Infrastructure as Code — Ansible, Terraform (private) |
+| [scripts](https://github.com/damianztk/scripts) | Automation scripts — backups, maintenance, not yet on GitHub |
+| [portfolio](https://github.com/damianztk/portfolio) | Personal portfolio website ([damianzientek.de](https://damianzientek.de)) |

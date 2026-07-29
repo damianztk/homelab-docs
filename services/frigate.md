@@ -25,7 +25,7 @@ Frigate is a self-hosted NVR (Network Video Recorder) running in a Docker contai
 | Host | pve2 (`10.x.x.x`) |
 | LXC ID | 320 |
 | IP | `10.x.x.x` |
-| Web UI | `http://10.x.x.x:5000` / `https://frigate.damianzientek.de` |
+| Web UI | `http://10.x.x.x:5000` / `https://frigate.example.com` |
 | go2rtc API | `http://10.x.x.x:1984` |
 
 ### Cameras
@@ -148,7 +148,7 @@ auth:
     - 10.x.x.x/32    # NPM IP
 ```
 
-**NPM configuration for `frigate.damianzientek.de`:**
+**NPM configuration for `frigate.example.com`:**
 
 - Forward scheme: `https`
 - Forward port: `8971`
@@ -214,7 +214,7 @@ Frigate ist ein self-hosted NVR (Network Video Recorder), der in einem Docker-Co
 | Host | pve2 (`10.x.x.x`) |
 | LXC ID | 320 |
 | IP | `10.x.x.x` |
-| Web UI | `http://10.x.x.x:5000` / `https://frigate.damianzientek.de` |
+| Web UI | `http://10.x.x.x:5000` / `https://frigate.example.com` |
 | go2rtc API | `http://10.x.x.x:1984` |
 
 ### Kameras
@@ -325,7 +325,7 @@ auth:
     - 10.x.x.x/32    # NPM IP
 ```
 
-**NPM-Konfiguration für `frigate.damianzientek.de`:**
+**NPM-Konfiguration für `frigate.example.com`:**
 
 - Forward scheme: `https`
 - Forward port: `8971`
@@ -382,7 +382,7 @@ Frigate to self-hosted NVR (Network Video Recorder) działający w kontenerze Do
 | Host | pve2 (`10.x.x.x`) |
 | LXC ID | 320 |
 | IP | `10.x.x.x` |
-| Web UI | `http://10.x.x.x:5000` / `https://frigate.damianzientek.de` |
+| Web UI | `http://10.x.x.x:5000` / `https://frigate.example.com` |
 | go2rtc API | `http://10.x.x.x:1984` |
 
 ### Kamery
@@ -505,7 +505,7 @@ auth:
     - 10.x.x.x/32    # IP NPM
 ```
 
-**Konfiguracja NPM dla `frigate.damianzientek.de`:**
+**Konfiguracja NPM dla `frigate.example.com`:**
 
 - Forward scheme: `https`
 - Forward port: `8971`

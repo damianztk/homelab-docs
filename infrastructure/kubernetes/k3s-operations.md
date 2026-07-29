@@ -190,7 +190,7 @@ metadata:
   namespace: default
 spec:
   rules:
-    - host: nginx-test.damianzientek.de
+    - host: nginx-test.example.com
       http:
         paths:
           - path: /
@@ -374,7 +374,7 @@ kubectl top pods -n monitoring
 
 #### Access
 
-NPM proxy host: `grafana.damianzientek.de` → `http://10.x.x.x:80`
+NPM proxy host: `grafana.example.com` → `http://10.x.x.x:80`
 Login: `admin` / password from `grafana-secret.yml`
 
 Prometheus and Alertmanager data sources are pre-configured automatically by the chart.
@@ -633,7 +633,7 @@ helm install monitoring prometheus-community/kube-prometheus-stack \
   -f k8s/monitoring-values.yml
 ```
 
-**Zugriff:** NPM-Proxy-Host `grafana.damianzientek.de` → `http://10.x.x.x:80`
+**Zugriff:** NPM-Proxy-Host `grafana.example.com` → `http://10.x.x.x:80`
 
 ---
 
@@ -846,7 +846,7 @@ metadata:
   namespace: default
 spec:
   rules:
-    - host: nginx-test.damianzientek.de
+    - host: nginx-test.example.com
       http:
         paths:
           - path: /
@@ -1016,7 +1016,7 @@ kubectl top pods -n monitoring
 
 #### Dostęp
 
-NPM proxy host: `grafana.damianzientek.de` → `http://10.x.x.x:80`
+NPM proxy host: `grafana.example.com` → `http://10.x.x.x:80`
 Login: `admin` / hasło z `grafana-secret.yml`
 
 Prometheus i Alertmanager są automatycznie skonfigurowane jako data sources przez chart.

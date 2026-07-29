@@ -38,7 +38,7 @@
 
 ```markdown
 [tekst linku](https://adres.url)
-[link do pliku w repo](infrastructure/overview.md)
+[link do pliku w repo](sciezka/do/pliku.md)
 
 ![alt text](screenshots/nazwa-pliku.png)
 ![alt text](https://adres.url/obrazek.png)

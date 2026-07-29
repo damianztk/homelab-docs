@@ -114,7 +114,7 @@ ip r                        # tablica routingu
 ping -c 4 8.8.8.8
 curl -I https://adres.url   # sprawdź odpowiedź HTTP
 dig domena.pl               # zapytanie DNS
-dig @10.100.30.1 domena.pl  # zapytanie DNS do konkretnego serwera
+dig @192.x.x.x domena.pl  # zapytanie DNS do konkretnego serwera
 ss -tulnp                   # otwarte porty i nasłuchujące procesy
 ```
 
