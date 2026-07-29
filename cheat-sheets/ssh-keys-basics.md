@@ -62,18 +62,18 @@ Zamiast pamiętać adresy i opcje – definiujesz aliasy:
 
 ```
 Host pve1
-    HostName 10.100.20.10
+    HostName 192.x.x.x
     User root
     IdentityFile ~/.ssh/id_ed25519
 
 Host pve2
-    HostName 10.100.20.11
+    HostName 192.x.x.x
     User root
     IdentityFile ~/.ssh/id_ed25519
 
 Host gitea
-    HostName 10.100.20.20
-    User git                      # zawsze "git" dla Gitea/GitHub
+    HostName 192.x.x.x
+    User git                      # zawsze "git" dla GitHub, ew. "gitea" dla Gitea
     IdentityFile ~/.ssh/id_ed25519_gitea
 ```
 
@@ -110,7 +110,7 @@ Gitea przechowuje go w swojej bazie danych (nie na systemie plików).
 ```yaml
 # hosts.yml – inventory Ansible
 utility-apps:
-  ansible_host: 10.100.20.30
+  ansible_host: 192.x.x.x
   ansible_user: root
   ansible_ssh_private_key_file: ~/.ssh/id_ed25519
 ```
