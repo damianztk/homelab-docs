@@ -62,7 +62,7 @@
   {
     "id": "tailscale-tutorial",
     "source": "networking/vpn/tailscale-tutorial.md",
-    "status": "pending",
+    "status": "published",
     "priority": 3
   },
   {
