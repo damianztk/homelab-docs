@@ -44,7 +44,7 @@
   {
     "id": "proxmox-hostname-change-troubleshooting",
     "source": "infrastructure/proxmox/proxmox-hostname-change-troubleshooting.md",
-    "status": "pending",
+    "status": "published",
     "priority": 4
   },
   {
