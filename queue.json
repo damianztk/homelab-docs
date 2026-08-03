@@ -74,7 +74,7 @@
   {
     "id": "lxc-data-migration",
     "source": "infrastructure/proxmox/lxc-data-migration.md",
-    "status": "pending",
+    "status": "published",
     "priority": 5
   },
   {
