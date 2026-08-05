@@ -80,7 +80,7 @@
   {
     "id": "backup-script-install",
     "source": "infrastructure/backup/backup-script-install.md",
-    "status": "pending",
+    "status": "published",
     "priority": 6
   },
   {
