@@ -86,7 +86,7 @@
   {
     "id": "fan-control",
     "source": "infrastructure/proxmox/fan-control.md",
-    "status": "pending",
+    "status": "published",
     "priority": 9
   }
 ]
