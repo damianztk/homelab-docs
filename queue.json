@@ -26,7 +26,7 @@
   {
     "id": "terraform-ansible-cloudinit",
     "source": "infrastructure/iac/vm-provisioning-terraform-ansible-cloudinit.md",
-    "status": "pending",
+    "status": "published",
     "priority": 10
   },
   {
