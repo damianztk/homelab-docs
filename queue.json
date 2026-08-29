@@ -20,7 +20,7 @@
   {
     "id": "k3s-operations",
     "source": "infrastructure/kubernetes/k3s-operations.md",
-    "status": "pending",
+    "status": "published",
     "priority": 12
   },
   {
