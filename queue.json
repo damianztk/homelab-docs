@@ -32,7 +32,7 @@
   {
     "id": "pbs-setup",
     "source": "infrastructure/backup/pbs-setup.md",
-    "status": "pending",
+    "status": "published",
     "priority": 13
   },
   {
