@@ -207,3 +207,8 @@ Powtarzająca się utrata łączności na zarządzalnym switchu TP-Link TL-SG108
 - 🌐 **Płaszczyzna zarządzania ≠ płaszczyzna danych.** W obu incydentach podłączone urządzenia działały bez zarzutu, podczas gdy własny interfejs zarządzania switcha był całkowicie nieosiągalny — to osobne domeny awarii.
 - 🧹 **Cache po stronie firewalla ma znaczenie.** Czyszczenie inwentarza urządzeń i tablicy ARP na firewallu było konieczne (choć niewystarczające przy incydencie #3), żeby rozwiązać konflikty IP/MAC.
 - ⚡ **Stabilność zasilania to otwarte ryzyko.** Obecnie brak UPS-a; krótkotrwały zanik zasilania jest podejrzewany jako możliwy wyzwalacz i jest rozważany jako przyszłe działanie zapobiegawcze.
+
+---
+
+> [!TIP]
+> Dodać wersje ENG/DE.
