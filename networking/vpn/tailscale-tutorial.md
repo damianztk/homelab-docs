@@ -160,8 +160,8 @@ Zamiast wymieniać adresy email w każdej regule, definiujesz grupę raz:
 ```json
 {
   "groups": {
-    "group:admins": ["damian@gmail.com"],
-    "group:family": ["damian@gmail.com", "zona@gmail.com"]
+    "group:admins": ["admin@example.com"],
+    "group:family": ["admin@example.com", "family@example.com"]
   }
 }
 ```
@@ -320,8 +320,8 @@ Tailscale ma oficjalny provider Terraform. Możesz trzymać całą konfigurację
 resource "tailscale_acl" "main" {
   acl = jsonencode({
     groups = {
-      "group:admins" = ["damian@gmail.com"]
-      "group:family" = ["damian@gmail.com", "zona@gmail.com"]
+      "group:admins" = ["admin@example.com"]
+      "group:family" = ["admin@example.com", "family@example.com"]
     }
     tagOwners = {
       "tag:serwery"    = ["group:admins"]
@@ -357,8 +357,8 @@ Kompletny przykład ACL dla homelabu z VLANami, żoną i zero-trust:
 ```json
 {
   "groups": {
-    "group:admins": ["damian@gmail.com"],
-    "group:family": ["damian@gmail.com", "zona@gmail.com"]
+    "group:admins": ["admin@example.com"],
+    "group:family": ["admin@example.com", "family@example.com"]
   },
 
   "tagOwners": {
