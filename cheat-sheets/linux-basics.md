@@ -54,7 +54,7 @@ chown -R użytkownik:grupa katalog/   # rekurencyjnie
 # W kontekście Proxmox LXC (UID mapping):
 # UID 0 wewnątrz LXC = UID 100000 na hoście
 # UID 1000 wewnątrz LXC = UID 101000 na hoście
-chown -R 100000:100000 /opt/lxc-data/gitea-data/
+chown -R 100000:100000 /opt/data/gitea-data/
 ```
 
 ---
