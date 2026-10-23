@@ -63,3 +63,18 @@ git merge <nazwa>           # scal branch do aktualnego
 - Pliki i foldery: `kebab-case` → `proxmox-backup-setup.md`
 - Bez wersji w nazwach: ~~`backup-script-v2.sh`~~ → `backup-script.sh`
 - Historia zmian żyje w commitach, nie w nazwach plików
+
+## Końce linii (CRLF / LF)
+
+Windows kończy linie znakami `\r\n` (CRLF), Linux samym `\n` (LF). Skrypty bash z CRLF nie działają (`/bin/bash^M: bad interpreter`), a diffy pokazują zmianę całego pliku. Typowa przyczyna: plik zapisany w Notatniku albo edytorze po stronie Windows.
+
+| Co | Polecenie |
+| --- | --- |
+| Wymuś LF w repo (plik `.gitattributes` w katalogu głównym) | `* text=auto eol=lf` |
+| Przepisz już śledzone pliki według `.gitattributes` | `git add --renormalize .` |
+| Pokaż końce linii plików w repo (`i/` = indeks, `w/` = katalog roboczy) | `git ls-files --eol` |
+| Znajdź pliki z CRLF w indeksie | `git ls-files --eol \| grep 'i/crlf'` |
+| Sprawdź jeden plik | `file skrypt.sh` (pokaże „with CRLF line terminators”) |
+| Zamień CRLF na LF w jednym pliku | `sed -i 's/\r$//' skrypt.sh` |
+
+`.gitattributes` jest w repo, więc działa na każdej maszynie i dla każdego, kto klonuje (także runnery i agenci) — w odróżnieniu od `git config core.autocrlf`, które obowiązuje tylko lokalnie. W VS Code aktualny format widać w prawym dolnym rogu (`LF`/`CRLF`); na stałe: `"files.eol": "\n"`.
